@@ -161,9 +161,3 @@ module.exports = {
     isLoggedIn,
     logout
 }
-
-//TODO
-//build log out functionality
-//A nice splashscreen that renders depending on whether user is logged in or not
-//Build out the tables, probably use laravel for database
-//

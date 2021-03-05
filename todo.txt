@@ -1,5 +1,25 @@
+A website where someone can create an event(s) and others can sign up for it. 
 //TODO
-//build log out functionality
-//A nice splashscreen that renders depending on whether user is logged in or not
-//Build out the tables, probably use laravel for database
-//ddd
+- [x] build log out functionality
+- [ ] Splashscreen/overview that renders depending on whether user is logged in or not (if logged out render welcome, logged in render event search)
+- [ ] bycrypt passwords
+- [ ]
+
+Features
+- [ ] Create event (public or private)
+- [ ] Public - everyone signed in can see and sign up
+- [ ] Private only invited people can see and sign up
+- [ ] Search events (additionally search by filters such as distance from location, type of event etc)
+- [ ] Users can add comments
+- [ ] A user can only delete their own events, remove people from the invites
+- [ ] An admin can delete any/all events
+
+
+Extra To dos
+- [ ] Log authentication events
+- [ ] Implement security
+- [ ] Implement testing
+
+Nice to haves
+- [ ] filter events by distance etc and have google maps of locations
+- [ ] Users can share events to Facebook/Twitter via link etc
