@@ -1,0 +1,15 @@
+html 
+    head 
+        title=`Node | ${title}`
+        link(rel='stylesheet', href='css/base.styles.css', type='text/css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet")
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    body 
+        include _header
+        block content
+
+script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js')
+script(type="text/javascript" src='js/index.js')
+script(type="text/javascript" src='js/logout.js')

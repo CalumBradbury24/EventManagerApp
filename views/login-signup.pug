@@ -1,0 +1,44 @@
+html 
+    head 
+        title=`Node | ${title}`
+        link(rel='stylesheet', href='css/base.styles.css', type='text/css')
+        link(rel='stylesheet', href='css/login.styles.css', type='text/css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet")
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    body 
+        .container#container
+            .form-container.sign-up-container
+                form.signUpForm
+                    h1 Create Account
+                    span Please use your email for registration
+                    input#fName(type='First Name', placeholder='First Name', required)
+                    input#lName(type='Last Name', placeholder='Last Name', required)
+                    input#signUpEmail(type='email', placeholder='you@example.com', required)
+                    input#signUpPassword(type='password', placeholder='password', required, minlength='8')
+                    button Sign Up
+            .form-container.sign-in-container
+                form.loginForm
+                    h1 Sign In
+                    input#email(type='email', name='email', placeholder='you@example.com', required)
+                    input#password(type='password', name='password', placeholder='password', required, minlength='8')
+                    a(href='/api/v1/users/resetpassword') Forgot your password?
+                    button Sign In
+            .overlay-container 
+                .overlay 
+                    .overlay-panel.overlay-left
+                        h1 Welcome Back! 
+                        p Please log in
+                        button.ghost#signIn Sign In 
+                    .overlay-panel.overlay-right
+                        h1 Hello friend! 
+                        p Enter your personal details and start your journey with us! 
+                        button.ghost#signUp Sign Up
+
+
+script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js')
+script(type="text/javascript" src='js/index.js')
+script(type="text/javascript" src='js/login-signup.js')
+
+

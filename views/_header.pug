@@ -1,0 +1,12 @@
+header.header
+    nav.nav
+        .nav-el(href='/') 
+            a.header-logo
+                img.logo-image(src="img/logo-white.png" alt="Nature Tours logo")
+        .nav-user
+            if user
+                a.link#logout Log Out
+            else
+                a.link(href='/login') Log in/sign up
+
+//script(type="text/javascript" src='js/index.js')
