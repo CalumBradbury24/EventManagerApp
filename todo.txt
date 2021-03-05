@@ -23,3 +23,4 @@ Extra To dos
 Nice to haves
 - [ ] filter events by distance etc and have google maps of locations
 - [ ] Users can share events to Facebook/Twitter via link etc
+
