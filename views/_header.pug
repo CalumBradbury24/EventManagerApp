@@ -1,10 +1,20 @@
-header.header
-    nav.nav
-        .nav-el(href='/') 
-            a.header-logo
-                img.logo-image(src="img/logo-white.png" alt="Nature Tours logo")
-        .nav-user
-            if user
-                a.link#logout Log Out
-            else
-                a.link(href='/login') Log in/sign up
+nav.header
+    .logo-container
+        a.link(href="/")
+            img.logo(src='../assets/logo.png' alt="Logo")
+    .menu-container
+        a.link(href="/find-events")
+            h3 WHATS ON
+    if user 
+        .user-container
+            .dropdown
+                img.dropdown-button(src='../assets/User.svg' alt="Logo")
+                .dropdown-content 
+                    a.dropdown-link(href='/myaccount') 
+                        h3 MY ACCOUNT
+                    a.dropdown-link#logout 
+                        h3 SIGN OUT
+    else
+        .signIn-container
+            a.link(href='login') 
+                h3 SIGN IN/UP

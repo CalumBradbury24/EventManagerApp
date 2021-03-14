@@ -7,9 +7,9 @@ const logout = async () => {
 		if ((res.data.status = 'success')) {
 			window.alert('Log out successful!');
 			window.setTimeout(() => {
-				//After 1 second load the login page
-				location.assign("/login");
-			}, 1000);
+				//After 1 second load landing page
+				location.assign('/');
+			}, 500);
 		}
 
 	} catch (err) {

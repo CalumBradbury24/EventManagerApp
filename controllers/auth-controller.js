@@ -26,11 +26,9 @@ const createAndSendJWT = (user, statusCode, req, res) => {
         expires: new Date(
             Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
         ), //Convert to milliseconds
-        //secure: true, //Send on encrypted connection (using HTTPS), - only want this when in production
         httpOnly: true, //Cookie cannot be accessed or modified in any way by the browser
-        //secure: (req.secure || req.headers('x-forwarded-proto' === 'https'))//If secure header is set to https set secure=true
     };
-
+    if(process.env.NODE_ENV === 'production') cookieOptions.secure = true;  //Send on encrypted connection (using HTTPS), - only want this when in production
     //Send JWT as a cookie - A cookie is a small piece of text that a server can send to clients,
     //when the client's browser receives the cookie it will automatically be stored and sent back in all future requests to the server it came from
     res.cookie("jwt", jwt, cookieOptions); //Send jwt as cookie to browser
@@ -75,37 +73,29 @@ const loginPromise = (email, password) => {
 }
 
 const logout = (req, res) => {
-    res.cookie('jwt', 'loggedout', {
+  /*  res.cookie('jwt', 'loggedout', {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true
-    });
+    });*/
+    res.clearCookie('jwt');
     res.status(200).json({ status: 'success' });
 };
 
-const signUp = catchAsyncErrors(async (req, res, next) => {
+const signUp = (req, res, next) => {
     const { fname, lname, email, password } = req.body;
-
     if (!fname || !lname || !email || !password) next(new AppError('Missing required details', 401));
 
-    await signupPromise(fname, lname, email, password);
-    res.status(200).json({
-        status: 'success',
-        message: 'User created!'
-    })
-    next();
-});
-
-const signupPromise = (fn, ln, email, pass) => {
-    return new Promise((resolve, reject) => {
-        connection.query(`insert into Users set firstName = ?, lastName = ?, email = ?,
-        password = ?`, [fn, ln, email, pass], (error) => {
-            if (error) {
-                reject(new AppError('Sign up error'), 400)
-                return
-            } else resolve()
+    connection.query(`insert into Users set firstName = ?, lastName = ?, email = ?,
+    password = ?`, [fname, lname, email, password], (error) => {
+        if (error) return new AppError('Sign up error', 400);
+        res.status(200).json({
+            status: 'success',
+            message: 'User created!'
         })
     })
-}
+};
+
+
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
 const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
@@ -142,8 +132,8 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
         return next()
     }
-    //  return next(new AppError('Failed to authorise user', 401)) 
-    next()
+    return next(new AppError('Failed to authorise user', 401)) 
+
 }, 'isLoggedIn')
 
 const validateUserOnLoginPromise = (decodedUserID) => {

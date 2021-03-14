@@ -10,7 +10,14 @@ const getHomePage = (req, res) => {
     })
 }
 
+const getLandingPage = (req, res) => {
+    res.status(200).render('landingpage', {
+        title: 'Home'
+    })
+}
+
 module.exports = {
     getLoginForm,
-    getHomePage
+    getHomePage,
+    getLandingPage
 }

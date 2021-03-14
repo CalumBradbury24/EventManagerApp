@@ -13,9 +13,9 @@ signInButton.addEventListener('click', () => {
 
 // DOM elements
 const loginForm = document.querySelector(".loginForm");
-const signInForm = document.querySelector('.signUpForm');
+const signUpForm = document.querySelector('.signUpForm');
 
-//If the login form exists
+//Handle sign in
 if (loginForm) {
 	loginForm.addEventListener("submit", (event) => {
 		//QuerySelector allows selecting elements based on its class
@@ -43,17 +43,17 @@ const login = async (email, password) => {
 		//if the response status from the http request is a success
 		window.setTimeout(() => {
 			//After 1.5 seconds load the home page
-			location.assign("/");
-		}, 1500);
+			location.assign("/home");
+		}, 1000);
 		console.log(result)
 
 	} catch (error) {
 		console.log(error); //Message property of response
 	}
 };
-
-if (signInForm) {
-	signInForm.addEventListener('submit', (event) => {
+//Handle sign up
+if (signUpForm) {
+	signUpForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const firstName = document.getElementById('fName').value;
 		const lastName = document.getElementById('lName').value;
@@ -79,7 +79,7 @@ const signUp = async (fname, lname, email, password) => {
 		window.alert('Account created! Please log in.')
 		//if the response status from the http request is a success
 		window.setTimeout(() => {
-			//After 1 second load the login page
+			//After 1 second load the login page to ask user to sign in with newly created credentials
 			location.assign("/login");
 		}, 1000);
 		console.log(result)

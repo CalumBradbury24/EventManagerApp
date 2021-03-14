@@ -1,9 +1,10 @@
 A website where someone can create an event(s) and others can sign up for it. 
 //TODO
 - [x] build log out functionality
-- [ ] Splashscreen/overview that renders depending on whether user is logged in or not (if logged out render welcome, logged in render event search)
+- [ ] Splashscreen 
+- [ ] Logged in home page
 - [ ] bycrypt passwords
-- [ ]
+- [ ] whats on page - if logged in can see and sign up for everything. If not signed in can just view public (non-private) events
 
 Features
 - [ ] Create event (public or private)
@@ -24,3 +25,5 @@ Nice to haves
 - [ ] filter events by distance etc and have google maps of locations
 - [ ] Users can share events to Facebook/Twitter via link etc
 
+
+//Base is always rendered, which renders landing page or homepage('/') depending on if user logged in and '/home' route accessed

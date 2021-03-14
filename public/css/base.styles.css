@@ -1,34 +1,30 @@
-
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 body{
     font-family: 'Montserrat', sans-serif;
     margin: 0;
 }
 
-.header{
-    width: 100%;
-    background-color: whitesmoke;
-    display: flex;
-    justify-content: center;
+:root {
+    --header-colour:#455A64;
+    --title-colour:#212121;
+    --subtext-colour: #757575;
 }
 
-.header .nav{
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
+a{
+    text-decoration: none;
 }
 
-.header .nav .nav-el .header-logo .logo-image{
-    width: 75px;
-    height:75px;
-    background-color: aquamarine;
-}
+.landingPage{background: whitesmoke}
+.panel-background-one{background-color: #CFD8DC;}
+.panel-background-two{background-color: whitesmoke;}
+.landingPage .landing-content-container{display: flex;height: 50vh;}
 
-.header .nav .nav-user{
-    display: flex;
-    align-items: center;
-}
-
-.header .nav .nav-user .link{
-    padding: 0 10px;
-}
+.landingPage .landing-content-container .title-text{display: flex; flex-direction: column; width: 50%; justify-content: center;align-items: center;}
+.landingPage .landing-content-container .title-text .title{color: var(--title-colour);font-size: 5rem; margin: 0;}
+.landingPage .landing-content-container .title-text .subtext{color: var(--subtext-colour);font-size: 1.25rem; margin: 0;padding: 5px 100px; text-align: center;}
+.landingPage .landing-content-container .landing-image{width: 50%; height:100%}
+.landingPage .landing-content-container .title-text .info-title-container{display: flex;align-items: center;}
+.landingPage .landing-content-container .title-text .info-title-container .create-image{width:35px; height:40px; background-image: url('../assets/create.svg'); background-repeat: no-repeat;padding-right: 5px;}
+.landingPage .landing-content-container .title-text .info-title-container .planner-image{width:35px; height:40px; background-image: url('../assets/bookmark.svg'); background-repeat:no-repeat ;padding-right: 5px;}
+.landingPage .landing-content-container .title-text .info-title-container .share-image{width:35px; height:40px; background-image: url('../assets/share.svg'); background-repeat:no-repeat ;padding-right: 5px;}
+.landingPage .landing-content-container .title-text .info-title-container .sub-title{color: var(--title-colour); font-size: 2.5rem; margin:0}
