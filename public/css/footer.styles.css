@@ -1,3 +1,5 @@
-.footer{width: 100%; height: 20vh; background-color: var(--header-colour); bottom: 0px;left: 0px;}
-.footer .footer-text-container{height: 100%; display: flex;}
-.footer .footer-text-container .list{display: flex;flex-direction: column;justify-content: space-between;}
+.footer{width: 100%;height: 10vh;background-color: #1c1f2f;bottom: 0px;left: 0px;}
+.footer .footer-text-container{height: 100%;display: flex;justify-content: center;align-items: center;}
+.footer .footer-text-container .list-item{color:#99a9b5; padding: 0 5px}
+.footer .footer-text-container .list-item:hover{color:white; font-weight:800px;cursor: pointer;}
+.footer .footer-text-container .line:hover{cursor:default;color:#99a9b5;}
