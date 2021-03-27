@@ -10,18 +10,19 @@ const loginForm = document.querySelector(".loginForm");
 const signUpForm = document.querySelector('.signUpForm');
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container');
-
+const signupcontainer = document.getElementById('signupcontainer');
+const arrowScrollButton = document.getElementById('arrow-wrapper');
+const informationContainer = document.querySelector('.information-container');
 
 if (signUpButton) {
     signUpButton.addEventListener('click', () => {
-        container.classList.add("right-panel-active");
+        signupcontainer.classList.add("right-panel-active");
     });
 }
 
 if (signInButton) {
     signInButton.addEventListener('click', () => {
-        container.classList.remove("right-panel-active");
+        signupcontainer.classList.remove("right-panel-active");
     });
 }
 
@@ -83,3 +84,8 @@ if (logoutButton) {
     })
 }
 
+if(arrowScrollButton){
+    arrowScrollButton.addEventListener('click', () => {
+        informationContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "start"});
+    })
+}

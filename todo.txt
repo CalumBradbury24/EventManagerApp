@@ -9,6 +9,7 @@ A website where someone can create an event(s) and others can sign up for it.
 - [ ] FAQs page - allow user to ask questions
 - [ ] Contact Us page - set up emailing system
 - [ ] whats on page - if logged in can see and sign up for everything. If not signed in can just view public (non-private) events
+- [ ] Featured events - a page of a few events that are featured (paid to be there?)
 - [ ] How it works page - explanation of what the site is and what can be done on there etc
 - [ ] Reset password functionality
 - [ ] bycrypt passwords
