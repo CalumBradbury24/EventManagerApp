@@ -3,6 +3,7 @@ const { catchAsyncErrors } = require('../utilities');
 const jwt = require('jsonwebtoken');
 const AppError = require('../Utils.js/app-error');
 const { promisify } = require("util"); //Node built in function that contains the promisify method to make a method return a promise, thus can use async/await
+const bcrypt = require('bcryptjs');
 
 //Authentication with jwt
 //1)User logs in with email/password with POST request
@@ -46,20 +47,22 @@ const createAndSendJWT = (user, statusCode, req, res) => {
 }
 
 const login = catchAsyncErrors(async (req, res, next) => {
-    const { email, password } = req.body;
-
+    let { email, password } = req.body;
+    email = email || '';
+    password = password || '';
     if (!email || !password) return next(new AppError('Please provide a username and password', 400))
 
     const user = await loginPromise(email, password);
 
     //if user logged in successfully, send jwt
-    createAndSendJWT(user, 200, req, res);
+    if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, req, res);
+    else return next(new AppError('Incorrect email or password', 401))
 
 }, 'login');
 
 const loginPromise = (email, password) => {
     return new Promise((resolve, reject) => {
-        connection.query(`select * from Users where email = ? and password = ?`, [email, password], (error, rows) => {
+        connection.query(`select * from Users where email = ?`, [email], (error, rows) => {
             if (error) {
                 reject(new AppError('Login error', 400))
                 return
@@ -73,29 +76,25 @@ const loginPromise = (email, password) => {
 }
 
 const logout = (req, res) => {
-  /*  res.cookie('jwt', 'loggedout', {
-        expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true
-    });*/
     res.clearCookie('jwt');
     res.status(200).json({ status: 'success' });
 };
 
-const signUp = (req, res, next) => {
-    const { fname, lname, email, password } = req.body;
-    if (!fname || !lname || !email || !password) next(new AppError('Missing required details', 401));
+const signUp = catchAsyncErrors( async (req, res, next) => {
+    let { fname, lname, email, password, passwordConfirm } = req.body;
+    if (!fname || !lname || !email || !password || !passwordConfirm) return next(new AppError('Missing required details', 401));
+    if(password !== passwordConfirm) return next(new AppError('Passwords do not match', 401));
+    password = await bcrypt.hash(password, 12);
 
     connection.query(`insert into Users set firstName = ?, lastName = ?, email = ?,
-    password = ?`, [fname, lname, email, password], (error) => {
-        if (error) return new AppError('Sign up error', 400);
+        password = ?`, [fname, lname, email, password], (error) => {
+        if (error) return next(new AppError('Sign up error', 400));
         res.status(200).json({
             status: 'success',
             message: 'User created!'
         })
     })
-};
-
-
+}, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
 const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
@@ -132,8 +131,8 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
         return next()
     }
-    return next(new AppError('Failed to authorise user', 401)) 
-
+  //  return next(new AppError('Failed to authorise user', 401)) 
+    next(); //This allows for rendering a 'please log in' page on protected routes in the case the user tried to access them without a valid jwt
 }, 'isLoggedIn')
 
 const validateUserOnLoginPromise = (decodedUserID) => {

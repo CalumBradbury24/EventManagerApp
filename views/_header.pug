@@ -4,17 +4,17 @@ nav.header
             img.logo(src='../assets/logo.png' alt="Logo")
     .menu-container
         a.link(href="/find-events")
-            h3 WHATS ON
+            h3.link-text WHATS ON
     if user 
         .user-container
             .dropdown
                 img.dropdown-button(src='../assets/User.svg' alt="Logo")
                 .dropdown-content 
                     a.dropdown-link(href='/myaccount') 
-                        h3 MY ACCOUNT
+                        h3.link-text MY ACCOUNT
                     a.dropdown-link#logout 
-                        h3 SIGN OUT
+                        h3.link-text SIGN OUT
     else
         .signIn-container
-            a.link(href='login') 
-                h3 SIGN IN/UP
+            a.link.sign-in-text(href='login') 
+                h3.link-text SIGN IN/UP

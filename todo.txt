@@ -1,10 +1,18 @@
 A website where someone can create an event(s) and others can sign up for it. 
 //TODO
 - [x] build log out functionality
-- [ ] Splashscreen 
+- [x] Splashscreen (COULD DO WITH IMPROVING)
 - [ ] Logged in home page
-- [ ] bycrypt passwords
+    - [ ] create event
+    - [ ] my account
+    - [ ] my events - filter by all, historic and upcoming
+- [ ] FAQs page - allow user to ask questions
+- [ ] Contact Us page - set up emailing system
 - [ ] whats on page - if logged in can see and sign up for everything. If not signed in can just view public (non-private) events
+- [ ] How it works page - explanation of what the site is and what can be done on there etc
+- [ ] Reset password functionality
+- [ ] bycrypt passwords
+- [ ] 
 
 Features
 - [ ] Create event (public or private)

@@ -6,8 +6,8 @@
 .header .logo-container .logo{height: 10vh}
 .header .link{text-decoration: none; color: #212121; font-size: 1.1rem;}
 .header .link:hover{color:whitesmoke;}
-
-
+.header .signIn-container .sign-in-text{border: solid white 1px;border-radius: 40px; padding: 10 15px}
+.header .link-text{margin: 0}
 .dropdown-button{color: #212121;cursor: pointer;height: 40px;}
 
 /* Dropdown dropdown-button on hover & focus */
