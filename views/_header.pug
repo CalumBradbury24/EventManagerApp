@@ -1,20 +1,21 @@
 nav.header
-    .logo-container
-        a.link(href="/")
-            img.logo(src='../assets/logo.png' alt="Logo")
+    a(href="/")
+        img.logo(src='../assets/Eventify.png' alt="Logo")
     .menu-container
         a.link(href="/find-events")
             h3.link-text WHATS ON
-    if user 
-        .user-container
-            .dropdown
-                img.dropdown-button(src='../assets/User.svg' alt="Logo")
-                .dropdown-content 
-                    a.dropdown-link(href='/myaccount') 
-                        h3.link-text MY ACCOUNT
-                    a.dropdown-link#logout 
-                        h3.link-text SIGN OUT
-    else
-        .signIn-container
-            a.link.sign-in-text(href='login') 
-                h3.link-text SIGN IN/UP
+        a.link(href="/find-events")
+            h3.link-text Featured Events
+        if user 
+            .user-container
+                .dropdown
+                    img.dropdown-button(src='../assets/User.svg' alt="Logo")
+                    .dropdown-content 
+                        a.dropdown-link(href='/myaccount') 
+                            h3.link-text MY ACCOUNT
+                        a.dropdown-link#logout 
+                            h3.link-text SIGN OUT
+        else
+            .signIn-container
+                a.link.sign-in-text(href='login') 
+                    h3.link-text SIGN IN/UP

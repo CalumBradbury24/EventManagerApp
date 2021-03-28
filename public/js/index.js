@@ -84,6 +84,7 @@ if (logoutButton) {
     })
 }
 
+//
 if(arrowScrollButton){
     arrowScrollButton.addEventListener('click', () => {
         informationContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "start"});
