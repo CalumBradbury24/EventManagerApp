@@ -84,9 +84,9 @@ if (logoutButton) {
     })
 }
 
-//
+//scroll down on splashscreen
 if(arrowScrollButton){
     arrowScrollButton.addEventListener('click', () => {
-        informationContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "start"});
+        informationContainer.scrollIntoView({behavior: "smooth", inline: "start"});
     })
 }
