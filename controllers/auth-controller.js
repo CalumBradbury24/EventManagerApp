@@ -62,7 +62,7 @@ const login = catchAsyncErrors(async (req, res, next) => {
 
 const loginPromise = (email, password) => {
     return new Promise((resolve, reject) => {
-        connection.query(`select * from Users where email = ?`, [email], (error, rows) => {
+        connection.query(`select * from users where email = ?`, [email], (error, rows) => {
             if (error) {
                 reject(new AppError('Login error', 400))
                 return
@@ -86,9 +86,9 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
     if(password !== passwordConfirm) return next(new AppError('Passwords do not match', 401));
     password = await bcrypt.hash(password, 12);
 
-    connection.query(`insert into Users set firstName = ?, lastName = ?, email = ?,
-        password = ?`, [fname, lname, email, password], (error) => {
-        if (error) return next(new AppError('Sign up error', 400));
+    connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
+        password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
+        if (error) return next(new AppError(error, 400));
         res.status(200).json({
             status: 'success',
             message: 'User created!'
@@ -137,7 +137,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
 const validateUserOnLoginPromise = (decodedUserID) => {
     return new Promise((resolve, reject) => {
-        connection.query(`select * from Users where deleted = 0 and userID = ?`, decodedUserID, (error, rows) => {
+        connection.query(`select * from users where deleted = 0 and userID = ?`, decodedUserID, (error, rows) => {
             if (error) reject(new AppError('Error finding user', 404));
             else resolve(rows[0])
         })

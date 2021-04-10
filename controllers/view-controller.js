@@ -10,15 +10,8 @@ const getHomePage = (req, res) => {
     })
 }
 
-const getLandingPage = (req, res) => {
-    res.status(200).render('landingpage', {
-        title: 'Home'
-    })
-}
-
-
-const getSplash = (req, res) => {
-    res.status(200).render('splash', {
+const getSplashPage = (req, res) => {
+    res.status(200).render('splashpage', {
         title: 'Home'
     })
 }
@@ -27,6 +20,5 @@ const getSplash = (req, res) => {
 module.exports = {
     getLoginForm,
     getHomePage,
-    getLandingPage,
-    getSplash
+    getSplashPage,
 }

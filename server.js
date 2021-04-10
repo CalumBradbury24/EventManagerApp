@@ -12,7 +12,8 @@ process.on("uncaughtException", (error) => {
 const app = require('./app');
 
 connection.connect((error) => {
-    console.log("Connected to mysql server!");
+    if(error)console.log(error.message)
+    else console.log('Connected to mysql server!')
 });
 
 const port = process.env.port || 5000;
