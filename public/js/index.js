@@ -35,7 +35,7 @@ if (dropdownButton) {
     })
 
     // Close the dropdown menu if the user clicks outside of it
-    window.onclick = function (event) {
+    window.onclick = (event) => {
         if (!event.target.matches('.dropdown-button')) {
             let dropdowns = document.getElementsByClassName("dropdown-content");
             let i;
@@ -87,6 +87,6 @@ if (logoutButton) {
 //scroll down on splashscreen
 if(arrowScrollButton && informationContainer){
     arrowScrollButton.addEventListener('click', () => {
-        informationContainer.scrollIntoView({block: "start"});
+        informationContainer.scrollIntoView({behavior: 'smooth'});
     })
 }

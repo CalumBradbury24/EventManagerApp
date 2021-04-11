@@ -97,6 +97,7 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
 }, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
+//If user is logged in then the user object is created for the pug files, otherwise there will be no user for pug files
 const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
     console.log('checking user is logged in...', req.cookies.jwt)
 
