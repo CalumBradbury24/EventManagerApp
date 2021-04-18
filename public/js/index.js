@@ -12,7 +12,7 @@ const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const signupcontainer = document.getElementById('signupcontainer');
 const arrowScrollButton = document.getElementById('arrow-wrapper');
-const informationContainer = document.querySelector('.information-container');
+const overviewContainer = document.querySelector('.overview-container');
 
 if (signUpButton) {
     signUpButton.addEventListener('click', () => {
@@ -85,8 +85,8 @@ if (logoutButton) {
 }
 
 //scroll down on splashscreen
-if(arrowScrollButton && informationContainer){
+if(arrowScrollButton && overviewContainer){
     arrowScrollButton.addEventListener('click', () => {
-        informationContainer.scrollIntoView({behavior: 'smooth'});
+        overviewContainer.scrollIntoView({behavior: 'smooth'});
     })
 }

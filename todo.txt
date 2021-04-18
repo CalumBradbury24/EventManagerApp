@@ -1,7 +1,7 @@
 A website where someone can create an event(s) and others can sign up for it. 
 //TODO
 - [x] build log out functionality
-- [x] Splashscreen (COULD DO WITH IMPROVING)
+- [x] Splashscreen 
 - [ ] Logged in home page
     - [ ] create event
     - [ ] my account
@@ -13,7 +13,8 @@ A website where someone can create an event(s) and others can sign up for it.
 - [ ] How it works page - explanation of what the site is and what can be done on there etc
 - [ ] Reset password functionality
 - [ ] bycrypt passwords
-- [ ] 
+- [ ] Add nice'please log in' screen when user accesses page whilst not logged in
+- [ ] dont let user access login function if they are already logged in
 
 Features
 - [ ] Create event (public or private)

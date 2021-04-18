@@ -132,7 +132,6 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
         return next()
     }
-  //  return next(new AppError('Failed to authorise user', 401)) 
     next(); //This allows for rendering a 'please log in' page on protected routes in the case the user tried to access them without a valid jwt
 }, 'isLoggedIn')
 

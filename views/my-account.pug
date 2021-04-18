@@ -1,0 +1,30 @@
+html 
+    head 
+        title=`Eventify | ${title}`
+        link(rel='stylesheet', href='css/base.styles.css', type='text/css')
+        link(rel='stylesheet', href='css/footer.styles.css', type='text/css')
+        link(rel='shortcut icon' type='image/png' href='./assets/Eventify.png')
+        link(href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet")
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    body
+        .my-account-page
+            if user 
+                .my-account-header 
+                    h1.header My Account
+                .options-container 
+                    ul.options-list
+                        a.option-container(href='/home')
+                            img.logo(src='../assets/home-logo.svg' alt="Logo")
+                            p.option Home
+                        span.option-container
+                            p.option Edit Profile 
+                        span.option-container
+                            p.option Password & Security #{option}
+                .edit-profile-container 
+                    h1 edit profile 
+                .password-and-security-container
+                    h1 password & security
+        include _footer
+
+script(type="text/javascript" src='/index.js')

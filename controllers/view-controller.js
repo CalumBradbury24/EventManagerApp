@@ -16,9 +16,22 @@ const getSplashPage = (req, res) => {
     })
 }
 
+const getMyAccount = (req, res) => {
+    res.status(200).render('my-account', {
+        title: 'My Account',
+    })
+}
+
+const getEditProfile = (req, res) => {
+    res.status(200).render('edit-profile', {
+        title: 'edit-profile'
+    })
+}
 
 module.exports = {
     getLoginForm,
     getHomePage,
     getSplashPage,
+    getMyAccount,
+    getEditProfile
 }

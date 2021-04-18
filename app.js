@@ -35,13 +35,14 @@ app.use(helmet());
 
 //Rate-limiting middleware to count number of requests from an IP address and block these requests when too many have been received
 //Helps protect against DOS and brute force attacks
-const limiter = rateLimit({
-  max: 100, //Max number of requests allowed from an IP address in a given time window
-  windowMs: 60 * 60 * 1000, //1 hour
-  message: "Too many requests from this IP, please try again in an hour!",
-});
-app.use('/', limiter);
-
+if (process.env.NODE_ENV !== "development") {
+  const limiter = rateLimit({
+    max: 100, //Max number of requests allowed from an IP address in a given time window
+    windowMs: 60 * 60 * 1000, //1 hour
+    message: "Too many requests from this IP, please try again in an hour!",
+  });
+  app.use('/', limiter);
+}
 //Data sanitisation against cross-site scripting attacks(XSS)
 app.use(xss());
 
