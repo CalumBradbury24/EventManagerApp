@@ -1,3 +1,5 @@
+const connection = require('../utils.js/sql-config');
+
 const getLoginForm = (req, res) => {
     res.status(200).render('login-signup',{
         title: 'Log In or Sign Up'
@@ -17,6 +19,7 @@ const getSplashPage = (req, res) => {
 }
 
 const getMyAccount = (req, res) => {
+    res.locals.user.password = ''; //Don't send user password to this page
     res.status(200).render('my-account', {
         title: 'My Account',
     })

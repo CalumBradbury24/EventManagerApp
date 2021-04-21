@@ -1,5 +1,5 @@
 require("dotenv").config({ path: "./config.env" });
-const connection = require('./sql-config');
+const connection = require('./utils.js/sql-config');
 
 //HANDLE UNCAUGHT EXCEPTIONS -synchronous errors such as console.log(undefinedVariable) - at top of code so that all errors that come after are caught (otherwise errors before this will be missed/uncaught!)
 //Listen to uncaughtException event

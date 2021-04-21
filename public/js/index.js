@@ -2,6 +2,7 @@
 import 'regenerator-runtime/runtime'
 import { logout } from './logout';
 import { login, signUp } from './login-signup';
+import { updateUserDetails } from './save-account-details';
 import '@babel/polyfill'; //For older browser compatibility
 console.log('hello from parcel')
 
@@ -13,6 +14,11 @@ const signInButton = document.getElementById('signIn');
 const signupcontainer = document.getElementById('signupcontainer');
 const arrowScrollButton = document.getElementById('arrow-wrapper');
 const overviewContainer = document.querySelector('.overview-container');
+const accountEdit = document.getElementById('edit');
+const editProfileContainer = document.querySelector('.edit-profile-container');
+const securityOptions = document.getElementById('security');
+const securityContainer = document.querySelector('.security-container');
+const userDetailsForm = document.querySelector('.my-account-details-form')
 
 if (signUpButton) {
     signUpButton.addEventListener('click', () => {
@@ -30,7 +36,6 @@ if (signInButton) {
 const dropdownButton = document.querySelector('.dropdown-button');
 if (dropdownButton) {
     dropdownButton.addEventListener('click', () => {
-        console.log('clicker')
         document.querySelector(".dropdown-content ").classList.toggle("show");
     })
 
@@ -79,7 +84,6 @@ if (signUpForm) {
 const logoutButton = document.getElementById('logout');
 if (logoutButton) {
     logoutButton.addEventListener('click', () => {
-        console.log('logout button clicked')
         logout();
     })
 }
@@ -88,5 +92,35 @@ if (logoutButton) {
 if(arrowScrollButton && overviewContainer){
     arrowScrollButton.addEventListener('click', () => {
         overviewContainer.scrollIntoView({behavior: 'smooth'});
+    })
+}
+
+//Account settings page
+if(accountEdit && securityOptions){
+    accountEdit.addEventListener('click', () => {
+        securityContainer.classList.remove('js-show-widget')
+        editProfileContainer.classList.add('js-show-widget')
+    })
+}
+if(securityOptions && accountEdit){
+    securityOptions.addEventListener('click', () => {
+        editProfileContainer.classList.remove('js-show-widget')
+        securityContainer.classList.add('js-show-widget')
+    })
+}
+//Save details
+if(userDetailsForm){
+    userDetailsForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const fname = document.getElementById('fname').value
+        const lname = document.getElementById('lname').value
+        const email = document.getElementById('email').value
+        const contactNum = document.getElementById('contact-num').value
+        const address = document.getElementById('address').value
+        const city = document.getElementById('city').value
+        const state = document.getElementById('state').value
+        const postcode = document.getElementById('postcode').value
+        const country = document.getElementById('country').value
+        updateUserDetails(fname, lname, email, contactNum, address, city, state, postcode, country);
     })
 }

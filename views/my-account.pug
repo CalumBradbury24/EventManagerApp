@@ -10,21 +10,65 @@ html
     body
         .my-account-page
             if user 
-                .my-account-header 
-                    h1.header My Account
-                .options-container 
-                    ul.options-list
-                        a.option-container(href='/home')
-                            img.logo(src='../assets/home-logo.svg' alt="Logo")
-                            p.option Home
-                        span.option-container
-                            p.option Edit Profile 
-                        span.option-container
-                            p.option Password & Security #{option}
-                .edit-profile-container 
-                    h1 edit profile 
-                .password-and-security-container
-                    h1 password & security
+                .page-content
+                    .options-container 
+                        ul.options-list
+                            a.option-container(href='/home')
+                                img.logo(src='../assets/home-logo.svg' alt="Logo")
+                                p.option Home
+                            span.option-container#edit
+                                img.logo(src='../assets/edit.svg' alt="Logo")
+                                p.option Edit Profile 
+                            span.option-container#security
+                                img.logo(src='../assets/shield.svg' alt="Logo")
+                                p.option Security settings
+                            a.option-container(href='/manage-events')
+                                img.logo(src='../assets/shield.svg' alt="Logo")
+                                p.option Manage Events
+                    .edit-profile-container.js-show-widget 
+                        .edit-profile-content
+                            h2.edit-profile-title Edit Profile
+                            .form-container 
+                                form.my-account-details-form
+                                    figure.user-image-container 
+                                        img.user-image
+                                    span.user-row 
+                                        .user-details-container
+                                            label.input-label(for="fname") First Name
+                                            input.input-box(type='text' id='fname' name='fname' value=user.firstName required) 
+                                        .user-details-container    
+                                            label.input-label(for="lname") Last Name
+                                            input.input-box(type='text' id='lname' name='lname' value=user.lastName required)
+                                    span.user-row     
+                                        .user-details-container    
+                                            label.input-label(for="email") Email
+                                            input.input-box(type='text' id='email' name='email' value=user.email required)
+                                        .user-details-container    
+                                            label.input-label(for="contact-num") Contact Number
+                                            input.input-box(type='text' id='contact-num' name='contact-num' value=user.contactNumber)
+                                    span.user-row           
+                                        .user-details-container(style="width:100%")    
+                                                label.input-label(for="address") Address
+                                                input.input-box-long(type='text' id='address' name='address' value=user.address)
+                                    span.user-row     
+                                        .user-details-container    
+                                            label.input-label(for="city") City
+                                            input.input-box(type='text' id='city' name='city' value=user.city)
+                                        .user-details-container    
+                                            label.input-label(for="state") State
+                                            input.input-box(type='text' id='state' name='state' value=user.state)
+                                    span.user-row     
+                                        .user-details-container    
+                                            label.input-label(for="postcode") Post Code
+                                            input.input-box(type='text' id='postcode' name='postcode' value=user.postCode)
+                                        .user-details-container    
+                                            label.input-label(for="country") Country
+                                            input.input-box(type='text' id='country' name='country' value=user.country)
+                                    span.save-my-account-details-container 
+                                        input.save-button(type="submit" value="Save")            
+                    .security-container
+                        .security-content
+                            h1 Change password, set recovery questions etc
         include _footer
 
 script(type="text/javascript" src='/index.js')

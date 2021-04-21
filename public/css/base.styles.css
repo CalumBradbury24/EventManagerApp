@@ -5,6 +5,8 @@ body{font-family: 'Montserrat', sans-serif;margin: 2vh;}
 :root {--header-colour:	#1c1f2f; --title-colour:#212121; --subtext-colour: #757575; font-size: 18px;}
 p{margin:0}
 a{text-decoration: none;}
+a:visited{color:black;}
+
 /* Custom alerts */
 .alert {
     position: fixed;
@@ -68,12 +70,51 @@ a{text-decoration: none;}
 }
 
 /* My account settings page */
-.my-account-page{background: whitesmoke; height: 89vh}
-.my-account-page .my-account-header{background-color: gainsboro; width: 100%; height: 75px; display: flex; align-items: center;}
-.my-account-page .my-account-header .header{margin:0;padding-left: 25px; font-size: 1.35rem;}
+.my-account-page{background: whitesmoke; height: 89vh;;}
 
-.my-account-page .options-container{border-right: 2px solid gainsboro; width: 275px; height:100%;}
-.my-account-page .options-container .options-list{ display: flex;flex-direction: column; height: 125px; justify-content: space-between;padding-left: 25px;padding-top: 25px; margin-top: 0;}
-.my-account-page .options-container .options-list .option-container{}
-.my-account-page .options-container .options-list .option-container .logo{}
-.my-account-page .options-container .options-list .option-container .option{font-size: 1.1rem;}
+.my-account-page .page-content{display: flex;height: 100%; overflow: hidden;}
+.my-account-page .page-content .options-container{border-right: 2px solid gainsboro; min-width: 325px; height:100%; background: rgb(95,171,161);background: linear-gradient(308deg, rgba(95,171,161,1) 0%, rgba(32,212,77,1) 100%);}
+.my-account-page .page-content .options-container .options-list{ display: flex;flex-direction: column; height: fit-content; justify-content: space-between;padding-left: 25px;padding-top: 25px; margin-top: 0;}
+.my-account-page .page-content .options-container .options-list .option-container{display: flex;align-items: center;width:250px;padding:10px}
+.my-account-page .page-content .options-container .options-list .option-container:hover{cursor: pointer; border-bottom: 2px solid orange;}
+.my-account-page .page-content .options-container .options-list .option-container .logo{height: 25px; width:  25px;padding-right: 5px;}
+.my-account-page .page-content .options-container .options-list .option-container .option{font-size: 1.1rem;color: black;}
+
+.my-account-page .page-content .edit-profile-container{width:0%;position: relative;bottom: 0;left: 100%;right: 0;overflow: hidden;height: 100%;transition: .5s ease;}
+.my-account-page .page-content .edit-profile-container .edit-profile-content{height: 100%;overflow: hidden;}
+.my-account-page .page-content .edit-profile-container .edit-profile-content .edit-profile-title{color:rgb(29,183,95); padding-left: 25px; padding-top: 30px;margin-bottom:5px; font-size: 1.5rem}
+
+/*Account settings details form */
+.form-container{width: 100%; display: flex; justify-content: flex-start;}
+.form-container .my-account-details-form{width:725px; padding-left: 25px;}
+.form-container .my-account-details-form .user-image-container{}
+.form-container .my-account-details-form .user-image-container .user-image{}
+.form-container .my-account-details-form .user-row{width: 100%; display:flex;flex-wrap: wrap; justify-content: space-between;}
+.form-container .my-account-details-form .user-details-container{display: flex; flex-direction: column;}
+.form-container .my-account-details-form .user-details-container .input-label{text-align: left; color: var(--subtext-colour);font-size: 0.8rem;}
+.form-container .my-account-details-form .user-details-container .input-box{padding: 10px;margin: 0 0 25px;width: 325px;border-radius: 5px; border: none;border-bottom: 1.5px solid grey;font-size:1rem;}
+.form-container .my-account-details-form .user-details-container .input-box-long{padding: 10px;margin: 0 0 25px;width: 100%;border-radius: 5px; border: none;border-bottom: 1.5px solid grey;font-size:1rem;}
+.form-container .my-account-details-form .user-details-container .input-box:focus{border-image: linear-gradient(to right, #11998e, #38ef7d);border-image-slice: 1;outline: none;}
+.form-container .my-account-details-form .user-details-container .input-box-long:focus{border-image: linear-gradient(to right, #11998e, #38ef7d);border-image-slice: 1;outline: none;}
+.my-account-page .page-content .security-container{position: relative;width:0%;bottom: 0;left: 100%;right: 0;overflow: hidden;height: 100%;transition: .5s ease;}
+.my-account-page .page-content .password-and-security-container .security-content{}
+.save-my-account-details-container{display: flex;justify-content: flex-start;}
+.save-button{font-size: 16px;font-weight: 600;padding: 0.7em 1.7em;border-bottom: 4px solid #000000;padding-top: 15px;
+    color: snow;
+    background-color: darkgray;
+    box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+    -webkit-transition: all 0.7s ease;
+    transition: all 0.7s ease;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.save-button:hover {letter-spacing: 2px; -webkit-transition: all 0.7s ease;transition: all 0.7s ease 0s;background-color: white;
+    color: black;
+    border-top: 2px whitesmoke;
+    border-left: 2px whitesmoke;
+    border-right: 2px whitesmoke;
+}
+.js-show-widget{width: 100% !important;left: 0 !important;}

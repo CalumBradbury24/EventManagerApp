@@ -1,7 +1,7 @@
-const connection = require('../sql-config');
-const { catchAsyncErrors } = require('../utilities');
+const connection = require('../utils.js/sql-config');
+const { catchAsyncErrors } = require('../utils.js/utilities');
 const jwt = require('jsonwebtoken');
-const AppError = require('../Utils.js/app-error');
+const AppError = require('../utils.js/app-error');
 const { promisify } = require("util"); //Node built in function that contains the promisify method to make a method return a promise, thus can use async/await
 const bcrypt = require('bcryptjs');
 
@@ -99,7 +99,7 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
 //If user is logged in then the user object is created for the pug files, otherwise there will be no user for pug files
 const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
-    console.log('checking user is logged in...', req.cookies.jwt)
+    console.log('checking user is logged in...')
 
     //verify jwt
     if (req.cookies.jwt) {
@@ -119,15 +119,24 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         /*res.locals contains response local variables scoped to the request, they are available only to the view(s) 
         rendered during the request / response cycle (if any)*/
         res.locals.user = validatedCurrentUser;
+
         /*res.locals.user looks like ->
         {
-            userID: 1,
-            firstName: 'Calum',
-            lastName: 'Bradbury',
-            email: 'c@b.com',
-            password: 'admin123',
-            deleted: 0,
-            deletedAt: null
+        userID: 1,
+        userTypeID: 1,
+        firstName: 'Calum',
+        lastName: 'Bradbury',
+        email: 'cs.bradbury@outlook.com',
+        password: '$2a$12$LkSMsz96DkoVa2xU8UJP3uH6EM3O9eM9lhkkchXX6SyMFf54EgeCS',
+        created: '20/02/1995',
+        deleted: 0,
+        deletedAt: null,
+        contactNumber: '7383514483',
+        address: '58 Priory Walk',
+        city: 'LEICESTER',
+        state: 'Leicestershire',
+        country: 'LE3 3PP',
+        postCode: 'United Kingdom'
         } and is accessible in all pug files*/
 
         return next()
@@ -143,10 +152,45 @@ const validateUserOnLoginPromise = (decodedUserID) => {
         })
     })
 }
+//Middleware to validate current user and add him to the req object
+const protect = catchAsyncErrors(async (req, res, next) => {
+    // 1) Getg jwt token and check it exists
+    let token = req.cookies.jwt;
+
+    //If there is no token then the user hasn't logged in and received one
+    if (!token) {
+      return next(new AppError("You are not logged in.", 401)); //401 - unauthorized
+    }
+
+    //2) validate jwt token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //Promisify makes jwt.verify return a promise which can be awaited (rather than having to use a callback function as the third argument)
+
+    //3) Check if user still exists
+    //If user has been deleted but the jwt still exists, we don't want to log the user in!
+    //Or if the user has changed his password after the jwt has been issued, the old token should no longer be valid!
+    //Check user still exists
+    const validatedUser = await validateUserOnLoginPromise(decoded.id);
+    if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+
+    // //4) Check if user changed password after the jwt was issued
+    // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
+    //   //iat = issued at
+    //   return next(
+    //     new AppError("User recently changed password! Please log in again", 401)
+    //   );
+    // }
+
+    //GRANT ACCESS TO PROTECTED ROUTE
+    //If user has valid jwt token then go to next middleware 
+    req.user = validatedUser; //Store current user details in req.user
+    next();
+}, 'authController.protect');
+
 
 module.exports = {
     login,
     signUp,
     isLoggedIn,
-    logout
+    logout,
+    protect
 }
