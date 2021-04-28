@@ -8,7 +8,7 @@ const updateUserProfile = catchAsyncErrors(async(req, res, next) => {
         fname: req.body.fname || '',
         lname: req.body.lname || '',
         email: req.body.email || '',
-        contactNumber: +req.body.contactNumber || 0,
+        contactNumber: req.body.contactNumber || 0,
         address: req.body.address || '',
         city: req.body.city || '',
         state: req.body.state || '',

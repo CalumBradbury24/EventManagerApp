@@ -22,7 +22,7 @@ html
                             span.option-container#security
                                 img.logo(src='../assets/shield.svg' alt="Logo")
                                 p.option Security settings
-                            a.option-container(href='/manage-events')
+                            a.option-container#myeventsmanager
                                 img.logo(src='../assets/shield.svg' alt="Logo")
                                 p.option Manage Events
                     .edit-profile-container.js-show-widget 
@@ -45,7 +45,7 @@ html
                                             input.input-box(type='text' id='email' name='email' value=user.email required)
                                         .user-details-container    
                                             label.input-label(for="contact-num") Contact Number
-                                            input.input-box(type='text' id='contact-num' name='contact-num' value=user.contactNumber)
+                                            input.input-box(type='tel' id='contact-num'  pattern="[0-9]{11}" name='contact-num' value=user.contactNumber)
                                     span.user-row           
                                         .user-details-container(style="width:100%")    
                                                 label.input-label(for="address") Address
@@ -69,6 +69,9 @@ html
                     .security-container
                         .security-content
                             h1 Change password, set recovery questions etc
+                    .security-container#manageMyEvents
+                        .security-content
+                            h1 User can see a filterable list of their events here, click on them to open them up and delete them from here too
         include _footer
 
 script(type="text/javascript" src='/index.js')

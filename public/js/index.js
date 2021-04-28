@@ -18,7 +18,9 @@ const accountEdit = document.getElementById('edit');
 const editProfileContainer = document.querySelector('.edit-profile-container');
 const securityOptions = document.getElementById('security');
 const securityContainer = document.querySelector('.security-container');
-const userDetailsForm = document.querySelector('.my-account-details-form')
+const manageEvents = document.getElementById('myeventsmanager');
+const manageMyEventsContainer = document.getElementById('manageMyEvents');
+const userDetailsForm = document.querySelector('.my-account-details-form');
 
 if (signUpButton) {
     signUpButton.addEventListener('click', () => {
@@ -100,14 +102,24 @@ if(accountEdit && securityOptions){
     accountEdit.addEventListener('click', () => {
         securityContainer.classList.remove('js-show-widget')
         editProfileContainer.classList.add('js-show-widget')
+        manageMyEventsContainer.classList.remove('js-show-widget')
     })
 }
 if(securityOptions && accountEdit){
     securityOptions.addEventListener('click', () => {
         editProfileContainer.classList.remove('js-show-widget')
         securityContainer.classList.add('js-show-widget')
+        manageMyEventsContainer.classList.remove('js-show-widget')
     })
 }
+if(manageEvents){
+    manageEvents.addEventListener('click', () => {
+        editProfileContainer.classList.remove('js-show-widget')
+        securityContainer.classList.remove('js-show-widget')
+        manageMyEventsContainer.classList.add('js-show-widget')
+    })
+}
+
 //Save details
 if(userDetailsForm){
     userDetailsForm.addEventListener('submit', (event) => {

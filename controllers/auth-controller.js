@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const AppError = require('../utils.js/app-error');
 const { promisify } = require("util"); //Node built in function that contains the promisify method to make a method return a promise, thus can use async/await
 const bcrypt = require('bcryptjs');
-
+const validate = require('../utils.js/validator');
 //Authentication with jwt
 //1)User logs in with email/password with POST request
 //2)If user and password are valid, server sends back to client a newly created jwt
@@ -84,16 +84,22 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
     let { fname, lname, email, password, passwordConfirm } = req.body;
     if (!fname || !lname || !email || !password || !passwordConfirm) return next(new AppError('Missing required details', 401));
     if(password !== passwordConfirm) return next(new AppError('Passwords do not match', 401));
-    password = await bcrypt.hash(password, 12);
 
-    connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
-        password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
-        if (error) return next(new AppError(error, 400));
-        res.status(200).json({
-            status: 'success',
-            message: 'User created!'
-        })
-    })
+    if(!validate.validatePassword(password, passwordConfirm)) return next(new AppError('Password is not strong enough', 400))
+    if(!validate.validateEmail(email)) return next(new AppError('Email is not valid', 400))
+        password = await bcrypt.hash(password, 12);
+        //check email used to sign up does not already have an account ////////////////
+            connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
+                password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
+                if (error) return next(new AppError(error, 400));
+                res.status(200).json({
+                    status: 'success',
+                    message: 'User created!'
+                })
+            })
+    
+
+    
 }, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
