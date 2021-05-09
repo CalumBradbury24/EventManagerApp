@@ -124,15 +124,17 @@ if(manageEvents){
 if(userDetailsForm){
     userDetailsForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        const fname = document.getElementById('fname').value
-        const lname = document.getElementById('lname').value
-        const email = document.getElementById('email').value
-        const contactNum = document.getElementById('contact-num').value
-        const address = document.getElementById('address').value
-        const city = document.getElementById('city').value
-        const state = document.getElementById('state').value
-        const postcode = document.getElementById('postcode').value
-        const country = document.getElementById('country').value
-        updateUserDetails(fname, lname, email, contactNum, address, city, state, postcode, country);
+        const form = new FormData();
+        form.append('fname', document.getElementById('fname').value)
+        form.append('lname', document.getElementById('lname').value)
+        form.append('email', document.getElementById('email').value)
+        form.append('contact-num', document.getElementById('contact-num').value)
+        form.append('address', document.getElementById('address').value)
+        form.append('city', document.getElementById('city').value)
+        form.append('state', document.getElementById('state').value)
+        form.append('postcode', document.getElementById('postcode').value)
+        form.append('country', document.getElementById('country').value)
+        form.append('photo', document.getElementById('photo').files[0])
+        updateUserDetails(form);
     })
 }

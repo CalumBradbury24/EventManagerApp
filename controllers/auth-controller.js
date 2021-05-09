@@ -48,11 +48,11 @@ const createAndSendJWT = (user, statusCode, req, res) => {
 
 const login = catchAsyncErrors(async (req, res, next) => {
     let { email, password } = req.body;
-    email = email || '';
-    password = password || '';
+    email = '' + email || '';
+    password = '' + password || '';
     if (!email || !password) return next(new AppError('Please provide a username and password', 400))
 
-    const user = await loginPromise(email, password);
+    const user = await loginPromise(email);
 
     //if user logged in successfully, send jwt
     if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, req, res);
@@ -60,7 +60,7 @@ const login = catchAsyncErrors(async (req, res, next) => {
 
 }, 'login');
 
-const loginPromise = (email, password) => {
+const loginPromise = (email) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where email = ?`, [email], (error, rows) => {
             if (error) {
@@ -87,19 +87,24 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
 
     if(!validate.validatePassword(password, passwordConfirm)) return next(new AppError('Password is not strong enough', 400))
     if(!validate.validateEmail(email)) return next(new AppError('Email is not valid', 400))
-        password = await bcrypt.hash(password, 12);
-        //check email used to sign up does not already have an account ////////////////
-            connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
-                password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
-                if (error) return next(new AppError(error, 400));
-                res.status(200).json({
-                    status: 'success',
-                    message: 'User created!'
-                })
-            })
-    
+    fname = fname.trim(); //remove whitespace
+    lname = lname.trim();
 
-    
+    password = await bcrypt.hash(password, 12);
+    //check email used to sign up does not already have an account
+    connection.query(`select * from users where email = ?`, email, (err, rows) => {
+        if (err) return next(new AppError(err, 400));
+            if(rows && rows.length) return next(new AppError('There already exists a user under this email address', 400));
+                connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
+                    password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
+                    if (error) return next(new AppError(error, 400));
+                    res.status(200).json({
+                        status: 'success',
+                        message: 'User created!'
+                    })
+                })
+    })
+   
 }, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
@@ -142,7 +147,8 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         city: 'LEICESTER',
         state: 'Leicestershire',
         country: 'LE3 3PP',
-        postCode: 'United Kingdom'
+        postCode: 'United Kingdom',
+        userImage: default.jpeg
         } and is accessible in all pug files*/
 
         return next()

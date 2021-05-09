@@ -9,7 +9,10 @@ nav.header
         if user 
             .user-container
                 .dropdown
-                    img.dropdown-button(src='../assets/User.svg' alt="Logo")
+                    if user 
+                        img.dropdown-button(src=`/img/users/${user.userImage}`)
+                    else    
+                        img.dropdown-button(src='../assets/User.svg' alt="Logo")
                     .dropdown-content 
                         a.dropdown-link(href='/my-account') 
                             h3.link-text My Account

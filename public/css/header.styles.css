@@ -7,7 +7,7 @@
 .header .link:hover{color:cornflowerblue;}
 .header .signIn-container .sign-in-text{border: solid white 1px;border-radius: 40px; padding: 10 15px}
 .header .link-text{margin: 0;text-align: center;}
-.dropdown-button{color: #212121;cursor: pointer;height: 40px;}
+.dropdown-button{color: #212121;cursor: pointer;height: 40px; border-radius: 50%;}
 
 /* The container - needed to position the dropdown content */
 .dropdown {position: relative;display: inline-block;}

@@ -1,34 +1,24 @@
 import axios from 'axios';
 import { showAlert } from './alerts'
 
-export const updateUserDetails = async (fn, ln, em, cn, addr, cty, st, pc, cntry) => {
+export const updateUserDetails = async (form) => {
     try{
         const res = await axios({
-            method: "POST",
+            method: "PATCH",
 			url: "http://localhost:5000/api/v1/users/update-profile",
-			data: {
-                fname: fn,
-                lname: ln,
-				email: em,
-                contactNumber: cn,
-                address: addr,
-                city: cty,
-                state: st,
-                postcode: pc,
-                country: cntry,
-			},
+			data: form
         })
 
         if(res.data.status === 'success') {
             showAlert('success', res.data.message)
             window.setTimeout(() => {
-				//After 0.5 seconds load landing page
+				//After 0.5 seconds re-load page (not really 0.5 seconds tho depending on the callback queue)
                 location.reload()
 			}, 500);
         }
 
     } catch (error) {
         console.log(error)
-        showAlert('error', 'Error updating details! Please try again.');
+        showAlert('error', error.response.data.message);
     }
 }

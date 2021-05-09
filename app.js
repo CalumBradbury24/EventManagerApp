@@ -7,8 +7,6 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
-
-//BEFORE BUILDING FOR PRODUCTION, NEED TO INTALL COMPRESSION
 const compression = require('compression');
 
 const globalErrorHandler = require("./controllers/error-controller");
@@ -28,7 +26,7 @@ app.set("views", path.join(__dirname, "views"))
 app.use(express.static(path.join(__dirname, 'dist')));//where bundled files are served from. in pug this is referenced as /index.js as the /dist part is already referenced here
 app.use(express.static(path.join(__dirname, "public"))); //where front end static data is served from
 
-//Middlewares
+//-----MIDDLEWARES-----
 
 // Set some security HTTP headers
 app.use(helmet());
@@ -36,26 +34,26 @@ app.use(helmet());
 //Rate-limiting middleware to count number of requests from an IP address and block these requests when too many have been received
 //Helps protect against DOS and brute force attacks
 if (process.env.NODE_ENV !== "development") {
-  const limiter = rateLimit({
-    max: 100, //Max number of requests allowed from an IP address in a given time window
-    windowMs: 60 * 60 * 1000, //1 hour
-    message: "Too many requests from this IP, please try again in an hour!",
-  });
-  app.use('/', limiter);
+	const limiter = rateLimit({
+	max: 100, //Max number of requests allowed from an IP address in a given time window
+	windowMs: 60 * 60 * 1000, //1 hour
+	message: "Too many requests from this IP, please try again in an hour!",
+	});
+	app.use('/', limiter);
 }
 //Data sanitisation against cross-site scripting attacks(XSS)
 app.use(xss());
 
 //Prevent parameter pollution - clears up query string with duplicate properties, for example: {{URL}}api/v1/tours?sort=price&sort=duration (will select the last sort and ignore the first one)
 app.use(
-  hpp({
-    whitelist: [
-      //Array of properties that are allowed to be duplicated in the query string
-      //     "duration",
-      //    "ratingsQuantity",
-      //    "ratingsAverage",
-    ],
-  })
+	hpp({
+		whitelist: [
+			//Array of properties that are allowed to be duplicated in the query string
+			//     "duration",
+			//    "ratingsQuantity",
+			//    "ratingsAverage",
+		],
+	})
 );
 
 //Middleware to compress all text that is sent to clients on api responses
@@ -63,7 +61,7 @@ app.use(compression());
 
 //app.use(cors()); //Allow cross origin resource sharing
 //app.options('*', cors()); //Do this on all routes *
-app.use(express.urlencoded({ extended: true, limit: '10kb' }))
+app.use(express.urlencoded({ extended: true, limit: '10kb' })) //Parse data from url encoded forms (login etc)
 app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser()); //Parses data from cookies
 
@@ -80,9 +78,17 @@ app.use((req, res, next) => { res.setHeader('Content-Security-Policy', "script-s
 app.use('/', viewRouter);
 app.use('/api/v1/users', userRouter);
 
+// app.all("*", (req, res, next) => {
+//   //Express assumes next called with an argument is an error and goes to the error handling middleware*/
+//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+// }); //* means all routes
+
 app.all("*", (req, res, next) => {
-  //Express assumes next called with an argument is an error and goes to the error handling middleware*/
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+	res.status(200).render('page-not-found', {
+		title: 'Oops!',
+		url: req.originalUrl
+	})
+	next();
 }); //* means all routes
 
 app.use(globalErrorHandler);

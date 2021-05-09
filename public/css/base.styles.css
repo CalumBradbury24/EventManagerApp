@@ -8,27 +8,7 @@ a{text-decoration: none;}
 a:visited{color:black;}
 
 /* Custom alerts */
-.alert {
-    position: fixed;
-    width: 50vw;
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    z-index: 9999;
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 400;
-    text-align: center;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
-    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
-}
+.alert{position: fixed;width: 50vw;height: 10vh;display: flex;align-items: center;justify-content: center;top: 0;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);z-index: 9999;color: #fff;font-size: 1.25rem;font-weight: 400;text-align: center;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;-webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);}
 .alert--success {background-color: #20bf6b;}
 .alert--error {background-color: #eb4d4b;}
 
@@ -87,8 +67,9 @@ a:visited{color:black;}
 /*Account settings details form */
 .form-container{width: 100%; display: flex; justify-content: flex-start;}
 .form-container .my-account-details-form{width:725px; padding-left: 25px;}
-.form-container .my-account-details-form .user-image-container{}
-.form-container .my-account-details-form .user-image-container .user-image{}
+.form-container .my-account-details-form .user-image-container{display: flex; justify-content: center;margin: 20px 0;}
+.form-container .my-account-details-form .user-image-container .user-image{border-radius: 50%;height: 11.5rem;}
+.form-container .my-account-details-form .user-image-text{margin-bottom: 30px;border-bottom: 2px solid #38ef7d;width:25%; color: #11998e;}
 .form-container .my-account-details-form .user-row{width: 100%; display:flex;flex-wrap: wrap; justify-content: space-between;}
 .form-container .my-account-details-form .user-details-container{display: flex; flex-direction: column;}
 .form-container .my-account-details-form .user-details-container .input-label{text-align: left; color: var(--subtext-colour);font-size: 0.8rem;}
@@ -111,10 +92,5 @@ a:visited{color:black;}
     cursor: pointer;
     border-radius: 10px;
 }
-.save-button:hover {letter-spacing: 2px; -webkit-transition: all 0.7s ease;transition: all 0.7s ease 0s;background-color: white;
-    color: black;
-    border-top: 2px whitesmoke;
-    border-left: 2px whitesmoke;
-    border-right: 2px whitesmoke;
-}
+.save-button:hover {letter-spacing: 2px; -webkit-transition: all 0.7s ease;transition: all 0.7s ease 0s;background-color: white;color: black;border-top: 2px whitesmoke;border-left: 2px whitesmoke;border-right: 2px whitesmoke;}
 .js-show-widget{width: 100% !important;left: 0 !important;}

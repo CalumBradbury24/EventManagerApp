@@ -25,9 +25,9 @@ const getMyAccount = (req, res) => {
     })
 }
 
-const getEditProfile = (req, res) => {
-    res.status(200).render('edit-profile', {
-        title: 'edit-profile'
+const getFAQs = (req, res) => {
+    res.status(200).render('faqs', {
+        title: 'FAQs'
     })
 }
 
@@ -36,5 +36,5 @@ module.exports = {
     getHomePage,
     getSplashPage,
     getMyAccount,
-    getEditProfile
+    getFAQs
 }

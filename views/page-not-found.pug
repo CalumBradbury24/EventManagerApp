@@ -3,22 +3,11 @@ html
         title=`Eventify | ${title}`
         link(rel='stylesheet', href='css/base.styles.css', type='text/css')
         link(rel='stylesheet', href='css/footer.styles.css', type='text/css')
-        link(rel='stylesheet', href='css/header.styles.css', type='text/css')
-        link(rel='stylesheet', href='css/login.styles.css', type='text/css')
         link(rel='shortcut icon' type='image/png' href='./assets/Eventify.png')
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
     body
-        include mixins/utils
-        include _header
-
-        block signInForm
-        block homepage
-        block splashpage
-        block myAccount
-        include _footer
-    
+        .page-not-found 
+            h1= `${url} was not found on this server!`
 
 script(type="text/javascript" src='/index.js')
-
-

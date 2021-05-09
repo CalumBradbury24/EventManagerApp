@@ -4,7 +4,6 @@ html
         link(rel='stylesheet', href='css/base.styles.css', type='text/css')
         link(rel='stylesheet', href='css/footer.styles.css', type='text/css')
         link(rel='shortcut icon' type='image/png' href='./assets/Eventify.png')
-        link(href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet")
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
     body
@@ -30,8 +29,10 @@ html
                             h2.edit-profile-title Edit Profile
                             .form-container 
                                 form.my-account-details-form
-                                    figure.user-image-container 
-                                        img.user-image
+                                    .user-image-container 
+                                        img.user-image(src=`/img/users/${user.userImage}` alt="User photo")
+                                    input.user-image-text(type='file', accept='image/*', id='photo' name='photo')
+                                    label(for='photo') Choose new photo
                                     span.user-row 
                                         .user-details-container
                                             label.input-label(for="fname") First Name

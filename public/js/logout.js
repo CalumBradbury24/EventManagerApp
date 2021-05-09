@@ -7,7 +7,7 @@ export const logout = async () => {
 			method: 'GET',
 			url: '/api/v1/users/logout'
 		});
-		if ((res.data.status = 'success')) {
+		if ((res.data.status === 'success')) {
 			showAlert('success', 'Logged out sucessfully!');
 			window.setTimeout(() => {
 				//After 1 second load landing page
