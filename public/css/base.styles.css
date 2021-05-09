@@ -50,7 +50,7 @@ a:visited{color:black;}
 }
 
 /* My account settings page */
-.my-account-page{background: whitesmoke; height: 89vh;;}
+.my-account-page{background: whitesmoke; height: 89vh;}
 
 .my-account-page .page-content{display: flex;height: 100%; overflow: hidden;}
 .my-account-page .page-content .options-container{border-right: 2px solid gainsboro; min-width: 325px; height:100%; background: rgb(95,171,161);background: linear-gradient(308deg, rgba(95,171,161,1) 0%, rgba(32,212,77,1) 100%);}
@@ -94,3 +94,9 @@ a:visited{color:black;}
 }
 .save-button:hover {letter-spacing: 2px; -webkit-transition: all 0.7s ease;transition: all 0.7s ease 0s;background-color: white;color: black;border-top: 2px whitesmoke;border-left: 2px whitesmoke;border-right: 2px whitesmoke;}
 .js-show-widget{width: 100% !important;left: 0 !important;}
+
+/*Please log in page*/
+.please-log-in-page{height: 80vh;}
+.please-log-in-page .please-log-in-container{display: flex;align-items: center;border: 1px solid red;margin-top: 2vh;padding: 1vh;border-radius: 5px;}
+.please-log-in-page .please-log-in-container .warning{height: 25px;}
+.please-log-in-page .please-log-in-container .text{}

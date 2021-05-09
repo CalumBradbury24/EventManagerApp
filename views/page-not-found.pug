@@ -3,11 +3,13 @@ html
         title=`Eventify | ${title}`
         link(rel='stylesheet', href='css/base.styles.css', type='text/css')
         link(rel='stylesheet', href='css/footer.styles.css', type='text/css')
+        link(rel='stylesheet', href='css/page-not-found.styles.css', type='text/css')
         link(rel='shortcut icon' type='image/png' href='./assets/Eventify.png')
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
     body
         .page-not-found 
-            h1= `${url} was not found on this server!`
-
-script(type="text/javascript" src='/index.js')
+            h1.url-message= `We are very sorry but ${url} was not found on this server :(`
+            img.404img(src='assets/404-cat.jpg')
+            h2.home-message= 'Can we help you find your way back home?'
+            a.home-button(href='/') GO HOME

@@ -84,7 +84,7 @@ app.use('/api/v1/users', userRouter);
 // }); //* means all routes
 
 app.all("*", (req, res, next) => {
-	res.status(200).render('page-not-found', {
+	res.status(404).render('page-not-found', {
 		title: 'Oops!',
 		url: req.originalUrl
 	})
