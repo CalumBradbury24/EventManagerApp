@@ -16,7 +16,7 @@ A website where someone can create an event(s) and others can sign up for it.
 - [ ] Add nice'please log in' screen when user accesses page whilst not logged in
 - [ ] dont let user access login function if they are already logged in
 - [ ] set up front-end are you sure? modal for submissions
-- [ ] set up validator.js
+- [x] set up validator.js
 
 Features
 - [ ] Create event (public or private)
