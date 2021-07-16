@@ -38,4 +38,4 @@ Nice to haves
 - [ ] Users can share events to Facebook/Twitter via link etc
 
 
-//Base is always rendered, which renders landing page or homepage('/') depending on if user logged in and '/home' route accessed
+//Base is always rendered except for specific pages that dont use the header and footer (faqs etc)

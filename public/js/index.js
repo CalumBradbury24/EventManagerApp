@@ -22,6 +22,7 @@ const manageEvents = document.getElementById('myeventsmanager');
 const manageMyEventsContainer = document.getElementById('manageMyEvents');
 const userDetailsForm = document.querySelector('.my-account-details-form');
 
+//Signup/in form animations
 if (signUpButton) {
     signUpButton.addEventListener('click', () => {
         signupcontainer.classList.add("right-panel-active");

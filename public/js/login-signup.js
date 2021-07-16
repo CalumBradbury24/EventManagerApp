@@ -1,7 +1,10 @@
 import axios from 'axios';
-import { showAlert } from './alerts'
+import { showAlert, spinner } from './Utils'
+
+const loginContainer = document.querySelector('.login-container-body');
 
 export const login = async (email, password) => {
+	spinner(loginContainer);
 	try {
 		const result = await axios({
 			method: "POST",
@@ -13,7 +16,6 @@ export const login = async (email, password) => {
 		});
 
 		if (result.data.status === 'success') {
-			
 			showAlert('success', 'Logged in sucessfully!')
 
 			//if the response status from the http request is a success
@@ -55,7 +57,7 @@ export const signUp = async (fname, lname, email, password, passwordConfirm) => 
 		}
 	} catch (error) {
 		console.log('Sign up failed', error);
-		showAlert('error',  error.response.data.message); //Message property of response
+		showAlert('error',  'User could not be created at this time'); //Message property of response
 	}
 }
 

@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { showAlert } from './alerts';
+import { showAlert, spinner } from './Utils';
+
 
 export const logout = async () => {
+	spinner(document.body) //TODO: Change to actual page element?
 	try {
 		const res = await axios({
 			method: 'GET',

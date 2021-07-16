@@ -19,7 +19,7 @@ const getSplashPage = (req, res) => {
 }
 
 const getMyAccount = (req, res) => {
-    res.locals.user.password = ''; //Don't send user password to this page
+    if(res.locals.user) res.locals.user.password = ''; //Don't send user password to this page
     res.status(200).render('my-account', {
         title: 'My Account',
     })
