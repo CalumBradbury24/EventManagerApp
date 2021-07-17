@@ -10,9 +10,22 @@ export const showAlert = (type, message) => {
     window.setTimeout(hideAlert, 5000); //Hide alert after 5 seconds
 }
 
-// export const modal = (element) => {
-    
-// }
+//Modal provides generic modal with generic buttons but can accept a custom element that will be used instead
+export const openModal = (message, cancelButtonText = 'No', okButtonText = 'Yes', customElement = undefined) => {
+    console.log('opening decision modal');
+
+    const modalElement = customElement || `<div class = "modal">${message}</div>`;
+
+    const modal = `<div class = "modal">
+                        ${modalElement}
+                    </div>`
+
+    const modalContainer = `<div class = "modal-container">
+                                ${modal}
+                            </div>`
+
+    document.querySelector('body').insertAdjacentHTML('beforeend', modalContainer) //insert as last child of body
+}
 
 export const spinner = (element) => {
     console.log('adding spinner')

@@ -1,8 +1,8 @@
 //All js files that are bundled together by parcel are imported here
 import 'regenerator-runtime/runtime'
-import { logout } from './logout';
-import { login, signUp } from './login-signup';
+import { login, signUp, logout } from './auth';
 import { updateUserDetails } from './save-account-details';
+import { openModal } from './Utils';
 import '@babel/polyfill'; //For older browser compatibility
 console.log('hello from parcel')
 
@@ -124,6 +124,9 @@ if(manageEvents){
 //Save details
 if(userDetailsForm){
     userDetailsForm.addEventListener('submit', (event) => {
+        openModal('Are you sure you want to update your details?');
+
+
         event.preventDefault();
         const form = new FormData();
         form.append('fname', document.getElementById('fname').value)

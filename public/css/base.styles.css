@@ -12,6 +12,9 @@ a:visited{color:black;}
 .alert--success {background-color: #20bf6b;}
 .alert--error {background-color: #eb4d4b;}
 
+/* Modal */
+.modal-container{position: absolute; inset: 0;background:rgba(34,34,34,.89); -webkit-animation-name: modalOpen;animation-name: modalOpen;-webkit-animation-duration: .75s;animation-duration: .75s;}
+
 /* Spinner */
 .spinner {display: inline-block;position: relative;width: 80px;height: 80px;}
 .spinner .spinner-section {animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;transform-origin: 40px 40px;}

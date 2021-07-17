@@ -104,7 +104,6 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
                     })
                 })
     })
-   
 }, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
