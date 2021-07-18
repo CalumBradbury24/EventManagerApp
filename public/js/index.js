@@ -2,7 +2,7 @@
 import 'regenerator-runtime/runtime'
 import { login, signUp, logout } from './auth';
 import { updateUserDetails } from './save-account-details';
-import { openModal } from './Utils';
+import { openModal } from './front-end-utilities';
 import '@babel/polyfill'; //For older browser compatibility
 console.log('hello from parcel')
 
@@ -124,21 +124,26 @@ if(manageEvents){
 //Save details
 if(userDetailsForm){
     userDetailsForm.addEventListener('submit', (event) => {
-        openModal('Are you sure you want to update your details?');
-
-
         event.preventDefault();
-        const form = new FormData();
-        form.append('fname', document.getElementById('fname').value)
-        form.append('lname', document.getElementById('lname').value)
-        form.append('email', document.getElementById('email').value)
-        form.append('contact-num', document.getElementById('contact-num').value)
-        form.append('address', document.getElementById('address').value)
-        form.append('city', document.getElementById('city').value)
-        form.append('state', document.getElementById('state').value)
-        form.append('postcode', document.getElementById('postcode').value)
-        form.append('country', document.getElementById('country').value)
-        form.append('photo', document.getElementById('photo').files[0])
-        updateUserDetails(form);
+        openModal('Are you sure you want to update your details?');
+        const cancel = document.getElementById('cancel');
+        const accept = document.getElementById('accept');
+
+        if(cancel) cancel.addEventListener('click', () => document.querySelector('.modal-container').remove())
+        
+        if(accept) accept.addEventListener('click', () => {
+            const form = new FormData();
+            form.append('fname', document.getElementById('fname').value)
+            form.append('lname', document.getElementById('lname').value)
+            form.append('email', document.getElementById('email').value)
+            form.append('contactNumber', document.getElementById('contact-num').value)
+            form.append('address', document.getElementById('address').value)
+            form.append('city', document.getElementById('city').value)
+            form.append('state', document.getElementById('state').value)
+            form.append('postcode', document.getElementById('postcode').value)
+            form.append('country', document.getElementById('country').value)
+            form.append('photo', document.getElementById('photo').files[0])
+            updateUserDetails(form);
+        })
     })
 }

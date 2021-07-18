@@ -18,6 +18,11 @@ A website where someone can create an event(s) and others can sign up for it.
 - [ ] set up front-end are you sure? modal for submissions
 - [x] set up validator.js
 
+//TODO short term
+- [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes))
+- [ ] finish modal
+- [ ] build FAQs page
+
 Features
 - [ ] Create event (public or private)
 - [ ] Public - everyone signed in can see and sign up

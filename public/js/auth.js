@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showAlert, spinner } from './Utils'
+import { showAlert, spinner } from './front-end-utilities'
 
 const loginContainer = document.querySelector('.login-container-body');
 

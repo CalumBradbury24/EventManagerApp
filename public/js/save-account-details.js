@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showAlert } from './Utils';
+import { showAlert } from './front-end-utilities';
 
 export const updateUserDetails = async (form) => {
     try{

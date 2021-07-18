@@ -6,6 +6,7 @@ body{font-family: 'Montserrat', sans-serif;margin: 2vh;}
 p{margin:0}
 a{text-decoration: none;}
 a:visited{color:black;}
+i{font-style: normal;}
 
 /* Custom alerts */
 .alert{position: fixed;width: 50vw;height: 10vh;display: flex;align-items: center;justify-content: center;top: 0;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);z-index: 9999;color: #fff;font-size: 1.25rem;font-weight: 400;text-align: center;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;-webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);}
@@ -13,7 +14,19 @@ a:visited{color:black;}
 .alert--error {background-color: #eb4d4b;}
 
 /* Modal */
-.modal-container{position: absolute; inset: 0;background:rgba(34,34,34,.89); -webkit-animation-name: modalOpen;animation-name: modalOpen;-webkit-animation-duration: .75s;animation-duration: .75s;}
+.modal-container{position: absolute; inset: 0;background:rgba(34,34,34,.89); display: flex; justify-content: center;align-items: center;}
+.modal-container .modal{-webkit-animation-name: modalOpen;animation-name: modalOpen;-webkit-animation-duration: .75s;animation-duration: .75s;background-color: whitesmoke;height: fit-content;width: fit-content;padding: 10px;border-radius: 15px;}
+@keyframes slidein {
+    from {transform: translateX(0%);}
+    to {transform: translateX(100%);}
+}
+
+/* Custom button */
+.button-container{display: flex; justify-content: space-evenly;}
+.button{border: none;display: flex; align-items: center; padding: 0;cursor: pointer; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;transition: all 0.3s; border-radius: 10px;}
+.button .button-text{padding: 10px;font-weight: 700;font-size: 0.8rem;}
+.button .button-icon-container{height: 100%; display: flex;align-items: center;font-size: 1rem;padding:0 10px;border-top-left-radius:10px;border-bottom-left-radius: 10px;}
+.button:hover {filter: brightness(85%);}
 
 /* Spinner */
 .spinner {display: inline-block;position: relative;width: 80px;height: 80px;}
@@ -93,7 +106,7 @@ a:visited{color:black;}
 .my-account-page .page-content .options-container .options-list .option-container .option{font-size: 1.1rem;color: black;}
 
 .my-account-page .page-content .edit-profile-container{width:0%;position: relative;bottom: 0;left: 100%;right: 0;overflow: hidden;height: 100%;transition: .5s ease;}
-.my-account-page .page-content .edit-profile-container .edit-profile-content{height: 100%;overflow: hidden;}
+.my-account-page .page-content .edit-profile-container .edit-profile-content{height: 100%;overflow: auto;}
 .my-account-page .page-content .edit-profile-container .edit-profile-content .edit-profile-title{color:rgb(29,183,95); padding-left: 25px; padding-top: 30px;margin-bottom:5px; font-size: 1.5rem}
 
 /*Account settings details form */
