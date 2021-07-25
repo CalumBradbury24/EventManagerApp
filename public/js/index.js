@@ -2,10 +2,11 @@
 import 'regenerator-runtime/runtime'
 import { login, signUp, logout } from './auth';
 import { updateUserDetails } from './save-account-details';
-import { openModal } from './front-end-utilities';
+import { openModal, customButton } from './front-end-utilities';
+import { Modal } from './views/modal';
 import '@babel/polyfill'; //For older browser compatibility
 console.log('hello from parcel')
-
+console.trace()
 // DOM elements
 const loginForm = document.querySelector(".loginForm");
 const signUpForm = document.querySelector('.signUpForm');
@@ -20,7 +21,6 @@ const securityOptions = document.getElementById('security');
 const securityContainer = document.querySelector('.security-container');
 const manageEvents = document.getElementById('myeventsmanager');
 const manageMyEventsContainer = document.getElementById('manageMyEvents');
-const userDetailsForm = document.querySelector('.my-account-details-form');
 
 //Signup/in form animations
 if (signUpButton) {
@@ -122,14 +122,21 @@ if(manageEvents){
 }
 
 //Save details
+const userDetailsForm = document.querySelector('.my-account-details-form');
 if(userDetailsForm){
+    const buttonMarkup = `<div style="display:flex"> 
+                                ${customButton('#23e8fa', '#6ef3ff', '#CF0E0E', '&#x2716', 'Save Details', 'save-account-details')}
+                            </div>`
+    userDetailsForm.insertAdjacentHTML('beforeend', buttonMarkup)
+
     userDetailsForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        openModal('Are you sure you want to update your details?');
+       // openModal('Are you sure you want to update your details?');
+        const modal = new Modal('Are you sure you want to update your details?')
         const cancel = document.getElementById('cancel');
         const accept = document.getElementById('accept');
 
-        if(cancel) cancel.addEventListener('click', () => document.querySelector('.modal-container').remove())
+        if(cancel) cancel.addEventListener('click', () => modal.closeModal())
         
         if(accept) accept.addEventListener('click', () => {
             const form = new FormData();

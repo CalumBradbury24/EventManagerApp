@@ -1,5 +1,3 @@
-const connection = require('../utils.js/sql-config');
-
 const getLoginForm = (req, res) => {
     res.status(200).render('login-signup',{
         title: 'Log In or Sign Up'

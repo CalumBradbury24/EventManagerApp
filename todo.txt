@@ -12,17 +12,19 @@ A website where someone can create an event(s) and others can sign up for it.
 - [ ] Featured events - a page of a few events that are featured (paid to be there?)
 - [ ] How it works page - explanation of what the site is and what can be done on there etc
 - [ ] Reset password functionality
-- [ ] bycrypt passwords
+- [x] bycrypt passwords
 - [ ] Add nice'please log in' screen when user accesses page whilst not logged in
 - [ ] dont let user access login function if they are already logged in
 - [ ] set up front-end are you sure? modal for submissions
 - [x] set up validator.js
 
 //TODO short term
-- [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes))
+- [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes)) - pending redesign
 - [ ] finish modal
 - [ ] build FAQs page
-
+- [ ] Sort proper colour scheme out and redesign Splashscreen
+- [ ] design home page (logged in)
+ 
 Features
 - [ ] Create event (public or private)
 - [ ] Public - everyone signed in can see and sign up
@@ -41,6 +43,5 @@ Extra To dos
 Nice to haves
 - [ ] filter events by distance etc and have google maps of locations
 - [ ] Users can share events to Facebook/Twitter via link etc
-
 
 //Base is always rendered except for specific pages that dont use the header and footer (faqs etc)

@@ -15,14 +15,16 @@ i{font-style: normal;}
 
 /* Modal */
 .modal-container{position: absolute; inset: 0;background:rgba(34,34,34,.89); display: flex; justify-content: center;align-items: center;}
-.modal-container .modal{-webkit-animation-name: modalOpen;animation-name: modalOpen;-webkit-animation-duration: .75s;animation-duration: .75s;background-color: whitesmoke;height: fit-content;width: fit-content;padding: 10px;border-radius: 15px;}
+.modal-container .modal{-webkit-animation-name: modalOpen;animation-name: modalOpen;-webkit-animation-duration: .75s;animation-duration: .75s;background-color: whitesmoke;height: fit-content;min-height: 15vh;width: fit-content;padding: 10px;border-radius: 15px;display: flex;
+    flex-direction: column;justify-content: center;}
+.modal-container .modal .buttons-container{display: flex; justify-content: space-evenly;}
+.modal-container .modal .modal-message{margin:20px; padding-bottom: 20px;}
 @keyframes slidein {
     from {transform: translateX(0%);}
     to {transform: translateX(100%);}
 }
 
 /* Custom button */
-.button-container{display: flex; justify-content: space-evenly;}
 .button{border: none;display: flex; align-items: center; padding: 0;cursor: pointer; -webkit-transition: all 0.3s;-moz-transition: all 0.3s;transition: all 0.3s; border-radius: 10px;}
 .button .button-text{padding: 10px;font-weight: 700;font-size: 0.8rem;}
 .button .button-icon-container{height: 100%; display: flex;align-items: center;font-size: 1rem;padding:0 10px;border-top-left-radius:10px;border-bottom-left-radius: 10px;}
@@ -125,19 +127,7 @@ i{font-style: normal;}
 .my-account-page .page-content .security-container{position: relative;width:0%;bottom: 0;left: 100%;right: 0;overflow: hidden;height: 100%;transition: .5s ease;}
 .my-account-page .page-content .password-and-security-container .security-content{}
 .save-my-account-details-container{display: flex;justify-content: flex-start;}
-.save-button{font-size: 16px;font-weight: 600;padding: 0.7em 1.7em;border-bottom: 4px solid #000000;padding-top: 15px;
-    color: snow;
-    background-color: darkgray;
-    box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
-    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
-    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-    -webkit-transition: all 0.7s ease;
-    transition: all 0.7s ease;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    border-radius: 10px;
-}
-.save-button:hover {letter-spacing: 2px; -webkit-transition: all 0.7s ease;transition: all 0.7s ease 0s;background-color: white;color: black;border-top: 2px whitesmoke;border-left: 2px whitesmoke;border-right: 2px whitesmoke;}
+
 .js-show-widget{width: 100% !important;left: 0 !important;}
 
 /*Please log in page*/
