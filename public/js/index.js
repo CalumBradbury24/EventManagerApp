@@ -124,9 +124,9 @@ if(manageEvents){
 //Save details
 const userDetailsForm = document.querySelector('.my-account-details-form');
 if(userDetailsForm){
-    const buttonMarkup = `<div style="display:flex"> 
-                                ${customButton('#23e8fa', '#6ef3ff', '#CF0E0E', '&#x2716', 'Save Details', 'save-account-details')}
-                            </div>`
+    const buttonMarkup =`<div style="display:flex"> 
+                            ${customButton('#23e8fa', '#6ef3ff', '#CF0E0E', '&#x2716', 'Save Details', 'save-account-details')}
+                        </div>`
     userDetailsForm.insertAdjacentHTML('beforeend', buttonMarkup)
 
     userDetailsForm.addEventListener('submit', (event) => {
