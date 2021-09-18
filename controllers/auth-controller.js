@@ -97,7 +97,10 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
             if(rows && rows.length) return next(new AppError('There already exists a user under this email address', 400));
                 connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
                     password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
-                    if (error) return next(new AppError(error, 400));
+                    if (error){
+                        console.log(error);
+                        return next(new AppError('Error creating new user :(', 400));
+                    }
                     res.status(200).json({
                         status: 'success',
                         message: 'User created!'

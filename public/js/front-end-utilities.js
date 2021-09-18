@@ -1,3 +1,4 @@
+
 export const hideAlert = () => {
     const alert = document.querySelector('.alert');
     if(alert) alert.parentElement.removeChild(alert); //remove the alert element from its parent element
@@ -35,3 +36,12 @@ export const spinner = (element) => {
     element.innerHTML = '';
     element.insertAdjacentHTML('afterbegin', markup);
 }
+
+export const timeout = () => {
+    return new Promise(function (_, reject) {
+        setTimeout(function () {
+            reject(new Error(`Request took too long! Timeout after ${TIMEOUT_SECONDS} second`));
+        }, TIMEOUT_SECONDS * 1000);
+    });
+};
+

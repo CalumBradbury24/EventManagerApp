@@ -1,38 +1,36 @@
 extends base
 
-block splashpage 
+block splashpage
     .splash-screen
         .landing-container
-            .content-container
+            .title-container
                 h1.title Your Next Social Event Awaits...
-                p.subtitle From concerts to nature tours and social meetups..there is something for everyone!
-                div#arrow-wrapper
-                    .arrow-border   
-                        .arrow.down 
-                        .pulse
-        .overview-container
-            .overview-wrapper
-                .overview
-                    img.overview-image(src='../assets/create.jpg' alt="Logo")
-                    .overview-description-container
-                        h1.title Create or Find Your Next Event
-                        ul.details 
-                            li.description Search for events near you!
-                            li.description Can't find something you like? Create your own event!
-                            li.description With our event template builder you can quickly and easily create your own events!
-                .overview
-                    img.overview-image(src='../assets/planner.jpg' alt="Logo")
-                    .overview-description-container
-                        h1.title Add Events To Your Planner
-                        ul.details 
-                            li.description Add events you like the look of to your personal planner!
-                            li.description Keep track of all of your upcoming events!
-                .overview
-                    img.overview-image(src='../assets/share.jpg' alt="Logo")
-                    .overview-description-container
-                        h1.title Share Your Events
-                        ul.details 
-                            li.description Share events you think your friends might like with them!
-                            li.description Send out invitations to your own events!
-
+                    p.subtitle With plenty of free and paid events all over the world, there is something for everyone!
+            .landing-image-container 
+                .landing-image-div
+                    img.landing-image(src='../assets/splashscreen.jpg' alt="splashscreen-image")
+        .infos-container
+            .info-container 
+                h1.advert-text Educational Classes
+                i.icon &#10003
+            .info-container 
+                h1.advert-text Concerts
+                i.icon &#10003
+            .info-container 
+                h1.advert-text Nature Tours
+                i.icon &#10003
+            .info-container 
+                h1.advert-text Social Meetups
+                i.icon &#10003
+            .info-container 
+                h1.advert-text And much more!!
+        .overview-container 
+            .overview-title Create or Find Your Next Event
+            .overview-content
+        .overview-container 
+            .overview-content
+            .overview-title Add Events To Your Planner
+        .overview-container 
+            .overview-title Share Your Events
+            .overview-content
 

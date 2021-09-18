@@ -21,10 +21,11 @@ A website where someone can create an event(s) and others can sign up for it.
 //TODO short term
 - [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes)) - pending redesign
 - [x] finish modal
+- [ ] Refactor front-end
 - [ ] build FAQs page
-- [ ] Sort proper colour scheme out and redesign Splashscreen
+- [ ] Sort proper colour scheme out and redesign Splashscreen - do like github log in page!
 - [ ] design home page (logged in)
-- [ ] Refactor for config.js, helpers etc, at api request timeout function 
+- [ ] Refactor for config.js, helpers etc, add api request timeout function 
  
 
 Features

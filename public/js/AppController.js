@@ -1,12 +1,20 @@
 //All js files that are bundled together by parcel are imported here
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
+import '@babel/polyfill'; //For older browser compatibility
+
 import { login, signUp, logout } from './auth';
 import { updateUserDetails } from './save-account-details';
 import { openModal, customButton } from './front-end-utilities';
 import { Modal } from './views/modal';
-import '@babel/polyfill'; //For older browser compatibility
+import SplashPageView from './views/SplashPageView';
+
 console.log('hello from parcel')
-console.trace()
+//console.trace()
+
+
+// automatically update modules in the browser at runtime without needing a whole page refresh
+if(module.hot) module.hot.accept(); //Parcel
+
 // DOM elements
 const loginForm = document.querySelector(".loginForm");
 const signUpForm = document.querySelector('.signUpForm');
@@ -154,3 +162,24 @@ if(userDetailsForm){
         })
     })
 }
+
+const controlSplashScreen = () => {
+    SplashPageView.render(null, 'beforeend');
+    SplashPageView.addButtonOnClickHandler();
+
+}
+
+
+//Publisher-Subscriber pattern
+const init = () => { //Add required event listeners
+    SplashPageView.addRenderButtonHandler(controlSplashScreen);
+    // recipeView.addHandlerRender(controlRecipes);
+    // searchView.addHandlerSearch(controlSearchResults);
+    // paginationView.addHandlerClick(controlPagination);
+    // recipeView.addHandlerUpdateServings(controlServings);
+    // recipeView.addHandlerAddBookmark(controlAddBookmark);
+    // addRecipeView.addHandlerUpload(controlAddRecipe);
+}
+
+
+init();

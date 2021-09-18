@@ -1,0 +1,38 @@
+extends base
+
+block splashpage 
+    .splash-screen
+        .landing-container
+            .content-container
+                h1.title Your Next Social Event Awaits...
+                p.subtitle From concerts to nature tours and social meetups..there is something for everyone!
+                div#arrow-wrapper
+                    .arrow-border   
+                        .arrow.down 
+                        .pulse
+        .overview-container
+            .overview-wrapper
+                .overview
+                    img.overview-image(src='../assets/create.jpg' alt="Logo")
+                    .overview-description-container
+                        h1.title Create or Find Your Next Event
+                        ul.details 
+                            li.description Search for events near you!
+                            li.description Can't find something you like? Create your own event!
+                            li.description With our event template builder you can quickly and easily create your own events!
+                .overview
+                    img.overview-image(src='../assets/planner.jpg' alt="Logo")
+                    .overview-description-container
+                        h1.title Add Events To Your Planner
+                        ul.details 
+                            li.description Add events you like the look of to your personal planner!
+                            li.description Keep track of all of your upcoming events!
+                .overview
+                    img.overview-image(src='../assets/share.jpg' alt="Logo")
+                    .overview-description-container
+                        h1.title Share Your Events
+                        ul.details 
+                            li.description Share events you think your friends might like with them!
+                            li.description Send out invitations to your own events!
+
+
