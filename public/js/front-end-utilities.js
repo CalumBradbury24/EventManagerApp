@@ -1,4 +1,5 @@
-
+import { API_URL, TIMEOUT_SECONDS } from '../config';
+import axios from 'axios';
 export const hideAlert = () => {
     const alert = document.querySelector('.alert');
     if(alert) alert.parentElement.removeChild(alert); //remove the alert element from its parent element
@@ -40,8 +41,27 @@ export const spinner = (element) => {
 export const timeout = () => {
     return new Promise(function (_, reject) {
         setTimeout(function () {
-            reject(new Error(`Request took too long! Timeout after ${TIMEOUT_SECONDS} second`));
-        }, TIMEOUT_SECONDS * 1000);
+            reject(new Error(`Request took too long! Timeout after ${TIMEOUT_SECONDS} seconds`));
+        }, TIMEOUT_SECONDS * 1000); //60 seconds
     });
 };
 
+
+export const makeAxiosPostRequest = async(url, data) => {
+    try {
+        const response = await Promise.race( //Resolves/rejects to the first promise that finishes
+            [
+                axios({
+                    method: "POST",
+                    url: `${API_URL}${url}`,
+                    data: data
+                }),
+                timeout()
+            ]
+        )
+
+        return response;
+    } catch(err){
+        throw err; //Causes this promise that is returned to reject
+    }
+}

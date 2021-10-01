@@ -16,4 +16,4 @@ router.route('/update-profile').patch(
     userController.resizeUserPhoto,
     userController.updateUserProfile) //patch is for updating a resource
 
-module.exports = router;
+    module.exports = router;

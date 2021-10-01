@@ -1,6 +1,11 @@
 nav.header
-    a(href="/")
-        img.logo(src='../assets/Eventify.png' alt="Logo")
+    a.header-logo-container(href="/")
+        //img.logo(src='../assets/Eventify-dark.png' alt="Logo")
+    form.event-search-form(role="search")
+        input.event-search-input(type="search" placeholder="Search events" autofocus)
+        button.event-search-button(type="submit")
+            img.event-search-icon(src='../assets/search-icon.svg')
+
     .menu-container
         a.link(href="/find-events")
             h3.link-text Whats On

@@ -19,6 +19,7 @@ A website where someone can create an event(s) and others can sign up for it.
 - [x] set up validator.js
 
 //TODO short term
+- [ ] Add search bar to header (shown on all headers). Make header colour different depending on hash
 - [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes)) - pending redesign
 - [x] finish modal
 - [ ] Refactor front-end
@@ -36,6 +37,7 @@ Features
 - [ ] Users can add comments
 - [ ] A user can only delete their own events, remove people from the invites
 - [ ] An admin can delete any/all events
+- [ ] When creating an event a user is asked for a nice picture/advertising image that represents it (otherwise a stock image is selected based on some keywords)
 
 
 Extra To dos

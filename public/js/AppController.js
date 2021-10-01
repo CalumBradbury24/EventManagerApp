@@ -2,11 +2,13 @@
 import 'regenerator-runtime/runtime';
 import '@babel/polyfill'; //For older browser compatibility
 
-import { login, signUp, logout } from './auth';
+import { signUp, logout } from './auth';
+import { login } from './models/user-model';
 import { updateUserDetails } from './save-account-details';
-import { openModal, customButton } from './front-end-utilities';
-import { Modal } from './views/modal';
+import { customButton } from './front-end-utilities';
+import {Modal} from './views/Modal';
 import SplashPageView from './views/SplashPageView';
+import HeaderView from './views/HeaderView';
 
 console.log('hello from parcel')
 //console.trace()
@@ -165,20 +167,22 @@ if(userDetailsForm){
 
 const controlSplashScreen = () => {
     SplashPageView.render(null, 'beforeend');
+    HeaderView.addHandlerMutateHeaderOnUrlChange(window.location);
     SplashPageView.addButtonOnClickHandler();
 
+}
+
+const controlHeaderSearchBar = (search) => {
+    console.log(search)
+    if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
 }
 
 
 //Publisher-Subscriber pattern
 const init = () => { //Add required event listeners
+    console.log('init')
     SplashPageView.addRenderButtonHandler(controlSplashScreen);
-    // recipeView.addHandlerRender(controlRecipes);
-    // searchView.addHandlerSearch(controlSearchResults);
-    // paginationView.addHandlerClick(controlPagination);
-    // recipeView.addHandlerUpdateServings(controlServings);
-    // recipeView.addHandlerAddBookmark(controlAddBookmark);
-    // addRecipeView.addHandlerUpload(controlAddRecipe);
+    HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
 }
 
 

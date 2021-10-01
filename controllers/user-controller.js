@@ -33,7 +33,7 @@ const resizeUserPhoto = (req, res, next) => {
 
 const updateUserProfile = catchAsyncErrors(async(req, res, next) => {
   //  console.log(req.file)
-  console.log(req.body)
+    console.log(req.body)
     const validatedData = {
         fname: ('' + req.body.fname).trim(), //Cast to string in the case a number is entered and remove whitespace
         lname: ('' + req.body.lname).trim(),
@@ -72,9 +72,8 @@ const updateUserProfile = catchAsyncErrors(async(req, res, next) => {
     })
 }, 'updateUserProfile')
 
-
 module.exports = {
     updateUserProfile,
     uploadUserPhoto,
-    resizeUserPhoto
+    resizeUserPhoto,
 }

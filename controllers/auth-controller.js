@@ -40,9 +40,7 @@ const createAndSendJWT = (user, statusCode, req, res) => {
     res.status(statusCode).json({
         status: "success",
         jwt, //Give the user a new jwt so that they are allowed access to protected routes
-        data: {
-            user
-        },
+        user,
     });
 }
 

@@ -1,13 +1,24 @@
-.header{width:100%; display: flex;align-items: center; background-color: var(--dark-blue); position: sticky; top: 0;/*box-shadow: 0 8px 16px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)*/;z-index:500}
-.header .menu-container{margin-left:auto;margin-right: 20px; display: flex;gap:25px;align-items: center;}
+.header{color:var(--grey-white);width:100%; display: flex;align-items: center; background-color: var(--dark-blue); position: sticky; top: 0;/*box-shadow: 0 8px 16px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)*/;z-index:500}
+.header .menu-container{margin-right: 20px; display: flex;gap:25px;align-items: center;margin-left: auto;}
 .header .user-container{width: 33%; display: flex;align-items: center;padding-right: 20px;}
 .header .signIn-container{display: flex;}
-.header .logo{height: 7vh}
+.header .header-logo-container{display: inherit;height: 80px;width: 280px}
+.header .header-logo-container .logo{height: 80px;width: 280px;}
 .header .link{text-decoration: none;width: max-content; color: var(--shadow-of-light-blue); font-size: 1.05rem;white-space: nowrap;}
-.header .link:hover{color:cornflowerblue;}
+.header .link:hover{color:var(--orange-red);}
 .header .signIn-container .sign-in-text{border: solid white 1px;border-radius: 40px; padding: 10px 15px}
 .header .link-text{margin: 0;text-align: center;}
 .dropdown-button{color: #212121;cursor: pointer;height: 40px; border-radius: 50%;}
+
+.event-search-form{width: 25%;display: flex;margin: 0 50px;height: 40px;}
+.event-search-form .event-search-input{flex: 1;border-bottom-left-radius: 5px;border-top-left-radius: 5px;padding: 10px 15px;border: none;}
+.event-search-form .event-search-input:focus-visible{outline: none;}
+.event-search-form .event-search-button{width:40px;padding: 0;border-top-right-radius: 5px; border-bottom-right-radius: 5px;border: none;background-color: white; cursor: pointer;}
+.event-search-form .event-search-icon{transition: all .2s ease-in-out;padding: 10px;}
+.event-search-form .event-search-icon:hover{transform: scale(1.3);}
+
+.header-splash-grey{background-color: var(--dark-grey);}
+.header-splash-purple{background-color: var(--purple-grey)}
 
 /* The container - needed to position the dropdown content */
 .dropdown {position: relative;display: inline-block;}

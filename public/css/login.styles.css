@@ -5,30 +5,11 @@
 	box-sizing: border-box;
 }
 
-.login-container-body {
-	background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 81.5vh;
-}
-
+.login-container-body {background: var(--dark-grey);display: flex;justify-content: center;align-items: center;font-family: 'Montserrat', sans-serif;height: 86.95vh;}
 .login-container-body h1 {font-weight: bold;margin: 0;}
-
 .login-container-body  h2 {text-align: center;}
-
-.login-container-body p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
+.login-container-body p {font-size: 14px;font-weight: 100;line-height: 20px;letter-spacing: 0.5px;margin: 20px 0 30px;}
 .login-container-body span {font-size: 12px;}
-
 .login-container-body a {
 	color: #333;
 	font-size: 14px;
@@ -144,9 +125,9 @@
 .login-container-body .container.right-panel-active .overlay-container{transform: translateX(-100%);}
 
 .login-container-body .overlay {
-	background: #243aff;
-	background: -webkit-linear-gradient(to right, #2baaff, #364afc);
-	background: linear-gradient(to right, #2baaff, #364afc);
+	background: var(--purple-grey);
+	background: -webkit-linear-gradient(to right, #2baaff, var(--purple-grey));
+	background: linear-gradient(to right, #522bff, var(--purple-grey));
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
