@@ -1,3 +1,4 @@
+import { hideAlert, showAlert } from '../front-end-utilities';
 export default class View{ //Singleton class
     #data;
 
@@ -9,15 +10,25 @@ export default class View{ //Singleton class
         if(this._parentElement)this._parentElement.insertAdjacentHTML(position, markup); 
     }
 
-    renderError(message = this._errorMessage){
-        this.hideAlert(); //Hide alert if it currently exists
-        const markup = `<div class='alert alert--error'>${message}</div>`; //Build alert container
-        document.querySelector('body').insertAdjacentHTML('afterbegin', markup); //insert alert container inside of the body, right at the beginning
-        window.setTimeout(this.hideAlert, 2000); //Hide alert after 5 seconds
+    renderError(message = this._errorMessage, timeoutSeconds = 3000){
+        hideAlert(); //Hide alert if it currently exists
+        showAlert('error', message);
+        window.setTimeout(hideAlert, timeoutSeconds); //Hide alert after 5 seconds
     }
 
-    hideAlert(){
-        const alert = document.querySelector('.alert');
-        if(alert) alert.parentElement.removeChild(alert); //remove the alert element from its parent element
+    renderSpinner(){
+        console.log('adding spinner')
+        const markup = `<div class="spinner">
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                            <div class='spinner-section'></div>
+                        </div>`
+        this._parentElement.innerHTML = '';
+        this._parentElement.insertAdjacentHTML('afterbegin', markup);
     }
 }

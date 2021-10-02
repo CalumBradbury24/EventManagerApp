@@ -3,12 +3,14 @@ import 'regenerator-runtime/runtime';
 import '@babel/polyfill'; //For older browser compatibility
 
 import { signUp, logout } from './auth';
-import { login } from './models/user-model';
+import userModel from './models/user-model';
 import { updateUserDetails } from './save-account-details';
-import { customButton } from './front-end-utilities';
-import {Modal} from './views/Modal';
+import { customButton, showAlert } from './front-end-utilities';
+import { Modal } from './views/Modal';
+
 import SplashPageView from './views/SplashPageView';
 import HeaderView from './views/HeaderView';
+import LoginView from './views/LoginView';
 
 console.log('hello from parcel')
 //console.trace()
@@ -18,11 +20,11 @@ console.log('hello from parcel')
 if(module.hot) module.hot.accept(); //Parcel
 
 // DOM elements
-const loginForm = document.querySelector(".loginForm");
-const signUpForm = document.querySelector('.signUpForm');
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
-const signupcontainer = document.getElementById('signupcontainer');
+// const loginForm =document.querySelector(".loginForm");
+// const signUpForm = document.querySelector('.signUpForm');
+// const signUpButton = document.getElementById('signUp');
+// const signInButton = document.getElementById('signIn');
+// const signupcontainer = document.getElementById('signupcontainer');
 const arrowScrollButton = document.getElementById('arrow-wrapper');
 const overviewContainer = document.querySelector('.overview-container');
 const accountEdit = document.getElementById('edit');
@@ -31,19 +33,6 @@ const securityOptions = document.getElementById('security');
 const securityContainer = document.querySelector('.security-container');
 const manageEvents = document.getElementById('myeventsmanager');
 const manageMyEventsContainer = document.getElementById('manageMyEvents');
-
-//Signup/in form animations
-if (signUpButton) {
-    signUpButton.addEventListener('click', () => {
-        signupcontainer.classList.add("right-panel-active");
-    });
-}
-
-if (signInButton) {
-    signInButton.addEventListener('click', () => {
-        signupcontainer.classList.remove("right-panel-active");
-    });
-}
 
 //When the user clicks on the button, toggle between hiding and showing the dropdown content 
 const dropdownButton = document.querySelector('.dropdown-button');
@@ -67,31 +56,6 @@ if (dropdownButton) {
     }
 }
 
-//Handle sign in
-if (loginForm) {
-    loginForm.addEventListener("submit", (event) => {
-        //QuerySelector allows selecting elements based on its class
-        event.preventDefault(); //Prevent the form from loading any other page
-
-        //Get data from input fields
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        login(email, password);
-    });
-}
-
-//Handle sign up
-if (signUpForm) {
-    signUpForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const firstName = document.getElementById('fName').value;
-        const lastName = document.getElementById('lName').value;
-        const email = document.getElementById('signUpEmail').value;
-        const password = document.getElementById('signUpPassword').value;
-        const passwordConfirm = document.getElementById('signUpPasswordConfirm').value;
-        signUp(firstName, lastName, email, password, passwordConfirm);
-    })
-}
 
 //logout 
 const logoutButton = document.getElementById('logout');
@@ -141,7 +105,6 @@ if(userDetailsForm){
 
     userDetailsForm.addEventListener('submit', (event) => {
         event.preventDefault();
-       // openModal('Are you sure you want to update your details?');
         const modal = new Modal('Are you sure you want to update your details?')
         const cancel = document.getElementById('cancel');
         const accept = document.getElementById('accept');
@@ -177,13 +140,52 @@ const controlHeaderSearchBar = (search) => {
     if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
 }
 
+const controlLogin = async (email, password) => {
+    LoginView.renderSpinner();
+    const response = await userModel.login(email, password);
+    console.log(response)
+    
+    //If the response status from the http request is a successs
+    if(response === 'success'){
+        showAlert('success', 'Logged in sucessfully!');
+        window.setTimeout(() => {
+            //After 1 second load the home page
+            location.assign("/home");
+        }, 1000)
+    } else{
+        window.setTimeout(() => {
+            location.reload();
+        }, 1500)
+    } 
+
+}
+
+const controlSignUp = async (firstName, lastName, email, password, passwordConfirm) => {
+    LoginView.renderSpinner();
+    const response = await userModel.signUp(firstName, lastName, email, password, passwordConfirm);
+
+    //If the response status from the http request is a successs
+    if(response === 'success'){
+        showAlert('success', 'Account created! Please log in.');
+        window.setTimeout(() => {
+            location.assign("/home");
+        }, 1000)
+    } else{
+        window.setTimeout(() => {
+            location.reload();
+        }, 1500)
+    } 
+}
 
 //Publisher-Subscriber pattern
 const init = () => { //Add required event listeners
     console.log('init')
+
     SplashPageView.addRenderButtonHandler(controlSplashScreen);
     HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
+    LoginView.handleFormAnimations();
+    LoginView.handleLogin(controlLogin);
+    LoginView.handleSignUp(controlSignUp);
 }
-
 
 init();

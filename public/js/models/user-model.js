@@ -1,6 +1,6 @@
-import { showAlert, spinner, makeAxiosPostRequest } from '../front-end-utilities';
+import { showAlert, makeAxiosPostRequest } from '../front-end-utilities';
 
-export const userState = {
+const userState = {
     user: {
         userID : 0,
         userTypeID: 0,
@@ -18,14 +18,11 @@ export const userState = {
     }
 }
 
-const loginContainer = document.querySelector('.login-container-body');
-export const login = async (email, password) => {
-	spinner(loginContainer); //Maybe move in refactor
+const login = async (email, password) => {
 	try {
-        const response = await makeAxiosPostRequest('users/login', { email: email, password: password });
+        const response = await makeAxiosPostRequest('users/logn', { email: email, password: password });
 
 		if(response.data.status === 'success') {
-			showAlert('success', 'Logged in sucessfully!');
             console.log(response)
             userState.user = {
                 userID : response.data.user.userID,
@@ -42,12 +39,7 @@ export const login = async (email, password) => {
                 postCode: response.data.user.postCode,
                 state: response.data.user.state
             }
-
-			//If the response status from the http request is a success
-			window.setTimeout(() => {
-				//After 1 second load the home page
-				location.assign("/home");
-			}, 1000);
+            return response.data.status;
 		}
 
 	} catch (error) {
@@ -56,3 +48,22 @@ export const login = async (email, password) => {
 	}
 };
 
+const signUp = async (fname, lname, email, password, passwordConfirm) => {
+	try {
+		console.log(fname, lname, email, password, passwordConfirm)
+		const response = await makeAxiosPostRequest("users/signup", { fname, lname, email, password, passwordConfirm });
+
+		if(response.data.status === 'success') return response.data.status;
+
+	} catch (error) {
+		console.log('Sign up failed', error);
+		showAlert('error',  error.response.data.message); //Message property of response (with axios error is essentially just the response)
+	}
+}
+
+
+module.exports = {
+    login,
+    signUp,
+    userState
+}

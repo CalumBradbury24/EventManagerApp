@@ -7,8 +7,8 @@ block signInForm
                 form.signUpForm
                     h1 Create Account
                     span Please use your email for registration
-                    input#fName(type='First Name', placeholder='First Name', required)
-                    input#lName(type='Last Name', placeholder='Last Name', required)
+                    input#signUpFName(type='First Name', placeholder='First Name', required)
+                    input#signUpLName(type='Last Name', placeholder='Last Name', required)
                     input#signUpEmail(type='email', placeholder='you@example.com', required)
                     input#signUpPassword(type='password', placeholder='password', required, minlength='8')
                     input#signUpPasswordConfirm(type='password', placeholder='confirm password', required, minlength='8')
@@ -16,8 +16,8 @@ block signInForm
             .form-container.sign-in-container
                 form.loginForm
                     h1 Sign In
-                    input#email(type='email', name='email', placeholder='you@example.com', required)
-                    input#password(type='password', name='password', placeholder='password', required, minlength='8')
+                    input#signInEmail(type='email', name='email', placeholder='you@example.com', required)
+                    input#signInPassword(type='password', name='password', placeholder='password', required, minlength='8')
                     a(href='/api/v1/users/resetpassword') Forgot your password?
                     button Sign In
             .overlay-container 
