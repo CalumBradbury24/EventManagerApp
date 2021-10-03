@@ -2,7 +2,6 @@
 import 'regenerator-runtime/runtime';
 import '@babel/polyfill'; //For older browser compatibility
 
-import { signUp, logout } from './auth';
 import userModel from './models/user-model';
 import { updateUserDetails } from './save-account-details';
 import { customButton, showAlert } from './front-end-utilities';
@@ -54,22 +53,6 @@ if (dropdownButton) {
             }
         }
     }
-}
-
-
-//logout 
-const logoutButton = document.getElementById('logout');
-if (logoutButton) {
-    logoutButton.addEventListener('click', () => {
-        logout();
-    })
-}
-
-//scroll down on splashscreen
-if(arrowScrollButton && overviewContainer){
-    arrowScrollButton.addEventListener('click', () => {
-        overviewContainer.scrollIntoView({behavior: 'smooth'});
-    })
 }
 
 //Account settings page
@@ -128,11 +111,10 @@ if(userDetailsForm){
     })
 }
 
-const controlSplashScreen = () => {
+const controlSplashPage = () => {
     SplashPageView.render(null, 'beforeend');
-    HeaderView.addHandlerMutateHeaderOnUrlChange(window.location);
+    HeaderView.handleHeaderOnURLChange(window.location);
     SplashPageView.addButtonOnClickHandler();
-
 }
 
 const controlHeaderSearchBar = (search) => {
@@ -143,7 +125,6 @@ const controlHeaderSearchBar = (search) => {
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
     const response = await userModel.login(email, password);
-    console.log(response)
     
     //If the response status from the http request is a successs
     if(response === 'success'){
@@ -157,35 +138,54 @@ const controlLogin = async (email, password) => {
             location.reload();
         }, 1500)
     } 
-
 }
 
 const controlSignUp = async (firstName, lastName, email, password, passwordConfirm) => {
     LoginView.renderSpinner();
     const response = await userModel.signUp(firstName, lastName, email, password, passwordConfirm);
 
-    //If the response status from the http request is a successs
+    //If the response status from the http request is a success
     if(response === 'success'){
         showAlert('success', 'Account created! Please log in.');
         window.setTimeout(() => {
             location.assign("/home");
         }, 1000)
-    } else{
+    } else {
         window.setTimeout(() => {
             location.reload();
         }, 1500)
     } 
 }
 
+const controlLogOut = async() => {
+    HeaderView.renderSpinner();
+    const response = await userModel.logout();
+    if (response === 'success') {
+        showAlert('success', 'Logged out sucessfully!');
+        window.setTimeout(() => location.assign('/'), 500);
+    } else window.setTimeout(() => location.reload(), 1500);
+}
+
 //Publisher-Subscriber pattern
 const init = () => { //Add required event listeners
     console.log('init')
+    const currentPath = window.location.pathname;
 
-    SplashPageView.addRenderButtonHandler(controlSplashScreen);
+    if(currentPath === '/'){
+        SplashPageView.handleSplashPage(controlSplashPage);
+    }
+
+    if(currentPath === '/login'){
+        LoginView.handleLogin(controlLogin);
+        LoginView.handleSignUp(controlSignUp);
+        LoginView.handleFormAnimations();
+    }
+console.log(userModel.userState.userID);
+   // if(userModel.userState.userID){
+        HeaderView.handleLogOut(controlLogOut);
+    //}
+
     HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
-    LoginView.handleFormAnimations();
-    LoginView.handleLogin(controlLogin);
-    LoginView.handleSignUp(controlSignUp);
 }
 
 init();

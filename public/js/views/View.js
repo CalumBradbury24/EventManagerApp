@@ -16,7 +16,7 @@ export default class View{ //Singleton class
         window.setTimeout(hideAlert, timeoutSeconds); //Hide alert after 5 seconds
     }
 
-    renderSpinner(){
+    renderSpinner(css){
         console.log('adding spinner')
         const markup = `<div class="spinner">
                             <div class='spinner-section'></div>

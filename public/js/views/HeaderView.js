@@ -4,7 +4,7 @@ class HeaderView extends View {
     _parentElement = document.querySelector('.header');
     _errorMessage = 'Invalid text entered. Please try again!';
 
-    addHandlerMutateHeaderOnUrlChange = (windowLocation) => {
+    handleHeaderOnURLChange = (windowLocation) => {
         console.log(this._parentElement.children[0])
         if(this._parentElement.children[0].children[0]) this._parentElement.children[0].children[0].remove(); //Remove current logo
         let route = windowLocation.pathname; //Get the '/xyz' part of the url
@@ -30,6 +30,11 @@ class HeaderView extends View {
     insertLogo(colour){
         const logo = `<img class="logo" src='../../assets/Eventify-${colour}.png' alt="Eventify Logo"></img>`; //Logo
         this._parentElement.children[0].insertAdjacentHTML('afterbegin', logo); //Insert logo into anchor tag in header
+    }
+
+    handleLogOut(handler){
+        const logoutButton = document.getElementById('logout');
+        if (logoutButton) logoutButton.addEventListener('click', () => handler());
     }
 }
 

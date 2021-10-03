@@ -1,5 +1,6 @@
 import { API_URL, TIMEOUT_SECONDS } from '../config';
 import axios from 'axios';
+
 export const hideAlert = () => {
     const alert = document.querySelector('.alert');
     if(alert) alert.parentElement.removeChild(alert); //remove the alert element from its parent element
@@ -33,7 +34,7 @@ export const spinner = (element) => {
                         <div class='spinner-section'></div>
                         <div class='spinner-section'></div>
                         <div class='spinner-section'></div>
-                    </div>`
+                    </div>`;
     element.innerHTML = '';
     element.insertAdjacentHTML('afterbegin', markup);
 }
@@ -45,7 +46,6 @@ export const timeout = () => {
         }, TIMEOUT_SECONDS * 1000); //60 seconds
     });
 };
-
 
 export const makeAxiosPostRequest = async(url, data) => {
     try {
@@ -59,6 +59,24 @@ export const makeAxiosPostRequest = async(url, data) => {
                 timeout()
             ]
         )
+
+        return response;
+    } catch(err){
+        throw err; //Causes this promise that is returned to reject
+    }
+}
+
+export const makeAxiosGetRequest = async(url) => {
+    try {
+        const response = await Promise.race( //Resolves/rejects to the first promise that finishes
+            [
+                axios({
+                    method: "GET",
+                    url: `${API_URL}${url}`,
+                }),
+                timeout()
+            ]
+        );
 
         return response;
     } catch(err){

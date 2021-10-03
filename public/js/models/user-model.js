@@ -1,7 +1,7 @@
-import { showAlert, makeAxiosPostRequest } from '../front-end-utilities';
+import { showAlert, makeAxiosPostRequest, makeAxiosGetRequest } from '../front-end-utilities';
 
 const userState = {
-    user: {
+    user: { //maybe redis?
         userID : 0,
         userTypeID: 0,
         userImage: '',
@@ -20,7 +20,7 @@ const userState = {
 
 const login = async (email, password) => {
 	try {
-        const response = await makeAxiosPostRequest('users/logn', { email: email, password: password });
+        const response = await makeAxiosPostRequest('users/login', { email: email, password: password });
 
 		if(response.data.status === 'success') {
             console.log(response)
@@ -61,9 +61,19 @@ const signUp = async (fname, lname, email, password, passwordConfirm) => {
 	}
 }
 
+const logout = async () => {
+	try {
+		const response = await makeAxiosGetRequest( 'users/logout');
+        if(response.data.status === 'success') return response.data.status;
+	} catch (err) {
+		console.log('Sign out failed', err); //Message property of response
+		showAlert('error', 'Error logging out :(. Please try again.');
+	}
+};
 
 module.exports = {
     login,
     signUp,
+    logout,
     userState
 }

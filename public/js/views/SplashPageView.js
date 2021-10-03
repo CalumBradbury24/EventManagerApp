@@ -3,7 +3,7 @@ import View from './View.js';
 class SplashPageView extends View{
     _parentElement = document.querySelector('.title-container');
 
-    addRenderButtonHandler(subscriber){
+    handleSplashPage(subscriber){
         subscriber();
     }
 
