@@ -1,8 +1,8 @@
 import View from './View.js';
 
 class LoginView extends View {
-    _parentElement = document.querySelector('.login-container-body');
-    _loginForm = document.querySelector(".loginForm");
+    _parentElement = document.querySelector('.home-page');
+
     _signUpForm = document.querySelector('.signUpForm');
     _signUpButton = document.getElementById('signUp');
     _signInButton = document.getElementById('signIn');
@@ -24,8 +24,10 @@ class LoginView extends View {
     }
 
     handleLogin(handler){
-        if(this._loginForm){
-            this._loginForm.addEventListener("submit", (event) => {
+        const loginForm = document.querySelector(".loginForm");
+        if(loginForm){
+            loginForm.addEventListener("submit", (event) => {
+                console.log('handling log in')
                 event.preventDefault(); //Prevent the form from loading any other page or refreshing page
                 const email = document.getElementById("signInEmail").value;
                 const password = document.getElementById("signInPassword").value;
@@ -46,6 +48,50 @@ class LoginView extends View {
                 handler(firstName, lastName, email, password, passwordConfirm);
             })
         }
+    }
+
+    _generateHTMLMarkup(){
+        return `
+            <div class="login-container-body">
+                <div class="container" id="signupcontainer">
+                    <div class="form-container sign-up-container">
+                        <form class="signUpForm" method="post">
+                            <h1>Create Account</h1>
+                            <span>Please use your email for registration</span>
+                            <input id="signUpFName" type="First Name" placeholder="First Name" required></input>
+                            <input id="signUpLName" type="Last Name" placeholder="Last Name" required></input>
+                            <input id="signUpEmail" type="email" placeholder="you@example.com" required></input>
+                            <input id="signUpPassword" type="password" placeholder="password" required minlength='8'></input>
+                            <input id="signUpPasswordConfirm" type="password" placeholder="confirm password" required minlength="8"></input>
+                            <button>Sign Up</button>
+                        </form>
+                    </div>
+                    <div class="form-container sign-in-container">
+                        <form class="loginForm"/>
+                            <h1>Sign In</h1>
+                            <input id="signInEmail" type="email" name="email" placeholder="you@example.com" required></input>
+                            <input id="signInPassword" type="password" name="password" placeholder="password" required minlength='8'></input>
+                            <a href="/api/v1/users/resetpassword">Forgot your password?</a>
+                            <button>Sign In</button>
+                        </form>
+                    </div>
+                    <div class="overlay-container"> 
+                        <div class="overlay"> 
+                            <div class="overlay-panel overlay-left"
+                                <h1>Welcome Back!</h1> 
+                                <p>Please log in</p>
+                                <button class="ghost" id="signIn">Sign In</button> 
+                            </div>
+                            <div class="overlay-panel overlay-right">
+                                <h1>Hello friend!</h1> 
+                                <p>Enter your personal details and start your journey with us!</p> 
+                                <button class="ghost" id="signUp">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
     }
 }
 

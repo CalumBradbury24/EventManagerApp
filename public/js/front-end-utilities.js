@@ -83,3 +83,10 @@ export const makeAxiosGetRequest = async(url) => {
         throw err; //Causes this promise that is returned to reject
     }
 }
+
+export const removeAllChildNodes = (parent) => {
+    console.log(parent);
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}

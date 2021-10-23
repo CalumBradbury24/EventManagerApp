@@ -8,8 +8,8 @@ const authController = require('../controllers/auth-controller');
 router.route('/login').get(viewController.getLoginForm);
 
 //router.use(authController.isLoggedIn);//Apply middleware to all routes below
-router.route('/').get(authController.isLoggedIn, viewController.getSplashPage);
-router.route('/home').get(authController.isLoggedIn, viewController.getHomePage);
+//router.route('/').get(authController.isLoggedIn, viewController.getSplashPage);
+router.route('/').get(authController.isLoggedIn, viewController.getHomePage);
 router.route('/my-account').get(authController.isLoggedIn, viewController.getMyAccount);
 router.route('/FAQs').get(viewController.getFAQs);
 

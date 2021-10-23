@@ -19,12 +19,11 @@ A website where someone can create an event(s) and others can sign up for it.
 - [x] set up validator.js
 
 //TODO short term
-- [ ] Add search bar to header (shown on all headers). Make header colour different depending on hash
+- [x] Add search bar to header (shown on all headers). Make header colour different depending on hash
 - [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes)) - pending redesign
 - [x] finish modal
-- [ ] Refactor front-end
 - [ ] build FAQs page
-- [ ] Sort proper colour scheme out and redesign Splashscreen - do like github log in page!
+- [ ] Sort proper colour scheme out and redesign Splashscreen
 - [ ] design home page (logged in)
 - [ ] Refactor for config.js, helpers etc, add api request timeout function 
  
@@ -49,4 +48,9 @@ Nice to haves
 - [ ] filter events by distance etc and have google maps of locations
 - [ ] Users can share events to Facebook/Twitter via link etc
 
-//Base is always rendered except for specific pages that dont use the header and footer (faqs etc)
+//Base is always rendered except for specific seperate pages that dont use the header and footer (faqs etc)
+//When a user makes a request to a page that requires they be logged in the backend checks their jwt(and gets userID from it),
+//fetches the current user based on that ID and attaches it to the req.user object so that req.user exists on the backend
+
+//isLoggedIn is used to validate a user is logged in and attach their details to pug to display on front-end
+//protect is used to validate user on back-end and attach req.user to the request object

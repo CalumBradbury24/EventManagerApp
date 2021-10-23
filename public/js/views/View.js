@@ -1,13 +1,17 @@
 import { hideAlert, showAlert } from '../front-end-utilities';
 export default class View{ //Singleton class
-    #data;
+    _data;
 
     render(data = undefined, position = 'afterbegin'){
-        this.#data = data;
+        this._data = data;
         const markup = this._generateHTMLMarkup();
 
-       // this._clear();
-        if(this._parentElement)this._parentElement.insertAdjacentHTML(position, markup); 
+        this._clear();
+        if(this._parentElement) this._parentElement.insertAdjacentHTML(position, markup); 
+    }
+
+    _clear(){
+        this._parentElement.innerHTML = '';
     }
 
     renderError(message = this._errorMessage, timeoutSeconds = 3000){
@@ -16,19 +20,26 @@ export default class View{ //Singleton class
         window.setTimeout(hideAlert, timeoutSeconds); //Hide alert after 5 seconds
     }
 
-    renderSpinner(css){
+    renderSpinner(){
         console.log('adding spinner')
-        const markup = `<div class="spinner">
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
-                            <div class='spinner-section'></div>
+        const markup = `
+                        <div class ="spinner-container">
+                            <div class="spinner">
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                            </div>
                         </div>`
-        this._parentElement.innerHTML = '';
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    }
+
+    removeSpinner(){
+        const $spinnerContainer = document.querySelector('.spinner-container');
+        $spinnerContainer.remove();
     }
 }

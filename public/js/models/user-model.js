@@ -1,29 +1,12 @@
 import { showAlert, makeAxiosPostRequest, makeAxiosGetRequest } from '../front-end-utilities';
 
-const userState = {
-    user: { //maybe redis?
-        userID : 0,
-        userTypeID: 0,
-        userImage: '',
-        firstName : '',
-        lastName: '',
-        email: '',
-        address: '',
-        contactNumber: '',
-        city: '',
-        country: '',
-        created: '',
-        postCode: '',
-        state: ''
-    }
-}
+const userState = {}
 
 const login = async (email, password) => {
 	try {
         const response = await makeAxiosPostRequest('users/login', { email: email, password: password });
 
 		if(response.data.status === 'success') {
-            console.log(response)
             userState.user = {
                 userID : response.data.user.userID,
                 userTypeID: response.data.user.userTypeID,
@@ -37,8 +20,10 @@ const login = async (email, password) => {
                 country: response.data.user.country,
                 created: response.data.user.created,
                 postCode: response.data.user.postCode,
-                state: response.data.user.state
+                state: response.data.user.state,
+                isLoggedIn: true
             }
+         //   window.localStorage.setItem('user', JSON.stringify(user));
             return response.data.status;
 		}
 
@@ -63,6 +48,7 @@ const signUp = async (fname, lname, email, password, passwordConfirm) => {
 
 const logout = async () => {
 	try {
+        userState.user = {};
 		const response = await makeAxiosGetRequest( 'users/logout');
         if(response.data.status === 'success') return response.data.status;
 	} catch (err) {

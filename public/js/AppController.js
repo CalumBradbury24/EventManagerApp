@@ -7,9 +7,9 @@ import { updateUserDetails } from './save-account-details';
 import { customButton, showAlert } from './front-end-utilities';
 import { Modal } from './views/Modal';
 
-import SplashPageView from './views/SplashPageView';
 import HeaderView from './views/HeaderView';
 import LoginView from './views/LoginView';
+import HomePageView from './views/HomePageView';
 
 console.log('hello from parcel')
 //console.trace()
@@ -18,14 +18,6 @@ console.log('hello from parcel')
 // automatically update modules in the browser at runtime without needing a whole page refresh
 if(module.hot) module.hot.accept(); //Parcel
 
-// DOM elements
-// const loginForm =document.querySelector(".loginForm");
-// const signUpForm = document.querySelector('.signUpForm');
-// const signUpButton = document.getElementById('signUp');
-// const signInButton = document.getElementById('signIn');
-// const signupcontainer = document.getElementById('signupcontainer');
-const arrowScrollButton = document.getElementById('arrow-wrapper');
-const overviewContainer = document.querySelector('.overview-container');
 const accountEdit = document.getElementById('edit');
 const editProfileContainer = document.querySelector('.edit-profile-container');
 const securityOptions = document.getElementById('security');
@@ -33,27 +25,7 @@ const securityContainer = document.querySelector('.security-container');
 const manageEvents = document.getElementById('myeventsmanager');
 const manageMyEventsContainer = document.getElementById('manageMyEvents');
 
-//When the user clicks on the button, toggle between hiding and showing the dropdown content 
-const dropdownButton = document.querySelector('.dropdown-button');
-if (dropdownButton) {
-    dropdownButton.addEventListener('click', () => {
-        document.querySelector(".dropdown-content ").classList.toggle("show");
-    })
 
-    // Close the dropdown menu if the user clicks outside of it
-    window.onclick = (event) => {
-        if (!event.target.matches('.dropdown-button')) {
-            let dropdowns = document.getElementsByClassName("dropdown-content");
-            let i;
-            for (i = 0; i < dropdowns.length; i++) {
-                let openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-}
 
 //Account settings page
 if(accountEdit && securityOptions){
@@ -111,12 +83,6 @@ if(userDetailsForm){
     })
 }
 
-const controlSplashPage = () => {
-    SplashPageView.render(null, 'beforeend');
-    HeaderView.handleHeaderOnURLChange(window.location);
-    SplashPageView.addButtonOnClickHandler();
-}
-
 const controlHeaderSearchBar = (search) => {
     console.log(search)
     if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
@@ -125,19 +91,27 @@ const controlHeaderSearchBar = (search) => {
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
     const response = await userModel.login(email, password);
-    
+    console.log(response)
     //If the response status from the http request is a successs
     if(response === 'success'){
         showAlert('success', 'Logged in sucessfully!');
         window.setTimeout(() => {
-            //After 1 second load the home page
-            location.assign("/home");
-        }, 1000)
-    } else{
+            //refresh header and page
+            HeaderView.refreshHeader(userModel.userState.user);
+            HeaderView.handleLogOut(controlLogOut);
+            HomePageView.render(userModel.userState.user);
+        }, 300)
+    } else {
         window.setTimeout(() => {
-            location.reload();
-        }, 1500)
+            LoginView.removeSpinner();
+        }, 2000)
     } 
+}
+
+const controlRenderLogin = () => {
+    //render the signin view
+    LoginView.render();
+    LoginView.handleLogin(controlLogin);
 }
 
 const controlSignUp = async (firstName, lastName, email, password, passwordConfirm) => {
@@ -158,33 +132,27 @@ const controlSignUp = async (firstName, lastName, email, password, passwordConfi
 }
 
 const controlLogOut = async() => {
-    HeaderView.renderSpinner();
+    HomePageView.renderSpinner();
     const response = await userModel.logout();
     if (response === 'success') {
         showAlert('success', 'Logged out sucessfully!');
+
         window.setTimeout(() => location.assign('/'), 500);
-    } else window.setTimeout(() => location.reload(), 1500);
+    } //else window.setTimeout(() => location.reload(), 1500);
 }
 
 //Publisher-Subscriber pattern
 const init = () => { //Add required event listeners
     console.log('init')
-    const currentPath = window.location.pathname;
 
-    if(currentPath === '/'){
-        SplashPageView.handleSplashPage(controlSplashPage);
-    }
+    LoginView.handleSignUp(controlSignUp);
+    LoginView.handleFormAnimations();
 
-    if(currentPath === '/login'){
-        LoginView.handleLogin(controlLogin);
-        LoginView.handleSignUp(controlSignUp);
-        LoginView.handleFormAnimations();
-    }
-console.log(userModel.userState.userID);
-   // if(userModel.userState.userID){
-        HeaderView.handleLogOut(controlLogOut);
-    //}
 
+    HeaderView.handleLogOut(controlLogOut);
+    HeaderView.handleHeaderDropDown();
+    HeaderView.handleRenderLogin(controlRenderLogin);
+    HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
     HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
 }
 

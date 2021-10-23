@@ -1,7 +1,7 @@
 .header{color:var(--grey-white);width:100%; display: flex;align-items: center; background-color: var(--dark-grey); position: sticky; top: 0;/*box-shadow: 0 8px 16px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)*/;z-index:500}
 .header .menu-container{margin-right: 20px; display: flex;gap:25px;align-items: center;margin-left: auto;}
 .header .user-container{width: 33%; display: flex;align-items: center;padding-right: 20px;}
-.header .signIn-container{display: flex;}
+.header .signIn-container{display: flex;cursor: pointer;}
 .header .header-logo-container{display: inherit;height: 80px;width: 280px}
 .header .header-logo-container .logo{height: 80px;width: 280px;}
 .header .link{text-decoration: none;width: max-content; color: var(--shadow-of-light-blue); font-size: 1.05rem;white-space: nowrap;}

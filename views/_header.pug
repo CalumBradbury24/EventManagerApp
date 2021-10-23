@@ -1,6 +1,6 @@
 nav.header
     a.header-logo-container(href="/")
-        //img.logo(src='../assets/Eventify-dark.png' alt="Logo")
+        img.logo(src='../assets/Eventify-dark.png' alt="Logo")
     form.event-search-form(role="search")
         input.event-search-input(type="search" placeholder="Search events" autofocus)
         button.event-search-button(type="submit")
@@ -24,6 +24,7 @@ nav.header
                         a.dropdown-link#logout 
                             h3.link-text Sign Out
         else
-            .signIn-container
-                a.link.sign-in-text(href='/login') 
-                    h3.link-text Sign In/Up
+            .user-container
+                .signIn-container
+                    a.link.sign-in-text 
+                        h3.link-text Sign In/Up

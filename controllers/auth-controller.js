@@ -151,9 +151,9 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         userImage: default.jpeg
         } and is accessible in all pug files*/
 
-        return next()
+        return next();
     }
-    next(); //This allows for rendering a 'please log in' page on protected routes in the case the user tried to access them without a valid jwt
+    next(); //This allows for rendering the page just without user details applied etc
 }, 'isLoggedIn')
 
 const validateUserOnLoginPromise = (decodedUserID) => {
@@ -166,7 +166,7 @@ const validateUserOnLoginPromise = (decodedUserID) => {
 }
 //Middleware to validate current user and add him to the req object
 const protect = catchAsyncErrors(async (req, res, next) => {
-    // 1) Getg jwt token and check it exists
+    // 1) Get jwt token and check it exists
     let token = req.cookies.jwt;
 
     //If there is no token then the user hasn't logged in and received one
