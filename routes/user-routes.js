@@ -9,11 +9,12 @@ const userController = require('../controllers/user-controller');
 router.route('/login').post(authController.login);
 router.route('/signup').post(authController.signUp);
 router.route('/logout').get(authController.logout);
+router.route('/fetch-user').get(authController.fetchValidUser);
 
 router.route('/update-profile').patch(
     authController.protect,
     userController.uploadUserPhoto,
     userController.resizeUserPhoto,
-    userController.updateUserProfile) //patch is for updating a resource
+    userController.updateUserProfile); //patch is for updating a resource
 
-    module.exports = router;
+module.exports = router;

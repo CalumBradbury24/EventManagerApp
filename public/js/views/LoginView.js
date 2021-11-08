@@ -3,22 +3,21 @@ import View from './View.js';
 class LoginView extends View {
     _parentElement = document.querySelector('.home-page');
 
-    _signUpForm = document.querySelector('.signUpForm');
-    _signUpButton = document.getElementById('signUp');
-    _signInButton = document.getElementById('signIn');
-    _signupcontainer = document.getElementById('signupcontainer');
-
     //Signup/in form animations
     handleFormAnimations(){
-        if (this._signUpButton) {
-            this._signUpButton.addEventListener('click', () => {
-                this._signupcontainer.classList.add("right-panel-active");
+        const signUpButton = document.getElementById('signUp');
+        const signupcontainer = document.getElementById('signupcontainer');
+        const signInButton = document.getElementById('signIn');
+
+        if (signUpButton) {
+            signUpButton.addEventListener('click', () => {
+                signupcontainer.classList.add("right-panel-active");
             });
         }
-        
-        if (this._signInButton) {
-            this._signInButton.addEventListener('click', () => {
-                this._signupcontainer.classList.remove("right-panel-active");
+
+        if (signInButton) {
+            signInButton.addEventListener('click', () => {
+                signupcontainer.classList.remove("right-panel-active");
             });
         }
     }
@@ -37,8 +36,9 @@ class LoginView extends View {
     }
 
     handleSignUp(handler){
-        if (this._signUpForm) {
-            this._signUpForm.addEventListener('submit', (event) => {
+        const signUpForm = document.querySelector('.signUpForm');
+        if (signUpForm) {
+            signUpForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const firstName = document.getElementById('signUpFName').value;
                 const lastName = document.getElementById('signUpLName').value;
@@ -46,7 +46,7 @@ class LoginView extends View {
                 const password = document.getElementById('signUpPassword').value;
                 const passwordConfirm = document.getElementById('signUpPasswordConfirm').value;
                 handler(firstName, lastName, email, password, passwordConfirm);
-            })
+            });
         }
     }
 

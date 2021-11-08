@@ -87,7 +87,7 @@ const controlHeaderSearchBar = (search) => {
     console.log(search)
     if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
 }
-
+/* -------------------------------------- LOG IN _ OUT_ UP --------------------------------------------- */
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
     const response = await userModel.login(email, password);
@@ -112,6 +112,10 @@ const controlRenderLogin = () => {
     //render the signin view
     LoginView.render();
     LoginView.handleLogin(controlLogin);
+
+    LoginView.handleSignUp(controlSignUp);
+    LoginView.handleFormAnimations();
+    
 }
 
 const controlSignUp = async (firstName, lastName, email, password, passwordConfirm) => {
@@ -136,24 +140,51 @@ const controlLogOut = async() => {
     const response = await userModel.logout();
     if (response === 'success') {
         showAlert('success', 'Logged out sucessfully!');
-
-        window.setTimeout(() => location.assign('/'), 500);
-    } //else window.setTimeout(() => location.reload(), 1500);
+        window.setTimeout(() => {
+            HeaderView.refreshHeader(userModel.userState.user);
+            HeaderView.handleRenderLogin(controlRenderLogin);
+            HomePageView.render(userModel.userState.user);
+            HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
+        }, 300);
+    }  window.setTimeout(() => {
+        LoginView.removeSpinner();
+    }, 750)
 }
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
 //Publisher-Subscriber pattern
-const init = () => { //Add required event listeners
+const init = async () => { //Add required event listeners
     console.log('init')
 
+    await initUser();
+    initHeader();
+    initHomePage();
+    console.log(userModel.userState);
+   // handleLoginViewInit();
+}
+
+const initHeader = () => {
+    HeaderView.render(userModel.userState.user);
+    if(!!userModel.userState?.user?.isLoggedIn) HeaderView.handleHeaderDropDown();
+    HeaderView.handleRenderLogin(controlRenderLogin);
+    HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
+    HeaderView.handleLogOut(controlLogOut);
+}
+
+const initHomePage = () => {
+    HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
+}
+
+const initUser = async () => {
+    await userModel.fetchValidUser(); //When the page is refreshed fetch the user 
+    //if(response === 'success') //user has been stored
+
+}
+
+const handleLoginViewInit = () => {
     LoginView.handleSignUp(controlSignUp);
     LoginView.handleFormAnimations();
-
-
-    HeaderView.handleLogOut(controlLogOut);
-    HeaderView.handleHeaderDropDown();
-    HeaderView.handleRenderLogin(controlRenderLogin);
-    HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
-    HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
 }
 
 init();

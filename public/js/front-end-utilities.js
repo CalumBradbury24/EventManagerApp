@@ -85,7 +85,6 @@ export const makeAxiosGetRequest = async(url) => {
 }
 
 export const removeAllChildNodes = (parent) => {
-    console.log(parent);
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }

@@ -102,9 +102,9 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
                     res.status(200).json({
                         status: 'success',
                         message: 'User created!'
-                    })
-                })
-    })
+                    });
+                });
+    });
 }, 'signup');
 
 //Gets jwt from cookie in browser to validate current user before letting the user access pages in the website
@@ -122,7 +122,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         console.log('decoded jwt->', decoded)
 
         //check if user still exists and hasn't been deleted, decoded.iat is issued at time
-        let validatedCurrentUser = await validateUserOnLoginPromise(decoded.id);
+        let validatedCurrentUser = await validateUser(decoded.id);
         if (!validatedCurrentUser) return next(new AppError('User does not exist', 401))
 
         //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
@@ -156,7 +156,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
     next(); //This allows for rendering the page just without user details applied etc
 }, 'isLoggedIn')
 
-const validateUserOnLoginPromise = (decodedUserID) => {
+const validateUser = (decodedUserID) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where deleted = 0 and userID = ?`, decodedUserID, (error, rows) => {
             if (error) reject(new AppError('Error finding user', 404));
@@ -198,11 +198,35 @@ const protect = catchAsyncErrors(async (req, res, next) => {
     next();
 }, 'authController.protect');
 
+const fetchValidUser = catchAsyncErrors(async (req, res, next) => {
+     // 1) Get jwt token and check it exists
+        let token = req.cookies.jwt;
+console.log('token->', token);
+        //If there is a token then the user is logged in
+        if (!!token) {
+            //2) validate jwt token
+            const decodedJWT = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //Promisify makes jwt.verify return a promise which can be awaited (rather than having to use a callback function as the third argument)
+            const validatedUser = await validateUser(decodedJWT.id);
+            if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+
+            //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
+            delete validatedUser.password;
+            res.status(200).json({
+                status: "success",
+                validatedUser: validatedUser,
+            });
+        } else { //If no token send back no user data
+            console.log('sending response');
+            res.status(200).json({});
+        }
+}, 'authController.fetchValidUser');
+
 
 module.exports = {
     login,
     signUp,
     isLoggedIn,
     logout,
-    protect
+    protect,
+    fetchValidUser
 }

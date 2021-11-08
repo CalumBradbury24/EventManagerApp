@@ -20,7 +20,6 @@ class HeaderView extends View {
     }
 
     handleLogOut(handler){
-         console.log('here');
         const logoutButton = document.getElementById('logout');
         if (logoutButton) logoutButton.addEventListener('click', () => handler());
     }
@@ -47,6 +46,53 @@ class HeaderView extends View {
         }
     }
 
+    _generateHTMLMarkup(){ //Encompasing nav tag is rendered in pug file
+        return ` 
+            <a class = "header-logo-container" href="/">
+                <img class="logo" src='../assets/Eventify-dark.png' alt="Logo"></img>
+            </a>
+            <form class="event-search-form" role="search">
+                <input class="event-search-input" type="search" placeholder="Search events" autofocus></input>
+                <button class="event-search-button" type="submit">
+                    <img class="event-search-icon" src='../assets/search-icon.svg'></img>
+                </button>
+            </form>
+                    
+            <div class="menu-container">
+                <a class="link" href="/find-events">
+                    <h3 class="link-text">Whats On</h3>
+                </a>
+                <a class="link" href="/find-events">
+                    <h3 class="link-text">Featured Events</h3>
+                </a>
+                ${this._data.isLoggedIn ? 
+                    `<div class="user-container">
+                        <div class="dropdown">
+                            <img class="dropdown-button" src="/img/users/${this._data.userImage}"></img>
+                            <div class="dropdown-content"> 
+                                <a class="dropdown-link" href='/my-account'> 
+                                    <h3 class="link-text">My Account</h3>
+                                </a>
+                                <a class="dropdown-link" id="logout"> 
+                                    <h3 class="link-text">Sign Out</h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                ` : `
+                    <div class="user-container">
+                        <div class="signIn-container">
+                            <a class="link sign-in-text"> 
+                                <h3 class="link-text">Sign In/Up</h3>
+                            </a>
+                        </div>
+                    </div>
+                    `
+                }
+            </div>
+        `
+    }
+
     refreshHeader(user){
         const userContainer = document.querySelector('.user-container');
 
@@ -71,9 +117,11 @@ class HeaderView extends View {
             `
         } else {
             markup = `
-                <a class="link sign-in-text">
-                    <h3 class="link-text">Sign In/Up</h3>
-                </a> 
+                <div class="signIn-container">
+                    <a class="link sign-in-text"> 
+                        <h3 class="link-text">Sign In/Up</h3>
+                    </a>
+                </div>
             `
         }   
 

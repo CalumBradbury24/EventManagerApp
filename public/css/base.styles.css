@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-body{font-family: 'Montserrat', sans-serif;margin: 0;}
+body{/*font-family: 'Montserrat', sans-serif;*/ margin: 0;}
 
 /* root styles */
 :root {font-size: 18px;--dark-grey: #2D2B34; --purple-grey: #7C688A; --orange-red: #9F5E45; --brown-orange: #BF9467; --grey-white: #F6F7F6;}
@@ -9,7 +9,7 @@ a:visited{color:black;}
 i{font-style: normal;}
 
 /* Custom alerts */
-.alert{animation: slidein 1s;position: fixed;width: 50vw;height: 100px;display: flex;align-items: center;justify-content: center;;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);z-index: 9999;color: #fff;font-size: 1.25rem;font-weight: 400;text-align: center;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;-webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);}
+.alert{animation: slidein 1s;position: fixed;width: 50vw;height: 100px;display: flex;align-items: center;justify-content: center;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);z-index: 9999;color: #fff;font-size: 1.25rem;font-weight: 400;text-align: center;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;-webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);}
 .alert--success {background-color: #20bf6b;}
 .alert--error {background-color: #f85552;}
 
@@ -68,7 +68,7 @@ i{font-style: normal;}
 .splash-screen .landing-container .title-container{width: 60%;display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 20px;text-align: center;z-index: 1;}
 .splash-screen .landing-container .title-container .title{color: var(--grey-white);font-size: 3rem;margin: 0;display: flex;flex-direction: column;gap: 10px;}
 .splash-screen .landing-container .title-container .subtitle{color: var(--dark-blue); font-size: 1.25rem;}
-.splash-screen .landing-container .title-container .splash-sign-up{border-radius: 15px; border: 3px solid var(--brown-orange); background-color: var(--purple-grey);color:var(--grey-white);padding: 10px; font-size: 1.25rem;cursor: pointer;}
+.splash-screen .landing-container .title-container .splash-sign-up{border-radius: 15px; border: 3px solid var(--brown-orange); background-color: var(--purple-grey);color:var(--grey-white);padding: 10px; font-size: 1.25rem;cursor: pointer;font-family: inherit;}
 .splash-screen .landing-container .title-container .splash-sign-up:hover{filter: brightness(85%)}
 
 

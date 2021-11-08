@@ -19,9 +19,9 @@ class HomePageView extends View {
                         ` 
                         : 
                         `
-                        <div class="splash-screen"
-                            <div class="landing-container"
-                                <div class="title-container"
+                        <div class="splash-screen">
+                            <div class="landing-container">
+                                <div class="title-container">
                                     <h1 class="title">Your Next Social Event Awaits...
                                         <p class="subtitle">With plenty of free and paid events all over the world, there is something for everyone!</p>
                                     </h1>
