@@ -10,6 +10,11 @@ import { Modal } from './views/Modal';
 import HeaderView from './views/HeaderView';
 import LoginView from './views/LoginView';
 import HomePageView from './views/HomePageView';
+import FooterView from './views/FooterView';
+import HowItWorksView from './views/HowItWorksView';
+import ContactUsView from './views/ContactUsView';
+import FindEventsView from './views/FindEventsView';
+import FAQsView from './views/FAQsView';
 
 console.log('hello from parcel')
 //console.trace()
@@ -56,7 +61,7 @@ if(userDetailsForm){
     const buttonMarkup =`<div style="display:flex"> 
                             ${customButton('#23e8fa', '#6ef3ff', '#CF0E0E', '&#x2716', 'Save Details', 'save-account-details')}
                         </div>`
-    userDetailsForm.insertAdjacentHTML('beforeend', buttonMarkup)
+    userDetailsForm.insertAdjacentHTML('beforeend', buttonMarkup);
 
     userDetailsForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -64,22 +69,22 @@ if(userDetailsForm){
         const cancel = document.getElementById('cancel');
         const accept = document.getElementById('accept');
 
-        if(cancel) cancel.addEventListener('click', () => modal.closeModal())
+        if(cancel) cancel.addEventListener('click', () => modal.closeModal());
         
         if(accept) accept.addEventListener('click', () => {
             const form = new FormData();
-            form.append('fname', document.getElementById('fname').value)
-            form.append('lname', document.getElementById('lname').value)
-            form.append('email', document.getElementById('email').value)
-            form.append('contactNumber', document.getElementById('contact-num').value)
-            form.append('address', document.getElementById('address').value)
-            form.append('city', document.getElementById('city').value)
-            form.append('state', document.getElementById('state').value)
-            form.append('postcode', document.getElementById('postcode').value)
-            form.append('country', document.getElementById('country').value)
-            form.append('photo', document.getElementById('photo').files[0])
+            form.append('fname', document.getElementById('fname').value);
+            form.append('lname', document.getElementById('lname').value);
+            form.append('email', document.getElementById('email').value);
+            form.append('contactNumber', document.getElementById('contact-num').value);
+            form.append('address', document.getElementById('address').value);
+            form.append('city', document.getElementById('city').value);
+            form.append('state', document.getElementById('state').value);
+            form.append('postcode', document.getElementById('postcode').value);
+            form.append('country', document.getElementById('country').value);
+            form.append('photo', document.getElementById('photo').files[0]);
             updateUserDetails(form);
-        })
+        });
     })
 }
 
@@ -87,6 +92,15 @@ const controlHeaderSearchBar = (search) => {
     console.log(search)
     if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
 }
+
+const controlFooterOptionSelection = (option = '') => {
+    if(!option) FooterView.renderError('An error occurred :(. Please try again.');
+    if(option === 'howItWorks') HowItWorksView.render();
+    if(option === 'contactUs') ContactUsView.render();
+    if(option === 'findEvents') FindEventsView.render();
+    if(option === 'faqs') FAQsView.render();
+}
+
 /* -------------------------------------- LOG IN _ OUT_ UP --------------------------------------------- */
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
@@ -138,6 +152,7 @@ const controlSignUp = async (firstName, lastName, email, password, passwordConfi
 const controlLogOut = async() => {
     HomePageView.renderSpinner();
     const response = await userModel.logout();
+
     if (response === 'success') {
         showAlert('success', 'Logged out sucessfully!');
         window.setTimeout(() => {
@@ -146,7 +161,7 @@ const controlLogOut = async() => {
             HomePageView.render(userModel.userState.user);
             HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
         }, 300);
-    }  window.setTimeout(() => {
+    } else window.setTimeout(() => {
         LoginView.removeSpinner();
     }, 750)
 }
@@ -156,35 +171,42 @@ const controlLogOut = async() => {
 //Publisher-Subscriber pattern
 const init = async () => { //Add required event listeners
     console.log('init')
-
-    await initUser();
-    initHeader();
-    initHomePage();
-    console.log(userModel.userState);
-   // handleLoginViewInit();
+    try{
+        await initUser();
+        initHeader();
+        initFooter();
+        initHomePage();
+        console.log(userModel.userState);
+       // handleLoginViewInit();
+    } catch(err){
+        console.error(err.message);
+    }
 }
+
+const initUser = async () => await userModel.fetchValidUser(); //When the page is refreshed fetch the user 
 
 const initHeader = () => {
     HeaderView.render(userModel.userState.user);
-    if(!!userModel.userState?.user?.isLoggedIn) HeaderView.handleHeaderDropDown();
+    if(!!userModel.userState?.user?.isLoggedIn){
+        HeaderView.handleHeaderDropDown();
+        HeaderView.handleLogOut(controlLogOut);
+    } 
     HeaderView.handleRenderLogin(controlRenderLogin);
     HeaderView.handleSearchBarOnSubmit(controlHeaderSearchBar);
-    HeaderView.handleLogOut(controlLogOut);
+}
+
+const initFooter = () => {
+    FooterView.initFooterEventListeners(controlFooterOptionSelection);
 }
 
 const initHomePage = () => {
     HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
 }
 
-const initUser = async () => {
-    await userModel.fetchValidUser(); //When the page is refreshed fetch the user 
-    //if(response === 'success') //user has been stored
 
-}
-
-const handleLoginViewInit = () => {
-    LoginView.handleSignUp(controlSignUp);
-    LoginView.handleFormAnimations();
-}
+// const handleLoginViewInit = () => {
+//     LoginView.handleSignUp(controlSignUp);
+//     LoginView.handleFormAnimations();
+// }
 
 init();

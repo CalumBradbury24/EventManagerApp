@@ -92,11 +92,12 @@ class HeaderView extends View {
             </div>
         `
     }
-
+    
+    //Refreshes dynamic elements in header
     refreshHeader(user){
         const userContainer = document.querySelector('.user-container');
 
-        if(userContainer)removeAllChildNodes(userContainer); //Remove current children of the container and replace it with relevant elements
+        if(userContainer) removeAllChildNodes(userContainer); //Remove current children of the container and replace it with relevant elements
         else return;
 
         const userImage = user.userImage || 'User.svg';

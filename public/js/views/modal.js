@@ -13,7 +13,7 @@ class Modal {
 
     render(){
         console.log(window.location)
-        console.log('opening decision modalsss');
+        console.log('opening decision modal');
         const modalElement = this.customElement || `<div class = "modal">
                                                     <h4 class = "modal-message">${this.message}</h4>
                                                     <div class = "buttons-container"> 

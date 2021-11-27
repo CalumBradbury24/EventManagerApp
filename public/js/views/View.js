@@ -39,7 +39,7 @@ export default class View{ //Singleton class
     }
 
     removeSpinner(){
-        const $spinnerContainer = document.querySelector('.spinner-container');
-        $spinnerContainer.remove();
+        const spinnerContainer = document.querySelector('.spinner-container');
+        spinnerContainer.remove();
     }
 }
