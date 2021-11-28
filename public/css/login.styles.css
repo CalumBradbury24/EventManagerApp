@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 }
 
-.login-container-body {background: var(--dark-grey);display: flex;justify-content: center;align-items: center;font-family: 'Montserrat', sans-serif;height: 86.95vh;}
+.login-container-body {background: var(--dark-grey);display: flex;justify-content: center;align-items: center;font-family: 'Montserrat', sans-serif;height:100%;}
 .login-container-body h1 {font-weight: bold;margin: 0;}
 .login-container-body  h2 {text-align: center;}
 .login-container-body p {font-size: 14px;font-weight: 100;line-height: 20px;letter-spacing: 0.5px;margin: 20px 0 30px;}

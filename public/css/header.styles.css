@@ -10,13 +10,6 @@
 .header .link-text{margin: 0;text-align: center;}
 .dropdown-button{color: #212121;cursor: pointer;height: 40px; border-radius: 50%;}
 
-.event-search-form{width: 25%;display: flex;margin: 0 50px;height: 40px;}
-.event-search-form .event-search-input{flex: 1;border-bottom-left-radius: 5px;border-top-left-radius: 5px;padding: 10px 15px;border: none;}
-.event-search-form .event-search-input:focus-visible{outline: none;}
-.event-search-form .event-search-button{width:40px;padding: 0;border-top-right-radius: 5px; border-bottom-right-radius: 5px;border: none;background-color: white; cursor: pointer;}
-.event-search-form .event-search-icon{transition: all .2s ease-in-out;padding: 10px;}
-.event-search-form .event-search-icon:hover{transform: scale(1.3);}
-
 .header-splash-grey{background-color: var(--dark-grey);}
 .header-splash-purple{background-color: var(--purple-grey)}
 

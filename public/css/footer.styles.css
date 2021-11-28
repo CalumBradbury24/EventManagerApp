@@ -1,4 +1,4 @@
-.footer{width: 100%;height: 7vh;background-color: var(--dark-grey);}
+.footer{width: 100%;height: 7vh;background-color: var(--dark-grey);bottom: 0;height: 80px;}
 .footer .footer-text-container{height: 100%;display: flex;justify-content: center;align-items: center;}
 .footer .footer-text-container .list-item{color:#99a9b5; padding: 0 5px; font-size: 1.25rem;}
 .footer .footer-text-container .list-item:hover{color:white; font-weight:800px;cursor: pointer;}

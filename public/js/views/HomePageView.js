@@ -10,7 +10,6 @@ class HomePageView extends View {
 
     _generateHTMLMarkup(){
         return `
-            <div class="home-page">
                 ${
                     this._data.isLoggedIn ?
                         `
@@ -30,8 +29,7 @@ class HomePageView extends View {
                             </div>
                         </div>
                         `
-                }
-            </div>                        
+                }                     
         `
     }
 }
