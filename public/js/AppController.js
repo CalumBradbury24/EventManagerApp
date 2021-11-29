@@ -6,6 +6,7 @@ import userModel from './models/user-model';
 import { updateUserDetails } from './save-account-details';
 import { customButton, showAlert } from './front-end-utilities';
 import { Modal } from './views/Modal';
+import FAQsModel from './models/FAQs-model';
 
 import HeaderView from './views/HeaderView';
 import LoginView from './views/LoginView';
@@ -87,18 +88,28 @@ if(userDetailsForm){
         });
     })
 }
-
+/**************************************************************************************************************** */
 const controlHeaderSearchBar = (search) => {
     console.log(search)
     if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
 }
 
-const controlFooterOptionSelection = (option = '') => {
+const controlFooterOptionSelection = async (option = '') => {
     if(!option) FooterView.renderError('An error occurred :(. Please try again.');
-    if(option === 'howItWorks') HowItWorksView.render();
-    if(option === 'contactUs') ContactUsView.render();
-    if(option === 'findEvents') FindEventsView.render();
-    if(option === 'faqs') FAQsView.render();
+    if(option === 'howItWorks'){
+        HowItWorksView.render();
+    } 
+    if(option === 'contactUs'){
+        ContactUsView.render();
+    } 
+    if(option === 'findEvents'){
+        FindEventsView.render();
+    } 
+    if(option === 'faqs'){
+        const commonFAQs = await FAQsModel.fetchCommonFAQs();
+        FAQsView.render(commonFAQs);
+        FAQsView.init();
+    } 
 }
 
 /* -------------------------------------- LOG IN _ OUT_ UP --------------------------------------------- */
@@ -129,7 +140,6 @@ const controlRenderLogin = () => {
 
     LoginView.handleSignUp(controlSignUp);
     LoginView.handleFormAnimations();
-    
 }
 
 const controlSignUp = async (firstName, lastName, email, password, passwordConfirm) => {
@@ -202,11 +212,5 @@ const initFooter = () => {
 const initHomePage = () => {
     HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
 }
-
-
-// const handleLoginViewInit = () => {
-//     LoginView.handleSignUp(controlSignUp);
-//     LoginView.handleFormAnimations();
-// }
 
 init();

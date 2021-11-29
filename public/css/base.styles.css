@@ -125,14 +125,21 @@ i{font-style: normal;}
 .please-log-in-page .please-log-in-container .warning{height: 25px;}
 
 /* FAQs */
-.FAQs{height: 100%;background-color: var(--grey-white);}
+.FAQs{height: 100%;background-color: var(--grey-white);display: flex; flex-direction: column;}
 .FAQs .title-container{margin: 0;padding-left: 10%;padding-top: 20px;}
 .generic-title{margin: 0;font-size: 2.5rem;}
 .FAQs .title-container .subtext{font-size: 0.9rem;margin: 5px 0;color: var(--purple-grey)}
 .FAQs .search-form-container{display: flex;flex-direction: column;align-items: center;gap: 10px;padding: 20px 0;}
 .FAQs .FAQs-text{font-size: 1.2rem;}
 .FAQs .FAQs-text.getInTouch{color: white;}
-.FAQs .common-faqs{padding-left: 10%;background-color: #38ef7d; height: 700px;}
+.FAQs .common-faqs{padding: 0 10% 20px 10%; flex: 1;}
+.FAQs .common-faqs .general-questions-title{font-size: 1.85rem;padding-bottom: 10px;padding-left: 15px;}
+.FAQs .common-faqs .common-questions-container{}
+.FAQs .common-faqs .common-questions-container .general-question{display: flex; flex-wrap: nowrap;align-items: center;padding: 10px 0;font-size: 1.2rem;justify-content: space-between;border-top: 1px solid black;}
+.FAQs .common-faqs .common-questions-container .general-question.last-el{border-bottom: 1px solid black;}
+.FAQs .common-faqs .common-questions-container .general-question .question{margin: 0 0 0 15px;}
+.FAQs .common-faqs .common-questions-container .general-question .plus{margin-right: 15px;font-weight: bolder;font-size: 1.3rem;cursor: pointer;}
+.FAQs .common-faqs .common-questions-container .faq-answer{display: none;}
 
-.FAQs .further-questions-container{background-image: url('../assets/faq-dog.jpg');height: 375px;background-repeat: no-repeat;background-size: 100% 100%;}
+.FAQs .further-questions-container{background-image: url('../assets/faq-dog.jpg');min-height: 375px;background-repeat: no-repeat;background-size: 100% 100%;}
 .FAQs .further-questions-container .further-questions-text-container{padding: 40px 50px;}

@@ -12,6 +12,7 @@ const compression = require('compression');
 const globalErrorHandler = require("./controllers/error-controller");
 const viewRouter = require('./routes/view-routes');
 const userRouter = require('./routes/user-routes');
+const FAQsRouter = require('./routes/faqs-routes');
 //const AppError = require('./Utils.js/app-error');
 //const connection = require('./utils.js/sql-config');
 
@@ -78,6 +79,7 @@ app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-sr
 
 app.use('/', viewRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/faqs', FAQsRouter);
 
 // app.all("*", (req, res, next) => {
 //   //Express assumes next called with an argument is an error and goes to the error handling middleware*/
