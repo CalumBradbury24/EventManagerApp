@@ -135,11 +135,12 @@ i{font-style: normal;}
 .FAQs .common-faqs{padding: 0 10% 20px 10%; flex: 1;}
 .FAQs .common-faqs .general-questions-title{font-size: 1.85rem;padding-bottom: 10px;padding-left: 15px;}
 .FAQs .common-faqs .common-questions-container{}
-.FAQs .common-faqs .common-questions-container .general-question{display: flex; flex-wrap: nowrap;align-items: center;padding: 10px 0;font-size: 1.2rem;justify-content: space-between;border-top: 1px solid black;}
-.FAQs .common-faqs .common-questions-container .general-question.last-el{border-bottom: 1px solid black;}
+.FAQs .common-faqs .common-questions-container .general-question{display: flex; flex-wrap: nowrap;align-items: center;padding: 10px 0;font-size: 1.2rem;justify-content: space-between;border-top: 1px solid black;cursor: pointer;}
 .FAQs .common-faqs .common-questions-container .general-question .question{margin: 0 0 0 15px;}
-.FAQs .common-faqs .common-questions-container .general-question .plus{margin-right: 15px;font-weight: bolder;font-size: 1.3rem;cursor: pointer;}
-.FAQs .common-faqs .common-questions-container .faq-answer{display: none;}
+.FAQs .common-faqs .common-questions-container .general-question .plus{margin-right: 15px;font-weight: bolder;font-size: 1.3rem;}
+.FAQs .common-faqs .common-questions-container .faq-answer{padding: 0px 0 10px 15px}
+.hidden{display: none;}
+.event-search-form.large{width: 600px;}
 
 .FAQs .further-questions-container{background-image: url('../assets/faq-dog.jpg');min-height: 375px;background-repeat: no-repeat;background-size: 100% 100%;}
 .FAQs .further-questions-container .further-questions-text-container{padding: 40px 50px;}

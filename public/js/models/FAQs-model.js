@@ -11,6 +11,17 @@ const fetchCommonFAQs = async() => {
 	}
 } 
 
+const searchFAQs = async(search) => {
+	try{
+		const response = await makeAxiosGetRequest(`faqs/search/${search}`);
+		return response.data.data || [];
+	} catch (err) {
+		console.log(err);
+		console.error('Failed to fetch common FAQs'); //Message property of response
+	}
+}
+
 module.exports = {
-	fetchCommonFAQs
+	fetchCommonFAQs,
+	searchFAQs
 }

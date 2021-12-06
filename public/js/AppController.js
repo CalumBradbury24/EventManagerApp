@@ -91,9 +91,11 @@ if(userDetailsForm){
 /**************************************************************************************************************** */
 const controlHeaderSearchBar = (search) => {
     console.log(search)
-    if(!search) HeaderView.renderError('Please enter some keywords to search for events.');
+    if(!search) return HeaderView.renderError('Please enter some keywords to search for events.');
 }
 
+
+/* --------------------------------------------------------------- FAQs ------------------------------------------------------------------------- */
 const controlFooterOptionSelection = async (option = '') => {
     if(!option) FooterView.renderError('An error occurred :(. Please try again.');
     if(option === 'howItWorks'){
@@ -108,11 +110,22 @@ const controlFooterOptionSelection = async (option = '') => {
     if(option === 'faqs'){
         const commonFAQs = await FAQsModel.fetchCommonFAQs();
         FAQsView.render(commonFAQs);
-        FAQsView.init();
+        FAQsView.init(controlFAQSearch);
     } 
 }
 
-/* -------------------------------------- LOG IN _ OUT_ UP --------------------------------------------- */
+const controlFAQSearch = async(search) => {
+    if(!search || search.length > 250) return FAQsView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
+
+    FAQsView.renderSpinner();
+    const searchedFAQs = await FAQsModel.searchFAQs(search);
+    FAQsView.removeSpinner();
+    FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------- LOG_IN_OUT_UP ---------------------------------------------------------------- */
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
     const response = await userModel.login(email, password);
