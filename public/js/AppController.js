@@ -99,15 +99,19 @@ const controlHeaderSearchBar = (search) => {
 const controlFooterOptionSelection = async (option = '') => {
     if(!option) FooterView.renderError('An error occurred :(. Please try again.');
     if(option === 'howItWorks'){
+        HomePageView.renderSpinner(); //Cleared in render method
         HowItWorksView.render();
     } 
     if(option === 'contactUs'){
+        HomePageView.renderSpinner();
         ContactUsView.render();
     } 
     if(option === 'findEvents'){
+        HomePageView.renderSpinner();
         FindEventsView.render();
     } 
     if(option === 'faqs'){
+        HomePageView.renderSpinner();
         const commonFAQs = await FAQsModel.fetchCommonFAQs();
         FAQsView.render(commonFAQs);
         FAQsView.init(controlFAQSearch);
@@ -117,7 +121,7 @@ const controlFooterOptionSelection = async (option = '') => {
 const controlFAQSearch = async(search) => {
     if(!search || search.length > 250) return FAQsView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
 
-    FAQsView.renderSpinner();
+    FAQsView.renderSpinner('.common-faqs');
     const searchedFAQs = await FAQsModel.searchFAQs(search);
     FAQsView.removeSpinner();
     FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs

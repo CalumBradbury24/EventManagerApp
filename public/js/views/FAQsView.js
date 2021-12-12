@@ -7,10 +7,14 @@ class FAQView extends View {
         const questionsContainerChildren = questionsContainer.children;
 
         //Add toggle answer event listener to every question
-        Object.values(questionsContainerChildren).forEach(generalQuestionEl => {
-            const answerEl = generalQuestionEl.children[1];
+        Object.values(questionsContainerChildren).forEach((generalQuestionEl, i) => {
+            if(i===0) return;
+
+            const arrowEl = document.getElementById(`arrow-${i-1}`); //title el is a child but dosn't have a question/answer
+
             generalQuestionEl.addEventListener('click', () => {
-                answerEl.classList.toggle('hidden');
+                arrowEl.classList.toggle('active');
+                generalQuestionEl.classList.toggle('expand');
             });
         })
 
@@ -45,7 +49,6 @@ class FAQView extends View {
                 </form>
             </div>
             <div class="common-faqs">
-                <p class='general-questions-title'>General Questions</p>
                     ${this.renderFAQs()}
                 </div>
             <div class="further-questions-container">
@@ -64,21 +67,24 @@ class FAQView extends View {
 
         const markup = `
             <div class="common-questions-container">
-                ${data.length ?
-                    data.map((question) => {
-                        return `
-                            <div class="general-question-container">
-                                <div id="question-${question.FaqID}" class="general-question">
-                                    <h6 class="question">${question.faqQuestion}</h6>
-                                    <span class='plus'>+</span>
+                <p class='general-questions-title'>${refresh ? 'Results' : 'General Questions'}</p>
+                    ${data.length ?
+                        data.map((question,i) => {
+                            return `
+                                <div class="general-question-container">
+                                    <div id="question-${question.FaqID}" class="general-question">
+                                        <h6 class="question">${question.faqQuestion}</h6>
+                                        <div class="drop-down-arrow-wrapper"  id="arrow-${i}">
+                                            <span class="arrow"></span>
+                                        </div>
+                                    </div>
+                                    <p class="faq-answer hidden" id="answer-${question.FaqID}">${question.faqAnswer}</p>
                                 </div>
-                                <p class="faq-answer hidden" id="answer-${question.FaqID}">${question.faqAnswer}</p>
-                            </div>
-                        `
-                    }).join('')
-                    :
-                    '<p class="faq-answer">Unfortunately no FAQs were found for this search. If you still need further help please contact us at lorem@ipsum.com</p>'
-                }
+                            `
+                        }).join('')
+                        :
+                        '<p class="faq-answer">Unfortunately no FAQs were found for this search. If you still need further help please contact us at lorem@ipsum.com</p>'
+                    }
             </div>
         `
 

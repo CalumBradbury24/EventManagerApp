@@ -59,6 +59,7 @@ i{font-style: normal;}
 .spinner-container .spinner .spinner-section:nth-child(7):after {top: 63px;left: 17px;}
 .spinner-container .spinner .spinner-section:nth-child(8) {animation-delay: -0.288s;}
 .spinner-container .spinner .spinner-section:nth-child(8):after {top: 56px;left: 12px;}
+
 @keyframes spinner {
     0% {
         transform: rotate(0deg);
@@ -132,15 +133,23 @@ i{font-style: normal;}
 .FAQs .search-form-container{display: flex;flex-direction: column;align-items: center;gap: 10px;padding: 20px 0;}
 .FAQs .FAQs-text{font-size: 1.2rem;}
 .FAQs .FAQs-text.getInTouch{color: white;}
-.FAQs .common-faqs{padding: 0 10% 20px 10%; flex: 1;}
+.FAQs .common-faqs{padding: 0 10% 20px 10%; flex: 1;position: relative;}
 .FAQs .common-faqs .general-questions-title{font-size: 1.85rem;padding-bottom: 10px;padding-left: 15px;}
-.FAQs .common-faqs .common-questions-container{}
-.FAQs .common-faqs .common-questions-container .general-question{display: flex; flex-wrap: nowrap;align-items: center;padding: 10px 0;font-size: 1.2rem;justify-content: space-between;border-top: 1px solid black;cursor: pointer;}
-.FAQs .common-faqs .common-questions-container .general-question .question{margin: 0 0 0 15px;}
-.FAQs .common-faqs .common-questions-container .general-question .plus{margin-right: 15px;font-weight: bolder;font-size: 1.3rem;}
-.FAQs .common-faqs .common-questions-container .faq-answer{padding: 0px 0 10px 15px}
-.hidden{display: none;}
+.FAQs .common-faqs .common-questions-container .general-question-container{height: 42px;overflow: hidden;transition: 0.45s ease; animation: expand;}
+.expand {height: 70px !important;}
+.FAQs .common-faqs .common-questions-container .general-question{display: flex; flex-wrap: nowrap;align-items: center;padding: 10px 0;font-size: 1.4rem;justify-content: space-between;border-top: 1px solid black;cursor: pointer;}
+.FAQs .common-faqs .common-questions-container .general-question .question{margin: 0 50px 0 15px;}
+.FAQs .common-faqs .common-questions-container .faq-answer{padding: 0px 50px 10px 15px}
 .event-search-form.large{width: 600px;}
-
 .FAQs .further-questions-container{background-image: url('../assets/faq-dog.jpg');min-height: 375px;background-repeat: no-repeat;background-size: 100% 100%;}
 .FAQs .further-questions-container .further-questions-text-container{padding: 40px 50px;}
+
+.drop-down-arrow-wrapper{margin-right: 15px;display: block;transition: 0.15s ease;}
+.drop-down-arrow-wrapper.active .arrow {transform: rotate(45deg) translate(-5px,-5px)}
+.drop-down-arrow-wrapper.active .arrow:before{transform: translate(10px,0)}
+.drop-down-arrow-wrapper.active .arrow:after{transform: rotate(90deg) translate(10px,0)}
+.arrow{width: 13px; height: 13px;position: relative;bottom: -4px;left: -10px;transition: 0.5s ease;margin-top: 2px;text-align: left;transform: rotate(45deg);float: right;}
+.arrow:before{position: absolute;content: '';width: 12px;height: 3px;background-color: red;transition: 0.4s ease}
+.arrow:after{content: '';width: 12px;height: 3px; background-color: blue;transition: 0.4s ease;position: absolute;transform: rotate(90deg);top: -5px;left: 5px}
+
+

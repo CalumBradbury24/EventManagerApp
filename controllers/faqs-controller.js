@@ -14,7 +14,9 @@ const getGeneralFAQs = catchAsyncErrors(async(req, res, next) => {
 
 const getFAQsSearch = catchAsyncErrors(async(req, res, next) => {
     const search = '' +  req.params.search;
-    console.log(search);
+    
+    if(!search || search.length > 250) return new AppError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.', 400)
+
     connection.query(`select FaqID, faqQuestion, faqAnswer from FAQs where deprecated = 0 and faqQuestion like '%${search}%'`, (err, rows) => {
         if(err){
             return next(new AppError('Error searching FAQs', 400));

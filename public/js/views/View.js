@@ -20,8 +20,11 @@ export default class View{ //Singleton class
         window.setTimeout(hideAlert, timeoutSeconds); //Hide alert after 5 seconds
     }
 
-    renderSpinner(){
+    renderSpinner(customParentEl = false){
         console.log('adding spinner')
+        const spinner = document.querySelector('.spinner-container');
+        if(spinner) return;
+        let customParentElement = document.querySelector(customParentEl) || this._parentElement;
         const markup = `
                         <div class ="spinner-container">
                             <div class="spinner">
@@ -35,7 +38,8 @@ export default class View{ //Singleton class
                                 <div class='spinner-section'></div>
                             </div>
                         </div>`
-        this._parentElement.insertAdjacentHTML('afterbegin', markup);
+
+        customParentElement.insertAdjacentHTML('afterbegin', markup);
     }
 
     removeSpinner(){

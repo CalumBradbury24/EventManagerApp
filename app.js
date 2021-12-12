@@ -87,11 +87,12 @@ app.use('/api/v1/faqs', FAQsRouter);
 // }); //* means all routes
 
 app.all("*", (req, res, next) => {
-	res.status(404).render('page-not-found', {
-		title: 'Oops!',
-		url: req.originalUrl
-	})
-	next();
+	// res.status(404).render('page-not-found', { //No new page to render now as SPA
+	// 	title: 'Oops!',
+	// 	url: req.originalUrl
+	// })
+	//next();
+	return res.status(400).json({status: 'failed', message: 'Invalid url'})
 }); //* means all routes
 
 app.use(globalErrorHandler);
