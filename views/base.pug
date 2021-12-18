@@ -9,6 +9,7 @@ html
         link(rel='shortcut icon' type='image/png' href='./assets/Eventify-dark.png')
         meta(charset='UTF-8')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        script(defer type="text/javascript" src='/AppController.js')
     body
         include mixins/utils
         include _header
@@ -16,7 +17,3 @@ html
         block homepage
         block myAccount
         include _footer
-
-script(type="text/javascript" src='/AppController.js')
-
-

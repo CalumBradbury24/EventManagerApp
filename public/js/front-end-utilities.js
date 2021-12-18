@@ -39,6 +39,15 @@ export const spinner = (element) => {
     element.insertAdjacentHTML('afterbegin', markup);
 }
 
+export const fetchUserTimeMessage = () => {
+    const date = new Date();
+    const hours = date.getHours();
+
+    if (hours < 12) return 'Morning';
+    if (hours >= 12 && hours <= 17) return 'Afternoon';
+    if (hours >= 17 && hours <= 24) return 'Evening';
+}
+
 export const timeout = () => {
     return new Promise(function (_, reject) {
         setTimeout(function () {

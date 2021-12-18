@@ -11,6 +11,8 @@ import FAQsModel from './models/FAQs-model';
 import HeaderView from './views/HeaderView';
 import LoginView from './views/LoginView';
 import HomePageView from './views/HomePageView';
+import UpcomingEventsView from './views/UpcomingEventsView';
+import RecomendedEventsView from './views/RecommendedEventsView';
 import FooterView from './views/FooterView';
 import HowItWorksView from './views/HowItWorksView';
 import ContactUsView from './views/ContactUsView';
@@ -30,8 +32,6 @@ const securityOptions = document.getElementById('security');
 const securityContainer = document.querySelector('.security-container');
 const manageEvents = document.getElementById('myeventsmanager');
 const manageMyEventsContainer = document.getElementById('manageMyEvents');
-
-
 
 //Account settings page
 if(accountEdit && securityOptions){
@@ -141,7 +141,7 @@ const controlLogin = async (email, password) => {
             //refresh header and page
             HeaderView.refreshHeader(userModel.userState.user);
             HeaderView.handleLogOut(controlLogOut);
-            HomePageView.render(userModel.userState.user);
+            initHomePage();
         }, 300)
     } else {
         window.setTimeout(() => {
@@ -185,8 +185,8 @@ const controlLogOut = async() => {
         window.setTimeout(() => {
             HeaderView.refreshHeader(userModel.userState.user);
             HeaderView.handleRenderLogin(controlRenderLogin);
-            HomePageView.render(userModel.userState.user);
-            HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
+
+            initHomePage();
         }, 300);
     } else window.setTimeout(() => {
         LoginView.removeSpinner();
@@ -227,7 +227,14 @@ const initFooter = () => {
 }
 
 const initHomePage = () => {
-    HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
+    HomePageView.render(userModel.userState.user);
+    if(!!userModel.userState?.user?.isLoggedIn){
+        const upcomingEventsView = new UpcomingEventsView();
+        const recommendedEventsView = new RecomendedEventsView();
+        upcomingEventsView.render();
+        recommendedEventsView.render(userModel.userState.user);
+    }
+    else HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
 }
 
 init();

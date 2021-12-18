@@ -59,10 +59,10 @@ class HeaderView extends View {
             </form>
                     
             <div class="menu-container">
-                <a class="link" href="/find-events">
+                <a class="link">
                     <h3 class="link-text">Whats On</h3>
                 </a>
-                <a class="link" href="/find-events">
+                <a class="link">
                     <h3 class="link-text">Featured Events</h3>
                 </a>
                 ${this._data.isLoggedIn ? 
@@ -72,6 +72,9 @@ class HeaderView extends View {
                             <div class="dropdown-content"> 
                                 <a class="dropdown-link" href='/my-account'> 
                                     <h3 class="link-text">My Account</h3>
+                                </a>
+                                <a class="dropdown-link"> 
+                                    <h3 class="link-text">My Events</h3>
                                 </a>
                                 <a class="dropdown-link" id="logout"> 
                                     <h3 class="link-text">Sign Out</h3>

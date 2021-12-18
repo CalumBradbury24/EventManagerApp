@@ -1,21 +1,14 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-* {
-	box-sizing: border-box;
-}
+* {box-sizing: border-box;}
 
 .login-container-body {background: var(--dark-grey);display: flex;justify-content: center;align-items: center;font-family: 'Montserrat', sans-serif;height:100%;}
 .login-container-body h1 {font-weight: bold;margin: 0;}
 .login-container-body  h2 {text-align: center;}
 .login-container-body p {font-size: 14px;font-weight: 100;line-height: 20px;letter-spacing: 0.5px;margin: 20px 0 30px;}
 .login-container-body span {font-size: 12px;}
-.login-container-body a {
-	color: #333;
-	font-size: 14px;
-	text-decoration: none;
-	margin: 15px 0;
-}
+.login-container-body a {color: #333;font-size: 14px;text-decoration: none;margin: 15px 0;}
 
 .login-container-body button {
 	border-radius: 20px;

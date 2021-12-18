@@ -6,8 +6,10 @@ export default class View{ //Singleton class
         this._data = data;
         const markup = this._generateHTMLMarkup();
 
-        this._clear();
-        if(this._parentElement) this._parentElement.insertAdjacentHTML(position, markup); 
+        if(this._parentElement) {
+            this._clear();
+            this._parentElement.insertAdjacentHTML(position, markup); 
+        }
     }
 
     _clear(){

@@ -6,7 +6,7 @@ A website where someone can create an event(s) and others can sign up for it.
     - [ ] create event
     - [ ] my account
     - [ ] my events - filter by all, historic and upcoming
-- [ ] FAQs page - allow user to ask questions
+- [x] FAQs page - allow user to ask questions
 - [ ] Contact Us page - set up emailing system
 - [ ] whats on page - if logged in can see and sign up for everything. If not signed in can just view public (non-private) events
 - [ ] Featured events - a page of a few events that are featured (paid to be there?)
@@ -19,13 +19,13 @@ A website where someone can create an event(s) and others can sign up for it.
 - [x] set up validator.js
 
 //TODO short term
-- [x] Add search bar to header (shown on all headers). Make header colour different depending on hash
+- [x] Add search bar to header.
 - [ ] fix styling for 'choose file' button and text when uploading user picture (fix styling for this page in general (especially the save button and maybe the input boxes)) - pending redesign
 - [x] finish modal
-- [ ] build FAQs page
-- [ ] Sort proper colour scheme out and redesign Splashscreen
+- [x] build FAQs page
+- [x] Sort proper colour scheme out and redesign Splashscreen
 - [ ] design home page (logged in)
-- [ ] Refactor for config.js, helpers etc, add api request timeout function 
+- [x] Refactor for config.js, helpers etc, add api request timeout function 
  
 
 Features

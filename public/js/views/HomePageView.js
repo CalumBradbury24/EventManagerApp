@@ -1,7 +1,7 @@
 import View from './View.js';
 
 class HomePageView extends View {
-    _parentElement = document.querySelector('.home-page');
+    _parentElement = document.querySelector('.home-page'); //This div is rendered by the pug template
 
     addSignUpSplashButtonHandler(handler){
         const signUp = document.querySelector('.splash-sign-up');
@@ -13,8 +13,10 @@ class HomePageView extends View {
                 ${
                     this._data.isLoggedIn ?
                         `
-                        <h1>Home page</h1>
-                        <h1>You are logged in ${this._data.firstName}</h1>
+                        <div class="logged-in-home">
+                            <div class="upcoming-events"></div>
+                            <div class="recommended-events"></div>
+                        </div>
                         ` 
                         : 
                         `
