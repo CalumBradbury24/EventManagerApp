@@ -1,25 +1,17 @@
 const connection = require('../utils.js/sql-config');
 const { catchAsyncErrors } = require('../utils.js/utilities');
-const jwt = require('jsonwebtoken');
 const AppError = require('../utils.js/app-error');
-const { promisify } = require("util"); //Node built in function that contains the promisify method to make a method return a promise, thus can use async/await
 const bcrypt = require('bcryptjs');
 const validate = require('../utils.js/validator');
+const { signJWT, verifyJWT } = require('../utils.js/jwt-utils');
 //Authentication with jwt
 //1)User logs in with email/password with POST request
 //2)If user and password are valid, server sends back to client a newly created jwt
 //3)User can then access protected routes with valid jwt token in the header or cookies e.g GET /someProtectedRoute
 //4)If jwt in request is valid, server sends back protected data to client
 
-const signToken = (userID) => {
-    //arguments- users id, Secret for encrypting the signiture, object of options
-    return jwt.sign({ id: userID }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-    }); //Create a jwt out of the user id and the secret
-};
-
 const createAndSendJWT = (user, statusCode, req, res) => {
-    const jwt = signToken(user.userID);
+    const jwt = signJWT(user.userID);
 
     //Can see this in the cookie tab in postman
     const cookieOptions = {
@@ -52,7 +44,7 @@ const login = catchAsyncErrors(async (req, res, next) => {
 
     const user = await loginPromise(email);
 
-    //if user logged in successfully, send jwt
+    //If user logged in successfully, send jwt
     if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, req, res);
     else return next(new AppError('Incorrect email or password', 401))
 
@@ -61,16 +53,11 @@ const login = catchAsyncErrors(async (req, res, next) => {
 const loginPromise = (email) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where email = ?`, [email], (error, rows) => {
-            if (error) {
-                reject(new AppError('Login error', 400))
-                return
-            } else if (!rows.length) {
-                reject(new AppError('Incorrect email or password', 401))
-                return
-            }
-            else resolve(rows[0])
-        })
-    })
+            if (error) return reject(new AppError('Login error', 400));
+            else if (!rows.length) return reject(new AppError('Incorrect email or password', 401));
+            resolve(rows[0])
+        });
+    });
 }
 
 const logout = (req, res) => {
@@ -114,16 +101,12 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
     //verify jwt
     if (req.cookies.jwt) {
-        const decoded = await promisify(jwt.verify)(
-            req.cookies.jwt,
-            process.env.JWT_SECRET
-        ); //Promisify makes jwt.verify return a promise which can be awaited (rather than having to use a callback function as the third argument)
-
+        const decoded = await verifyJWT(req.cookies.jwt);
         console.log('decoded jwt->', decoded)
 
         //check if user still exists and hasn't been deleted, decoded.iat is issued at time
         let validatedCurrentUser = await validateUser(decoded.id);
-        if (!validatedCurrentUser) return next(new AppError('User does not exist', 401))
+        if (!validatedCurrentUser.length) return next(new AppError('User does not exist', 401))
 
         //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
 
@@ -159,8 +142,8 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 const validateUser = (decodedUserID) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where deleted = 0 and userID = ?`, decodedUserID, (error, rows) => {
-            if (error) reject(new AppError('Error finding user', 404));
-            else resolve(rows[0])
+            if (error) return reject(new AppError('Error finding user', 404));
+            resolve(rows[0]);
         })
     })
 }
@@ -175,14 +158,14 @@ const protect = catchAsyncErrors(async (req, res, next) => {
     }
 
     //2) validate jwt token
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //Promisify makes jwt.verify return a promise which can be awaited (rather than having to use a callback function as the third argument)
+    const decoded = await verifyJWT(req.cookies.jwt);
 
     //3) Check if user still exists
     //If user has been deleted but the jwt still exists, we don't want to log the user in!
     //Or if the user has changed his password after the jwt has been issued, the old token should no longer be valid!
     //Check user still exists
-    const validatedUser = await validateUserOnLoginPromise(decoded.id);
-    if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+    const validatedUser = await validateUser(decoded.id);
+    if (!validatedUser.length) return next(new AppError("The user belonging to this token no longer exists", 401));
 
     // //4) Check if user changed password after the jwt was issued
     // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
@@ -205,9 +188,9 @@ console.log('token->', token);
         //If there is a token then the user is logged in
         if (!!token) {
             //2) validate jwt token
-            const decodedJWT = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //Promisify makes jwt.verify return a promise which can be awaited (rather than having to use a callback function as the third argument)
+            const decodedJWT = await verifyJWT(req.cookies.jwt);
             const validatedUser = await validateUser(decodedJWT.id);
-            if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+            if (!validatedUser.length) return next(new AppError("The user belonging to this token no longer exists", 401));
 
             //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
             delete validatedUser.password;

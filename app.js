@@ -14,7 +14,6 @@ const viewRouter = require('./routes/view-routes');
 const userRouter = require('./routes/user-routes');
 const FAQsRouter = require('./routes/faqs-routes');
 //const AppError = require('./Utils.js/app-error');
-//const connection = require('./utils.js/sql-config');
 
 // Start express app
 const app = express(); //express methods added to app
@@ -75,7 +74,7 @@ if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev")); //Logs the incoming request method and route, response code, time it took to send back the response and size of the response in bytes
 }
 
-app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-src 'self' cdnjs.cloudflare.com"); return next();})
+app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-src 'self' cdnjs.cloudflare.com"); return next();}) //is this needed?
 
 app.use('/', viewRouter);
 app.use('/api/v1/users', userRouter);
