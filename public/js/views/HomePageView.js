@@ -1,5 +1,5 @@
 import View from './View.js';
-
+import { fetchUserTimeMessage } from '../front-end-utilities';
 class HomePageView extends View {
     _parentElement = document.querySelector('.home-page'); //This div is rendered by the pug template
 
@@ -15,7 +15,7 @@ class HomePageView extends View {
                         `
                         <div class="logged-in-home">
                             <div class="upcoming-events"></div>
-                            <div class="recommended-events"></div>
+                            <div class="recommended-events"> <h1 class = "welcome-message">Good ${fetchUserTimeMessage()} ${this._data.firstName}! Can we interest you in some events?</h1></div>
                         </div>
                         ` 
                         : 

@@ -2,11 +2,14 @@
 import 'regenerator-runtime/runtime';
 import '@babel/polyfill'; //For older browser compatibility
 
-import userModel from './models/user-model';
+
 import { updateUserDetails } from './save-account-details';
 import { customButton, showAlert } from './front-end-utilities';
 import { Modal } from './views/Modal';
+
+import userModel from './models/user-model';
 import FAQsModel from './models/FAQs-model';
+import eventsModel from './models/events-model';
 
 import HeaderView from './views/HeaderView';
 import LoginView from './views/LoginView';
@@ -202,9 +205,8 @@ const init = async () => { //Add required event listeners
         await initUser();
         initHeader();
         initFooter();
-        initHomePage();
+        await initHomePage();
         console.log(userModel.userState);
-       // handleLoginViewInit();
     } catch(err){
         console.error(err.message);
     }
@@ -226,13 +228,14 @@ const initFooter = () => {
     FooterView.initFooterEventListeners(controlFooterOptionSelection);
 }
 
-const initHomePage = () => {
+const initHomePage = async() => {
     HomePageView.render(userModel.userState.user);
     if(!!userModel.userState?.user?.isLoggedIn){
+        await eventsModel.fetchRecommendedEvents();
         const upcomingEventsView = new UpcomingEventsView();
         const recommendedEventsView = new RecomendedEventsView();
         upcomingEventsView.render();
-        recommendedEventsView.render(userModel.userState.user);
+        recommendedEventsView.render(eventsModel.eventsState?.recommendedEvents, 'beforeend', false);
     }
     else HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
 }

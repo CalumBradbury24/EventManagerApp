@@ -72,3 +72,7 @@ config.env
 .cache
 .parcel-cache
 dist
+
+db-scripts.js
+countries.json
+states.json

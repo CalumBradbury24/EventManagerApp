@@ -2,14 +2,12 @@ import { hideAlert, showAlert } from '../front-end-utilities';
 export default class View{ //Singleton class
     _data;
 
-    render(data = undefined, position = 'afterbegin'){
+    render(data = undefined, position = 'afterbegin', clearParentEL = true){
         this._data = data;
         const markup = this._generateHTMLMarkup();
 
-        if(this._parentElement) {
-            this._clear();
-            this._parentElement.insertAdjacentHTML(position, markup); 
-        }
+        if(clearParentEL) this._clear();
+        if(this._parentElement) this._parentElement.insertAdjacentHTML(position, markup); 
     }
 
     _clear(){

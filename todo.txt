@@ -54,3 +54,14 @@ Nice to haves
 
 //isLoggedIn is used to validate a user is logged in and attach their details to pug to display on front-end
 //protect is used to validate user on back-end and attach req.user to the request object
+
+// Event types - https://www.socialtables.com/blog/event-planning/types-of-events/
+- Conference & Seminar
+- Trade Show
+- Music Festivals (music etc)
+- Food and drink festivals
+- Business (Careers fair etc)
+- Charity (fundraisers etc)
+- Outdoor (walks, hikes, cycling clubs etc)
+- Sports
+- Other ()

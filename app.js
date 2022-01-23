@@ -12,6 +12,7 @@ const compression = require('compression');
 const globalErrorHandler = require("./controllers/error-controller");
 const viewRouter = require('./routes/view-routes');
 const userRouter = require('./routes/user-routes');
+const eventsRouter = require('./routes/event-routes');
 const FAQsRouter = require('./routes/faqs-routes');
 //const AppError = require('./Utils.js/app-error');
 
@@ -78,6 +79,7 @@ app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-sr
 
 app.use('/', viewRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/events', eventsRouter);
 app.use('/api/v1/faqs', FAQsRouter);
 
 // app.all("*", (req, res, next) => {

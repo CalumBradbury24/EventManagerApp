@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util"); //Node built in function that contains the promisify method to make a method return a promise, thus can use async/await
+const AppError = require('./app-error');
 
 //arguments- users id, Secret for encrypting the signiture, object of options
 exports.signJWT = (userID, options = {}) => { //Create a jwt out of the user id and the secret
@@ -15,10 +16,6 @@ exports.verifyJWT = async (token) => {
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
         return decoded;
     }catch(err){
-        return {
-            valid:false,
-            expired: err.message === 'jwt expired',
-            decoded: null
-        }
+        return next(new AppError('Error validating user', 401))
     }
 }

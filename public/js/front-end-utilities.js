@@ -43,9 +43,9 @@ export const fetchUserTimeMessage = () => {
     const date = new Date();
     const hours = date.getHours();
 
-    if (hours < 12) return 'Morning';
-    if (hours >= 12 && hours <= 17) return 'Afternoon';
-    if (hours >= 17 && hours <= 24) return 'Evening';
+    if (hours < 12) return 'morning';
+    if (hours >= 12 && hours <= 17) return 'afternoon';
+    if (hours >= 17 && hours <= 24) return 'evening';
 }
 
 export const timeout = () => {
