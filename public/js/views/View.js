@@ -6,7 +6,7 @@ export default class View{ //Singleton class
         this._data = data;
         const markup = this._generateHTMLMarkup();
 
-        if(clearParentEL) this._clear();
+        if(clearParentEL) this._clear(); //In some cases we want to render an element without clearing its parent element
         if(this._parentElement) this._parentElement.insertAdjacentHTML(position, markup); 
     }
 

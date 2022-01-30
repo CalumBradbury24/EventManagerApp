@@ -52,8 +52,8 @@ Nice to haves
 //When a user makes a request to a page that requires they be logged in the backend checks their jwt(and gets userID from it),
 //fetches the current user based on that ID and attaches it to the req.user object so that req.user exists on the backend
 
-//isLoggedIn is used to validate a user is logged in and attach their details to pug to display on front-end
-//protect is used to validate user on back-end and attach req.user to the request object
+//isLoggedIn is used to validate a user is logged in and attach their details to pug to display on front-end and req.user
+
 
 // Event types - https://www.socialtables.com/blog/event-planning/types-of-events/
 - Conference & Seminar

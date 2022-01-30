@@ -12,7 +12,7 @@ router.route('/logout').get(authController.logout);
 router.route('/fetch-user').get(authController.fetchValidUser);
 
 router.route('/update-profile').patch(
-    authController.protect,
+    authController.isLoggedIn,
     userController.uploadUserPhoto,
     userController.resizeUserPhoto,
     userController.updateUserProfile); //patch is for updating a resource

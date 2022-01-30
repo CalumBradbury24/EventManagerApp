@@ -98,47 +98,39 @@ const signUp = catchAsyncErrors( async (req, res, next) => {
 //If user is logged in then the user object is created for the pug files, otherwise there will be no user for pug files
 const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
     console.log('checking user is logged in...')
+        //1) Get jwt token and check it exists
+        let token = req.cookies.jwt;
 
-    //verify jwt
-    if (req.cookies.jwt) {
-        const decoded = await verifyJWT(req.cookies.jwt);
-        console.log('decoded jwt->', decoded)
+        //If there is no token then the user hasn't logged in and received one
+        if (!token) return next(); //401 - unauthorized, just go back to home page?
         
-        //check if user still exists and hasn't been deleted, decoded.iat is issued at time
-        let validatedCurrentUser = await validateUser(decoded.id);
-        console.log(validatedCurrentUser);
-        if (!validatedCurrentUser) return next(new AppError('User does not exist', 401))
+        //2) validate jwt token
+        const decoded = await verifyJWT(req.cookies.jwt);
 
-        //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
+        //3) Check if user still exists
+        //If user has been deleted but the jwt still exists, we don't want to log the user in!
+        //Or if the user has changed his password after the jwt has been issued, the old token should no longer be valid!
+        const validatedUser = await validateUser(decoded.id);
+        if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+
+        // //4) Check if user changed password after the jwt was issued
+        // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
+        //   //iat = issued at
+        //   return next(
+        //     new AppError("User recently changed password! Please log in again", 401)
+        //   );
+        // }
 
         /*res.locals contains response local variables scoped to the request, they are available only to the view(s) 
         rendered during the request / response cycle (if any)*/
-        res.locals.user = validatedCurrentUser;
+        res.locals.user = validatedUser;
 
-        /*res.locals.user looks like ->
-        {
-        userID: 1,
-        userTypeID: 1,
-        firstName: 'Calum',
-        lastName: 'Bradbury',
-        email: 'cs.bradbury@outlook.com',
-        password: '$2a$12$LkSMsz96DkoVa2xU8UJP3uH6EM3O9eM9lhkkchXX6SyMFf54EgeCS',
-        created: '20/02/1995',
-        deleted: 0,
-        deletedAt: null,
-        contactNumber: '7383514483',
-        address: '58 Priory Walk',
-        city: 'LEICESTER',
-        state: 'Leicestershire',
-        country: 'LE3 3PP',
-        postCode: 'United Kingdom',
-        userImage: default.jpeg
-        } and is accessible in all pug files*/
-
-        return next();
-    }
-    next(); //This allows for rendering the page just without user details applied etc
+        //GRANT ACCESS TO PROTECTED ROUTE
+        //If user has valid jwt token then go to next middleware 
+        req.user = validatedUser; //Store current user details in req.user
+        next();
 }, 'isLoggedIn')
+
 
 const validateUser = (decodedUserID) => {
     return new Promise((resolve, reject) => {
@@ -148,39 +140,6 @@ const validateUser = (decodedUserID) => {
         })
     })
 }
-//Middleware to validate current user and add him to the req object
-const protect = catchAsyncErrors(async (req, res, next) => {
-    // 1) Get jwt token and check it exists
-    let token = req.cookies.jwt;
-
-    //If there is no token then the user hasn't logged in and received one
-    if (!token) {
-      return next(new AppError("You are not logged in.", 401)); //401 - unauthorized
-    }
-
-    //2) validate jwt token
-    const decoded = await verifyJWT(req.cookies.jwt);
-
-    //3) Check if user still exists
-    //If user has been deleted but the jwt still exists, we don't want to log the user in!
-    //Or if the user has changed his password after the jwt has been issued, the old token should no longer be valid!
-    //Check user still exists
-    const validatedUser = await validateUser(decoded.id);
-    if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
-
-    // //4) Check if user changed password after the jwt was issued
-    // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
-    //   //iat = issued at
-    //   return next(
-    //     new AppError("User recently changed password! Please log in again", 401)
-    //   );
-    // }
-
-    //GRANT ACCESS TO PROTECTED ROUTE
-    //If user has valid jwt token then go to next middleware 
-    req.user = validatedUser; //Store current user details in req.user
-    next();
-}, 'authController.protect');
 
 const fetchValidUser = catchAsyncErrors(async (req, res, next) => {
      // 1) Get jwt token and check it exists
@@ -211,6 +170,5 @@ module.exports = {
     signUp,
     isLoggedIn,
     logout,
-    protect,
     fetchValidUser
 }
