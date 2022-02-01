@@ -94,7 +94,8 @@ i{font-style: normal;}
 /* Recommended Events Widget */
 .recommended-events .welcome-message{font-size: 1.5rem; color: var(--dark-grey);margin-top: 50px;}
 .recommended-events .recommended-events-container{width: 100%; display: flex;gap: 50px;flex-wrap: wrap;overflow: auto;justify-content: center;margin: 20px 0;}
-.recommended-events .recommended-events-container .recommended-event-container{height: 200px;background-color:white;width: 500px;border-radius: 20px;}
+.recommended-events .recommended-events-container .recommended-event-container{height: 200px;background-color:white;min-width: 500px;width: 80%; border-radius: 20px;display: flex;}
+.recommended-events .recommended-events-container .recommended-event-container .event-type-image{border-top-left-radius: 20px; border-bottom-left-radius: 20px; min-width: 175px;max-width: 250px;width: 25%;}
 
 /* Upcoming Events Widget */
 .upcoming-events .upcoming-title-container{background-color: var(--dark-grey); margin: 10px;border-radius: 10px;}

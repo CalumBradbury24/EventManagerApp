@@ -202,17 +202,18 @@ const controlLogOut = async() => {
 const init = async () => { //Add required event listeners
     console.log('init')
     try{
-        await initUser();
+        await Promise.all([initUser(), initEvents()]);
         initHeader();
         initFooter();
         await initHomePage();
-        console.log(userModel.userState);
+        console.log(userModel.userState, eventsModel.eventsState);
     } catch(err){
         console.error(err.message);
     }
 }
 
 const initUser = async () => await userModel.fetchValidUser(); //When the page is refreshed fetch the user 
+const initEvents = async() => await eventsModel.fetchEventTypes();
 
 const initHeader = () => {
     HeaderView.render(userModel.userState.user);

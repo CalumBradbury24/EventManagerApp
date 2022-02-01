@@ -1,7 +1,14 @@
 import { makeAxiosGetRequest } from '../front-end-utilities';
 
 const eventsState = {
-    recommendedEvents: {}
+    recommendedEvents: {},
+	eventTypes: {}
+}
+
+const fetchEventTypes = async() => {
+	//dont need to try, catch as errors are caught in function where this function is called from
+	const response = await makeAxiosGetRequest('events/types');
+	eventsState.eventTypes = response.data?.data || [];
 }
 
 const fetchRecommendedEvents = async() => {
@@ -17,5 +24,6 @@ const fetchRecommendedEvents = async() => {
 
 module.exports = {
 	fetchRecommendedEvents,
+	fetchEventTypes,
     eventsState
 }
