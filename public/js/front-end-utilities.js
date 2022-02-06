@@ -98,3 +98,14 @@ export const removeAllChildNodes = (parent) => {
         parent.removeChild(parent.firstChild);
     }
 }
+
+export const UTCtoLocaleTime = (utc = '') => {
+    if(!utc) return 0;
+
+    const localeTime = new Date(utc).toLocaleString();
+    return localeTime.slice(0, localeTime.length-3);
+};
+
+export const formatMoney = (symbol, code, cost) => {
+    return `${symbol}${cost} (${code})`
+}

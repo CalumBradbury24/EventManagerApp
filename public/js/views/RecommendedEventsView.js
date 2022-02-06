@@ -1,4 +1,5 @@
 import View from './View.js';
+import { UTCtoLocaleTime, formatMoney } from '../front-end-utilities';
 
 class RecommendedEventsView extends View {
     _parentElement = document.querySelector('.recommended-events'); //This div is rendered in the home page view
@@ -12,14 +13,16 @@ class RecommendedEventsView extends View {
                         return `<div class="recommended-event-container">
                                     <img class="event-type-image" src="/img/events/${event.image}.jpg"></img>
                                     <div class="event-info-container">
-                                        <h4 class="event-info-title">${event.eventName}</h4>
-                                            <div class="event-info">
+                                        <h4 class="event-info-title">${event.eventName || 'Undefined Event Name'} (${event.eventTypeName})</h4>
+                                        <div class="event-info">
+                                            <p class='event-date'>${(UTCtoLocaleTime(event.startDate) || '')} - ${(UTCtoLocaleTime(event.endDate) || '')}</p>
+                                            <p class='event-meta-data'>${event.address + ',' || ''} ${event.city + ',' || ''} ${event.countryName || ''}</p>
+                                            <p class='event-meta-data'>${formatMoney(event.currencySymbol, event.currencyCode, event.cost)}</p>
                                         </div>
+                                    </div>
                                     <div class="event-buttons">
 
                                     </div>
-                                    </div>
-
                                 </div>`
                     }).join('') //.map results in an array of each string so need to .join()
                 :

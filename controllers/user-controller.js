@@ -13,7 +13,7 @@ const multerFilter = (req, file, cb) => {
     if(file.mimetype.startsWith('image')){ //if the mimetype of the file is an image
         cb(null, true);
     } else {
-        cb(new AppError('Not an image! Please only upload images', 400), false);
+        cb(new AppError('', 'Not an image! Please only upload images', 400), false);
     }
 }
 const upload = multer( { 
@@ -47,10 +47,10 @@ const updateUserProfile = catchAsyncErrors(async(req, res, next) => {
         userPhoto: req.file ? req.file.filename : 'default.jpeg'
     }
 
-    if(!validatedData.fname || !validatedData.lname || !validatedData.email) return next(new AppError('Missing parameters', 400));
-    if(!validator.validateEmail(validatedData.email)) return next(new AppError('The entered email is invalid', 400));
+    if(!validatedData.fname || !validatedData.lname || !validatedData.email) return next(new AppError('', 'Missing parameters', 400));
+    if(!validator.validateEmail(validatedData.email)) return next(new AppError('', 'The entered email is invalid', 400));
     if(validatedData.postcode){
-        if(!validator.validatePostCode(validatedData.postcode)) return next(new AppError('The entered postcode is invalid', 400));
+        if(!validator.validatePostCode(validatedData.postcode)) return next(new AppError('', 'The entered postcode is invalid', 400));
     }
 
     let query = `update users set firstName = ?, lastName = ?, email = ?, contactNumber = ?, address = ?, city = ?, state = ?, country = ?, postCode = ?`
@@ -67,7 +67,7 @@ const updateUserProfile = catchAsyncErrors(async(req, res, next) => {
     }
     console.log(query, params)
     connection.query(query, params, (error) => {
-        if(error)return next(new AppError(error, 500));
+        if(error)return next(new AppError(error, 'Failed to update user details', 500));
         else res.status(200).json({status: 'success', message: 'Details updated successfully!'});
     })
 }, 'updateUserProfile')

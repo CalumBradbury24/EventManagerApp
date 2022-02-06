@@ -74,5 +74,4 @@ config.env
 dist
 
 db-scripts.js
-countries.json
-states.json
+db-data

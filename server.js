@@ -1,9 +1,11 @@
 require("dotenv").config({ path: "./config.env" });
 const connection = require('./utils.js/sql-config');
+const logger = require('./utils.js/logger');
 
 //HANDLE UNCAUGHT EXCEPTIONS -synchronous errors such as console.log(undefinedVariable) - at top of code so that all errors that come after are caught (otherwise errors before this will be missed/uncaught!)
 //Listen to uncaughtException event
 process.on("uncaughtException", (error) => {
+    logger.error(`Uncaught exception event ocurred: ${error.message}`);
     console.log("UNCAUGHT EXCEPTION!..server closing down.");
     console.log(error.name, error.message); //Catch and log the error name and message
     process.exit(1);
@@ -24,6 +26,7 @@ const server = app.listen(port, () => {
 //HANDLE UNHANDLED PROMISE REJECTIONS/asynchronous errors - Deal with unhandled promise rejections such as a failure to connect to the database etc
 //subscribe to the unhandledRejection event listener
 process.on("unhandledRejection", (error) => {
+    logger.error(`Unhandled rejection event ocurred: ${error.message}`);
     console.log("UNHANDLED REJECTION!..server closing down.");
     console.log(error.name, error.message); //Catch and log the error name and message
     server.close(() => {

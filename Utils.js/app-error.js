@@ -5,7 +5,7 @@ class AppError extends Error {
         super();
 
         //Don't need to initialise this.statusMessage as it is passed in super()
-        this.fullError = fullError; //These properties are used in the error-controller controller function
+        this.fullError = fullError || message; //These properties are used in the error-controller controller function
         this.message = message;
         this.statusCode = statusCode;
         this.status = `${statusCode}`.startsWith("4") ? "failed" : "error";

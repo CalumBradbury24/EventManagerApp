@@ -8,6 +8,7 @@ const hpp = require("hpp");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const compression = require('compression');
+const logger = require('./utils.js/logger');
 
 const globalErrorHandler = require("./controllers/error-controller");
 const viewRouter = require('./routes/view-routes');
@@ -18,7 +19,6 @@ const FAQsRouter = require('./routes/faqs-routes');
 
 // Start express app
 const app = express(); //express methods added to app
-
 
 //Pug config
 app.set("view engine", "pug"); //pug is automatically contained in node, doesn't need to be installed
@@ -88,12 +88,14 @@ app.use('/api/v1/faqs', FAQsRouter);
 // }); //* means all routes
 
 app.all("*", (req, res, next) => {
-	// res.status(404).render('page-not-found', { //No new page to render now as SPA
-	// 	title: 'Oops!',
-	// 	url: req.originalUrl
-	// })
-	//next();
-	return res.status(400).json({status: 'failed', message: 'Invalid url'})
+	console.log(req);
+	logger.http(`${req.method} request to ${req.originalUrl} failed. Response Code: '404', Response message: "Invalid URL"`);
+	res.status(404).render('page-not-found', {
+		title: 'Oops!',
+		url: req.originalUrl
+	})
+	next();
+	//return res.status(400).json({status: 'failed', message: 'Invalid url'}) //if no front end then could do like this
 }); //* means all routes
 
 app.use(globalErrorHandler);

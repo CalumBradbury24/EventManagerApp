@@ -40,21 +40,21 @@ const login = catchAsyncErrors(async (req, res, next) => {
     let { email, password } = req.body;
     email = '' + email || '';
     password = '' + password || '';
-    if (!email || !password) return next(new AppError('Please provide a username and password', 400))
+    if (!email || !password) return next(new AppError('', 'Please provide a username and password', 400));
 
     const user = await loginPromise(email);
 
     //If user logged in successfully, send jwt
     if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, req, res);
-    else return next(new AppError('Incorrect email or password', 401))
+    else return next(new AppError('','Incorrect email or password', 401))
 
 }, 'login');
 
 const loginPromise = (email) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where email = ?`, [email], (error, rows) => {
-            if (error) return reject(new AppError('Login error', 400));
-            else if (!rows.length) return reject(new AppError('Incorrect email or password', 401));
+            if (error) return reject(new AppError(error, 'Login error', 400));
+            else if (!rows.length) return reject(new AppError('', 'Incorrect email or password', 401));
             resolve(rows[0])
         });
     });
@@ -67,24 +67,24 @@ const logout = (req, res) => {
 
 const signUp = catchAsyncErrors( async (req, res, next) => {
     let { fname, lname, email, password, passwordConfirm } = req.body;
-    if (!fname || !lname || !email || !password || !passwordConfirm) return next(new AppError('Missing required details', 401));
-    if(password !== passwordConfirm) return next(new AppError('Passwords do not match', 401));
+    if (!fname || !lname || !email || !password || !passwordConfirm) return next(new AppError('', 'Missing required details', 401));
+    if(password !== passwordConfirm) return next(new AppError('', 'Passwords do not match', 401));
 
     if(!validate.validatePassword(password, passwordConfirm)) return next(new AppError('Password is not strong enough', 400))
-    if(!validate.validateEmail(email)) return next(new AppError('Email is not valid', 400))
+    if(!validate.validateEmail(email)) return next(new AppError('', 'Email is not valid', 400))
     fname = fname.trim(); //remove whitespace
     lname = lname.trim();
 
     password = await bcrypt.hash(password, 12);
     //check email used to sign up does not already have an account
     connection.query(`select * from users where email = ?`, email, (err, rows) => {
-        if (err) return next(new AppError(err, 400));
-        if(rows && rows.length) return next(new AppError('There already exists a user under this email address', 400));
+        if (err) return next(new AppError(err,'Error validating user', 400));
+        if(rows && rows.length) return next(new AppError('', 'There already exists a user under this email address', 400));
             connection.query(`insert into users set firstName = ?, lastName = ?, email = ?,
                 password = ?, created = ?`, [fname, lname, email, password, '20/02/1995'], (error) => {
                 if (error){
                     console.log(error);
-                    return next(new AppError('Error creating new user :(', 400));
+                    return next(new AppError(error, 'Error creating new user :(', 400));
                 }
                 res.status(200).json({
                     status: 'success',
@@ -111,7 +111,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         //If user has been deleted but the jwt still exists, we don't want to log the user in!
         //Or if the user has changed his password after the jwt has been issued, the old token should no longer be valid!
         const validatedUser = await validateUser(decoded.id);
-        if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+        if (!validatedUser) return next(new AppError('', "The user belonging to this token no longer exists", 401));
 
         // //4) Check if user changed password after the jwt was issued
         // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
@@ -135,7 +135,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 const validateUser = (decodedUserID) => {
     return new Promise((resolve, reject) => {
         connection.query(`select * from users where deleted = 0 and userID = ?`, decodedUserID, (error, rows) => {
-            if (error) return reject(new AppError('Error finding user', 404));
+            if (error) return reject(new AppError(error, 'Error finding user', 404));
             resolve(rows[0]);
         })
     })
@@ -150,7 +150,7 @@ console.log('token->', token);
             //2) validate jwt token
             const decodedJWT = await verifyJWT(req.cookies.jwt);
             const validatedUser = await validateUser(decodedJWT.id);
-            if (!validatedUser) return next(new AppError("The user belonging to this token no longer exists", 401));
+            if (!validatedUser) return next(new AppError('', "The user belonging to this token no longer exists", 401));
 
             //TODO: Check if user changed password after the jwt was issued to make sure they have to log back in again and get a new jwt
             delete validatedUser.password;
