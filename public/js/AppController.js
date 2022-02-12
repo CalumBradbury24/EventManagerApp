@@ -237,8 +237,13 @@ const initHomePage = async() => {
         const recommendedEventsView = new RecomendedEventsView();
         upcomingEventsView.render();
         recommendedEventsView.render(eventsModel.eventsState?.recommendedEvents, 'beforeend', false);
+        initRecommendedEventsView(recommendedEventsView);
     }
     else HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
+}
+
+const initRecommendedEventsView = (recommendedEventsView) => {
+    recommendedEventsView.initSaveToFavourites(/*saveEventToFavourites*/)
 }
 
 init();

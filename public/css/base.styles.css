@@ -94,7 +94,8 @@ i{font-style: normal;}
 /* Recommended Events Widget */
 .recommended-events .welcome-message{font-size: 1.5rem; color: var(--dark-grey);margin-top: 50px;margin-bottom: 0px;}
 .recommended-events .recommended-events-container{width: 100%; display: flex;gap: 50px;flex-wrap: wrap;overflow: auto;justify-content: center;margin: 20px 0;}
-.recommended-events .recommended-events-container .recommended-event-container{height: 225px;background-color:white;min-width: 500px;width: 80%; border-radius: 20px;display: flex; overflow: hidden;}
+.recommended-events .recommended-events-container .recommended-event-container{height: 225px;background-color:white;min-width: 500px;width: 80%; border-radius: 20px;display: flex; overflow: hidden; box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);cursor: pointer;}
+.recommended-events .recommended-events-container .recommended-event-container:hover{ transform: scale(1.04); transition: transform 2s cubic-bezier(0.25, 0.45, 0.45, 0.95);}
 .recommended-events .recommended-events-container .recommended-event-container .event-type-image{border-top-left-radius: 20px; border-bottom-left-radius: 20px; min-width: 175px;max-width: 250px;width: 25%;}
 .recommended-events .recommended-events-container .recommended-event-container .event-info-container{flex: 1;font-size: 0.85rem;display: flex;flex-direction: column;align-items: center;}
 .recommended-events .recommended-events-container .recommended-event-container .event-info-container .event-info-title{text-align: center;margin: 10px 0 10px 0;font-size: 1.25rem;}
@@ -102,6 +103,41 @@ i{font-style: normal;}
 .recommended-events .recommended-events-container .recommended-event-container .event-info-container .event-info .event-date{color: var(--orange-red);}
 .recommended-events .recommended-events-container .recommended-event-container .event-info-container .event-info .event-meta-data{text-align: center;}
 .recommended-events .recommended-events-container .recommended-event-container .event-buttons{width: 100px;}
+
+
+svg.one .heart  {
+      fill: transparent;
+      stroke: #a00;
+      stroke-width: 6;
+      transition: all .6s ease-out;
+    }
+    svg.one .heartEX {
+      fill: none;
+      stroke: transparent;
+      transform-box: border-box;
+      transform-origin:50% 50%;
+      stroke-width: 12px;
+      transform: scale(.5);
+      transition:none;
+    }
+
+  svg.one.on .heartEX {
+       transform: scale(2);
+        opacity:0;
+        stroke: #c00;
+        transform-box: border-box;
+      transform-origin:50% 50%;
+        transition: transform, stroke, opacity;
+        transition-duration: .6s, .01s, .4s;
+        transition-delay: 0s, 0s, .2s;
+        
+      }
+      svg.one.on .heartEX .heart  {
+        fill: #a00;
+      }
+    
+  
+
 /* Upcoming Events Widget */
 .upcoming-events .upcoming-title-container{background-color: var(--dark-grey); margin: 10px;border-radius: 10px;}
 .upcoming-events .upcoming-title-container .upcoming-events-title{margin: 0;font-size: 1.3rem;color: white;text-align: center;padding: 10px 0;}

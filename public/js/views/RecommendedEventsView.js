@@ -4,6 +4,16 @@ import { UTCtoLocaleTime, formatMoney } from '../front-end-utilities';
 class RecommendedEventsView extends View {
     _parentElement = document.querySelector('.recommended-events'); //This div is rendered in the home page view
 
+    initSaveToFavourites(){
+        console.log('here');
+        let h1 = document.querySelector('.heartOne');
+        let _svg1 = document.querySelector('svg.one');
+        
+        h1.addEventListener('click',e=>{
+          _svg1.classList.toggle('on');
+        },false);
+    }
+
     _generateHTMLMarkup(){ //10 recommended events based on user location and maybe other stats?
         const markup =
         `
@@ -21,7 +31,12 @@ class RecommendedEventsView extends View {
                                         </div>
                                     </div>
                                     <div class="event-buttons">
-
+                                        <svg class="one" viewBox="0 0 100 100">
+                                            <g class="heartOne">
+                                            <path  class="heartEX" d="M 90,40 a 20 20 0 1 0 -40,-25 a 20 20 0 1 0 -40,25 l 40,50  z" />
+                                            <path class="heart"    d="M 90,40 a 20 20 0 1 0 -40,-25 a 20 20 0 1 0 -40,25 l 40,50  z" />
+                                            </g>
+                                        </svg>
                                     </div>
                                 </div>`
                     }).join('') //.map results in an array of each string so need to .join()

@@ -73,6 +73,8 @@ console.log("Current environment is:", process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
 	//USE THESE MIDDLEWARES DURING DEVELOPMENT ONLY
 	app.use(morgan("dev")); //Logs the incoming request method and route, response code, time it took to send back the response and size of the response in bytes
+} else{
+	app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :response-time ms', { stream: { write: message => logger.log('info', message.trim(), { tags: ['http'] }) } }));
 }
 
 app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-src 'self' cdnjs.cloudflare.com"); return next();}) //is this needed?
@@ -88,8 +90,7 @@ app.use('/api/v1/faqs', FAQsRouter);
 // }); //* means all routes
 
 app.all("*", (req, res, next) => {
-	console.log(req);
-	logger.http(`${req.method} request to ${req.originalUrl} failed. Response Code: '404', Response message: "Invalid URL"`);
+	//logger.http(`${req.method} request to ${req.originalUrl} failed. Response Code: '404', Response message: "Invalid URL"`);
 	res.status(404).render('page-not-found', {
 		title: 'Oops!',
 		url: req.originalUrl
