@@ -85,7 +85,6 @@ const fetchValidUser = async() => {
 	} catch (error) {
 		console.error('Fetch valid user details failed'); //Message property of response
 		showAlert('error', error.response?.data?.message || 'Unknown Error occurred, please try again.');
-        throw new Error('Failed to validate user')
 	}
 }
 

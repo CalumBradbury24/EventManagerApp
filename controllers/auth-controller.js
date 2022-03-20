@@ -113,7 +113,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
         const validatedUser = await validateUser(decoded.id);
         if (!validatedUser) return next(new AppError('', "The user belonging to this token no longer exists", 401));
 
-        // //4) Check if user changed password after the jwt was issued
+        // //4)TODO:: Check if user changed password after the jwt was issued
         // if (freshUser.changedPasswordAfterJWTSent(decoded.iat)) {
         //   //iat = issued at
         //   return next(
@@ -127,6 +127,7 @@ const isLoggedIn = catchAsyncErrors(async (req, res, next) => {
 
         //GRANT ACCESS TO PROTECTED ROUTE
         //If user has valid jwt token then go to next middleware 
+        delete validatedUser.password;
         req.user = validatedUser; //Store current user details in req.user
         next();
 }, 'isLoggedIn')

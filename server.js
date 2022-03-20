@@ -5,7 +5,7 @@ const logger = require('./utils.js/logger');
 //HANDLE UNCAUGHT EXCEPTIONS -synchronous errors such as console.log(undefinedVariable) - at top of code so that all errors that come after are caught (otherwise errors before this will be missed/uncaught!)
 //Listen to uncaughtException event
 process.on("uncaughtException", (error) => {
-    logger.error(`Uncaught exception sssevent ocurred: ${error.message}`);
+    logger.error(`Uncaught exception event ocurred: ${error.stack}`);
     process.exit(1);
 });
 
@@ -25,7 +25,7 @@ const server = app.listen(port, () => {
 //HANDLE UNHANDLED PROMISE REJECTIONS/asynchronous errors - Deal with unhandled promise rejections such as a failure to connect to the database etc
 //subscribe to the unhandledRejection event listener
 process.on("unhandledRejection", (error) => {
-    logger.error(`Unhandled rejection event ocurred: ${error.message}`);
+    logger.error(`Unhandled rejection event ocurred: ${error.stack}`);
     server.close(() => {
         //Server.close gives the server time to finish all the requests that are still processing/pending before closing
         process.exit(1); //Kill server with error code 1(uncaught exception)

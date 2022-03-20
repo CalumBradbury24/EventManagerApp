@@ -56,7 +56,7 @@ export const timeout = () => {
     });
 };
 
-export const makeAxiosPostRequest = async(url, data) => {
+export const makeAxiosPostRequest = async(url, data) => { // to be phased out and replaced with makeAxiosRequest
     try {
         const response = await Promise.race( //Resolves/rejects to the first promise that finishes
             [
@@ -75,7 +75,7 @@ export const makeAxiosPostRequest = async(url, data) => {
     }
 }
 
-export const makeAxiosGetRequest = async(url) => {
+export const makeAxiosGetRequest = async(url) => { // to be phased out and replaced with makeAxiosRequest
     try {
         const response = await Promise.race( //Resolves/rejects to the first promise that finishes
             [
@@ -87,6 +87,24 @@ export const makeAxiosGetRequest = async(url) => {
             ]
         );
 
+        return response;
+    } catch(err){
+        throw err; //Causes this promise that is returned to reject
+    }
+}
+
+
+export const makeAxiosRequest = async(method = '', path = '', requestBody = undefined) => {
+    if(!method || !path) throw new Error('Invalid data recieved for request').stack;
+    try {
+        const options = {
+            method,
+            url: `${API_URL}${path}`,
+        }
+
+        if(requestBody) options.data = requestBody;
+
+        const response = await Promise.race([axios({...options}), timeout()]);
         return response;
     } catch(err){
         throw err; //Causes this promise that is returned to reject

@@ -132,6 +132,20 @@ const controlFAQSearch = async(search) => {
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
+/* ------------------------------------------------------------- RECOMMENDED_EVENTS ------------------------------------------------------------- */
+const saveEventToFavourites = async(eventID = 0, isFavourited = false) => {
+    if(!userModel.userState.user.userID || !+eventID){
+        return HomePageView.renderError('Failed to update favourites.');
+        //return refreshRecommendedEventsViewElement(eventID);
+    }
+
+    await eventsModel.updateFavouriteEvent({eventID, isFavourited});
+
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
 /* --------------------------------------------------------------- LOG_IN_OUT_UP ---------------------------------------------------------------- */
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
@@ -202,13 +216,13 @@ const controlLogOut = async() => {
 const init = async () => { //Add required event listeners
     console.log('init')
     try{
-        await Promise.all([initUser(), initEvents()]);
+        await Promise.all([initUser(), initEvents()]); //Load initial data
         initHeader();
         initFooter();
         await initHomePage();
         console.log(userModel.userState, eventsModel.eventsState);
     } catch(err){
-        console.error(err.message);
+        console.error(err); //TOD0:: dont log errors actual errors
     }
 }
 
@@ -233,17 +247,25 @@ const initHomePage = async() => {
     HomePageView.render(userModel.userState.user);
     if(!!userModel.userState?.user?.isLoggedIn){
         await eventsModel.fetchRecommendedEvents();
-        const upcomingEventsView = new UpcomingEventsView();
-        const recommendedEventsView = new RecomendedEventsView();
-        upcomingEventsView.render();
-        recommendedEventsView.render(eventsModel.eventsState?.recommendedEvents, 'beforeend', false);
-        initRecommendedEventsView(recommendedEventsView);
+        renderUpcomingEventsView();
+        renderRecommendedEventsView();
     }
     else HomePageView.addSignUpSplashButtonHandler(controlRenderLogin);
 }
 
+const renderUpcomingEventsView = () => {
+    const upcomingEventsView = new UpcomingEventsView();
+    upcomingEventsView.render();
+} 
+
+const renderRecommendedEventsView = () => {
+    const recommendedEventsView = new RecomendedEventsView(); //Renders in the recommended-events view container rendered in HomePageView
+    recommendedEventsView.render(eventsModel.eventsState?.recommendedEvents, 'beforeend', false);
+    initRecommendedEventsView(recommendedEventsView);
+}
+
 const initRecommendedEventsView = (recommendedEventsView) => {
-    recommendedEventsView.initSaveToFavourites(/*saveEventToFavourites*/)
+    recommendedEventsView.initSaveToFavourites(saveEventToFavourites);
 }
 
 init();

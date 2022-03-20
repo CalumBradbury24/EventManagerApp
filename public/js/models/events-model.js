@@ -1,4 +1,4 @@
-import { makeAxiosGetRequest } from '../front-end-utilities';
+import { makeAxiosGetRequest, showAlert, makeAxiosRequest } from '../front-end-utilities';
 
 const eventsState = {
     recommendedEvents: {},
@@ -14,7 +14,7 @@ const fetchEventTypes = async() => {
 const fetchRecommendedEvents = async() => {
     try {
 		const response = await makeAxiosGetRequest('events/recommended');
-        console.log(response);
+        console.log(response.data.data);
         eventsState.recommendedEvents = response.data?.data || [];
 	} catch (err) {
 		console.log(err); //TODO: remove log
@@ -22,8 +22,21 @@ const fetchRecommendedEvents = async() => {
 	}
 } 
 
+const updateFavouriteEvent = async(data) => {
+	try{
+		console.log('hereddddd');
+		await makeAxiosRequest('PUT', 'events/favourite', data);
+		showAlert('success', 'Event Updated!');
+	} catch(err){
+		console.log(err); //TODO: remove log
+		console.error('Failed to update event'); //Message property of response
+		showAlert('error', err.response?.data?.message || 'Unknown Error occurred, please try again.');
+	}
+}
+
 module.exports = {
 	fetchRecommendedEvents,
 	fetchEventTypes,
-    eventsState
+    eventsState,
+	updateFavouriteEvent
 }

@@ -12,13 +12,14 @@ const getEventTypes = (req, res, next) => {
 
 const getRecommendedEvents = (req, res, next) => {
     const countryID = +req.user?.country || 0; //Maybe include state and city ?
-    const where = [], params = [];
+    const where = [], params = [req.user.userID];
     // if(countryID){
-    //     where.push('and countryID = ?');
+    //     where.push('and countryID = ?'); //comment in when done teesting recommended events
     //     params.push(countryID);
     // } 
     connection.query(`select eventifyEvents.*, eventTypes.eventTypeName, eventTypes.image, countries.countryName, states.stateName, currency.name currencyName, 
-        currency.symbol currencySymbol, currency.code currencyCode
+        currency.symbol currencySymbol, currency.code currencyCode,
+        (select 1 from favouriteEvents where favouriteEvents.eventID = eventifyEvents.eventID and userID = ?) as favouriteEvent
         from eventifyEvents
         left join eventTypes on eventTypes.eventTypeID = eventifyEvents.eventTypeID
         left join countries on countries.countryID = eventifyEvents.countryID
@@ -32,7 +33,28 @@ const getRecommendedEvents = (req, res, next) => {
     });
 }
 
+const updateFavouriteEvent = (req, res, next) => {
+    const eventID = +req.body.eventID || 0;
+    const isFavourited = !!req.body.isFavourited;
+
+    if(!eventID) return next(new AppError('', 'Error updating event', 400));
+
+    if(isFavourited) {
+        connection.query(`insert into favouriteEvents (userID, eventID) values (?, ?)`, [req.user.userID, eventID], (err) => {
+            if(err) return next(new AppError(err, 'Error adding recommended event', 400));
+            res.json({success: true});
+        });
+    }
+    else {
+        connection.query(`delete from favouriteEvents where userID = ? and eventID = ?`, [req.user.userID, eventID], (err) => {
+            if(err) return next(new AppError(err, 'Error deleting recommended event', 400));
+            res.json({success: true});
+        });
+    }
+}
+
 module.exports = {
     getEventTypes,
-    getRecommendedEvents
+    getRecommendedEvents,
+    updateFavouriteEvent
 }
