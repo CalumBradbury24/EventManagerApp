@@ -24,7 +24,6 @@ const fetchRecommendedEvents = async() => {
 
 const updateFavouriteEvent = async(data) => {
 	try{
-		console.log('hereddddd');
 		await makeAxiosRequest('PUT', 'events/favourite', data);
 		showAlert('success', 'Event Updated!');
 	} catch(err){

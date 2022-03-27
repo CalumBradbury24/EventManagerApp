@@ -35,14 +35,14 @@ app.use(helmet());
 
 //Rate-limiting middleware to count number of requests from an IP address and block these requests when too many have been received
 //Helps protect against DOS and brute force attacks
-if (process.env.NODE_ENV !== "development") {
+//if (process.env.NODE_ENV !== "development") {
 	const limiter = rateLimit({
-	max: 100, //Max number of requests allowed from an IP address in a given time window
-	windowMs: 60 * 60 * 1000, //1 hour
-	message: "Too many requests from this IP, please try again in an hour!",
+		max: 50, //Max number of requests allowed from an IP address in a given time window
+		windowMs: 60 * 1000, //1 minute
+		message: "Too many requests from this IP, please try again in 1 minute!",
 	});
 	app.use('/', limiter);
-}
+//}
 //Data sanitisation against cross-site scripting attacks(XSS)
 app.use(xss());
 
@@ -88,6 +88,12 @@ app.use('/api/v1/faqs', FAQsRouter);
 //   //Express assumes next called with an argument is an error and goes to the error handling middleware*/
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 // }); //* means all routes
+
+app.use('/test', (req, res, next) => {
+	console.log('in test route------------------------------------------------');
+	const data = {test: 'data'}
+	res.json({success: true})
+})
 
 app.all("*", (req, res, next) => {
 	//logger.http(`${req.method} request to ${req.originalUrl} failed. Response Code: '404', Response message: "Invalid URL"`);

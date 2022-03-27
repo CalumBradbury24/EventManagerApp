@@ -1,6 +1,21 @@
 import { API_URL, TIMEOUT_SECONDS } from '../config';
 import axios from 'axios';
 
+axios.interceptors.response.use(response => response, (error) => { //If hit rate limit, retry after specified time
+	return new Promise((resolve, reject) => {
+		if (error.config && error.response && error.response.status === 429) {
+			let retryAfter = error.response?.headers["retry-after"];
+	        retryAfter = retryAfter * 1000; //To milliseconds as retry after is returns in seconds
+
+            return setTimeout(async() => {
+                console.log('retrying api request!');
+                resolve(await axios(error.config));	
+            }, retryAfter)
+        }
+	    reject(error)
+	})
+});
+
 export const hideAlert = () => {
     const alert = document.querySelector('.alert');
     if(alert) alert.parentElement.removeChild(alert); //remove the alert element from its parent element
