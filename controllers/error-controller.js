@@ -10,7 +10,7 @@ const globalErrorHandler = ((error, req, res, next) => {
         message: error.message
     });
 
-    logger.http({"Route": `${req.method} ${req.originalUrl}`, "Response Code": statusCode, "Response message": error.fullError});
+    logger.warn(error.fullError)
     next();
 });
 

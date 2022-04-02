@@ -13,13 +13,13 @@ const app = require('./app');
 
 connection.connect((error) => {
     if(error) return logger.error(error);
-    console.log('Connected to mysql server!')
+    logger.info('Connected to mysql server!')
 });
 
 const port = process.env.port || 5000;
 const server = app.listen(port, () => {
     if(process.env.NODE_ENV === 'production') return logger.info(`Server started running on port ${port}`)
-    console.log(`Server running on port ${port}`);
+    logger.info(`Server running on port ${port}`);
 });
 
 //HANDLE UNHANDLED PROMISE REJECTIONS/asynchronous errors - Deal with unhandled promise rejections such as a failure to connect to the database etc

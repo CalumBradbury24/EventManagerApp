@@ -15,7 +15,6 @@ const viewRouter = require('./routes/view-routes');
 const userRouter = require('./routes/user-routes');
 const eventsRouter = require('./routes/event-routes');
 const FAQsRouter = require('./routes/faqs-routes');
-//const AppError = require('./Utils.js/app-error');
 
 // Start express app
 const app = express(); //express methods added to app
@@ -37,7 +36,7 @@ app.use(helmet());
 //Helps protect against DOS and brute force attacks
 //if (process.env.NODE_ENV !== "development") {
 	const limiter = rateLimit({
-		max: 50, //Max number of requests allowed from an IP address in a given time window
+		max: 150, //Max number of requests allowed from an IP address in a given time window
 		windowMs: 60 * 1000, //1 minute
 		message: "Too many requests from this IP, please try again in 1 minute!",
 	});
@@ -70,12 +69,12 @@ app.use(cookieParser()); //Parses data from cookies
 console.log("Current environment is:", process.env.NODE_ENV);
 
 //Development logging
-if (process.env.NODE_ENV === "development") {
-	//USE THESE MIDDLEWARES DURING DEVELOPMENT ONLY
-	app.use(morgan("dev")); //Logs the incoming request method and route, response code, time it took to send back the response and size of the response in bytes
-} else{
+// if (process.env.NODE_ENV === "development") {
+// 	//USE THESE MIDDLEWARES DURING DEVELOPMENT ONLY
+// 	app.use(morgan("dev")); //Logs the incoming request method and route, response code, time it took to send back the response and size of the response in bytes
+// } else {
 	app.use(morgan(':method :url HTTP/:http-version :status :res[content-length] :response-time ms', { stream: { write: message => logger.log('info', message.trim(), { tags: ['http'] }) } }));
-}
+//}
 
 app.use((req, res, next) => {res.setHeader('Content-Security-Policy', "script-src 'self' cdnjs.cloudflare.com"); return next();}) //is this needed?
 
@@ -84,25 +83,12 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/events', eventsRouter);
 app.use('/api/v1/faqs', FAQsRouter);
 
-// app.all("*", (req, res, next) => {
-//   //Express assumes next called with an argument is an error and goes to the error handling middleware*/
-//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// }); //* means all routes
-
-app.use('/test', (req, res, next) => {
-	console.log('in test route------------------------------------------------');
-	const data = {test: 'data'}
-	res.json({success: true})
-})
-
 app.all("*", (req, res, next) => {
-	//logger.http(`${req.method} request to ${req.originalUrl} failed. Response Code: '404', Response message: "Invalid URL"`);
 	res.status(404).render('page-not-found', {
 		title: 'Oops!',
 		url: req.originalUrl
 	})
 	next();
-	//return res.status(400).json({status: 'failed', message: 'Invalid url'}) //if no front end then could do like this
 }); //* means all routes
 
 app.use(globalErrorHandler);
