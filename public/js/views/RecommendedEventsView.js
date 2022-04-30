@@ -1,5 +1,8 @@
 import View from './View.js';
-import { UTCtoLocaleTime, formatMoney, debounce } from '../front-end-utilities';
+import { UTCtoLocaleTime, formatMoney } from '../front-end-utilities';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale-extreme.css';
 
 class RecommendedEventsView extends View {
     _parentElement = document.querySelector('.recommended-events'); //This div is rendered in the home page view
@@ -14,12 +17,17 @@ class RecommendedEventsView extends View {
         svgNodeList.forEach(svg => { //Iterate through node list
             let currentSvg = document.getElementById(svg.id);
             let g = document.getElementById(`heart-${svg.id}`);
+         //   const isFavourited = !currentSvg.classList.contains('on');
 
             g.addEventListener('click', () => {
-                const isFavourited = !currentSvg.classList.contains('on');
-
                 currentSvg.classList.toggle('on');
-                saveToFavourites(svg.id, isFavourited); //svg.id is the event id
+                saveToFavourites(svg.id); //svg.id is the event id
+            });
+
+            tippy(g, {
+                content: `Remove from/add event to my favourites`,
+                placement: 'bottom',
+                animation: 'scale-extreme'
             });
         })
     }

@@ -10,7 +10,7 @@ const globalErrorHandler = ((error, req, res, next) => {
         message: error.message
     });
 
-    logger.warn(error.fullError)
+    logger.warn(error)
     next();
 });
 

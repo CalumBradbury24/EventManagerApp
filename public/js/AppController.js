@@ -133,13 +133,13 @@ const controlFAQSearch = async(search) => {
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* ------------------------------------------------------------- RECOMMENDED_EVENTS ------------------------------------------------------------- */
-const saveEventToFavourites = async(eventID = 0, isFavourited = false) => {
+const saveEventToFavourites = async(eventID = 0) => {
     if(!userModel.userState.user.userID || !+eventID){
         return HomePageView.renderError('Failed to update favourites.');
         //return refreshRecommendedEventsViewElement(eventID);
     }
 
-    await eventsModel.updateFavouriteEvent({eventID, isFavourited});
+    await eventsModel.updateFavouriteEvent({eventID});
 
 }
 

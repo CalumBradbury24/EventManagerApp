@@ -19,19 +19,19 @@ connection.connect((error) => {
 });
 
 const port = process.env.port || 5000;
-// const server = app.listen(port, () => { //HTTP
-//     if(process.env.NODE_ENV === 'production') return logger.info(`Server started running on port ${port}`)
-//     logger.info(`Server running on port ${port}`);
-// });
+const server = app.listen(port, () => { //HTTP
+    if(process.env.NODE_ENV === 'production') return logger.info(`Server started running on port ${port}`)
+    logger.info(`Server running on port ${port}`);
+});
 
-const server = https.createServer( //Requests must be made over https not http
-    {
-        cert: fs.readFileSync('tls-certificates/server.cert'),
-        key: fs.readFileSync('tls-certificates/server.key'),
-    },
-    app).listen(port, () => {
-        logger.info(`Server running on port ${port}`);
-    });
+// const server = https.createServer( //Requests must be made over https not http
+//     {
+//         cert: fs.readFileSync('tls-certificates/server.cert'),
+//         key: fs.readFileSync('tls-certificates/server.key'),
+//     },
+//     app).listen(port, () => {
+//         logger.info(`Server running on port ${port}`);
+//     });
 
 //HANDLE UNHANDLED PROMISE REJECTIONS/asynchronous errors - Deal with unhandled promise rejections such as a failure to connect to the database etc
 //subscribe to the unhandledRejection event listener
