@@ -91,14 +91,14 @@ if(userDetailsForm){
         });
     })
 }
-/**************************************************************************************************************** */
+/* --------------------------------------------------------------- HEADER ------------------------------------------------------------------------- */
 const controlHeaderSearchBar = (search) => {
     console.log(search)
     if(!search) return HeaderView.renderError('Please enter some keywords to search for events.');
 }
 
 
-/* --------------------------------------------------------------- FAQs ------------------------------------------------------------------------- */
+/* --------------------------------------------------------------- FOOTER ------------------------------------------------------------------------- */
 const controlFooterOptionSelection = async (option = '') => {
     if(!option) FooterView.renderError('An error occurred :(. Please try again.');
     if(option === 'howItWorks'){
@@ -120,7 +120,7 @@ const controlFooterOptionSelection = async (option = '') => {
         FAQsView.init(controlFAQSearch);
     } 
 }
-
+/* --------------------------------------------------------------- FAQs ------------------------------------------------------------------------- */
 const controlFAQSearch = async(search) => {
     if(!search || search.length > 250) return FAQsView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
 
@@ -143,6 +143,18 @@ const saveEventToFavourites = async(eventID = 0) => {
 
 }
 
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------- UPCOMING_EVENTS -------------------------------------------------------------- */
+// const handleUpComingEventsSearch = async(search) => {
+//     if(!search || search.length > 250) return HomePageView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
+
+//     FAQsView.renderSpinner('.common-faqs');
+//     const searchedFAQs = await FAQsModel.searchFAQs(search);
+//     FAQsView.removeSpinner();
+//     FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs
+// }
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -226,7 +238,7 @@ const init = async () => { //Add required event listeners
     }
 }
 
-const initUser = async () => await userModel.fetchValidUser(); //When the page is refreshed fetch the user 
+const initUser = async () => await userModel.fetchValidUser(); //When the page is refreshed, fetch the user 
 const initEvents = async() => await eventsModel.fetchEventTypes();
 
 const initHeader = () => {
@@ -256,6 +268,7 @@ const initHomePage = async() => {
 const renderUpcomingEventsView = () => {
     const upcomingEventsView = new UpcomingEventsView();
     upcomingEventsView.render();
+    initUpcomingEventsView(upcomingEventsView);
 } 
 
 const renderRecommendedEventsView = () => {
@@ -267,5 +280,10 @@ const renderRecommendedEventsView = () => {
 const initRecommendedEventsView = (recommendedEventsView) => {
     recommendedEventsView.initSaveToFavourites(saveEventToFavourites);
 }
+
+const initUpcomingEventsView = (upcomingEventsView) => {
+    upcomingEventsView.initUpcomingEventsSearch();
+}
+
 
 init();

@@ -25,6 +25,7 @@ class RecommendedEventsView extends View {
             });
 
             tippy(g, {
+                theme: 'custom',
                 content: `Remove from/add event to my favourites`,
                 placement: 'bottom',
                 animation: 'scale-extreme'

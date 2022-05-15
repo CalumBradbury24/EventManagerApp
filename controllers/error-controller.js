@@ -9,8 +9,8 @@ const globalErrorHandler = ((error, req, res, next) => {
         status: error.status,
         message: error.message
     });
-
-    logger.warn(error)
+console.log(error.fullError);
+  //  logger.warn(error.fullError)
     next();
 });
 

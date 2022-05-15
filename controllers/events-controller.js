@@ -11,7 +11,7 @@ const getEventTypes = (req, res, next) => {
 }
 
 const getRecommendedEvents = (req, res, next) => {
-    const countryID = +req.user?.country || 0; //Maybe include state and city ?
+    const countryID = +req.user?.country || 0; //Maybe include state and city ? //ALSO don't include events that are already favourited!
     const where = [], params = [req.user.userID];
     // if(countryID){
     //     where.push('and countryID = ?'); //comment in when done teesting recommended events
@@ -19,7 +19,7 @@ const getRecommendedEvents = (req, res, next) => {
     // } 
     connection.query(`select eventifyEvents.*, eventTypes.eventTypeName, eventTypes.image, countries.countryName, states.stateName, currency.name currencyName, 
         currency.symbol currencySymbol, currency.code currencyCode,
-        (select 1 from favouriteEvents where favouriteEvents.eventID = eventifyEvents.eventID and userID = ?) as favouriteEvent
+        (select 1 from favouriteEvents where favouriteEvents.eventID = eventifyEvents.eventID and userID = ? limit 1) as favouriteEvent
         from eventifyEvents
         left join eventTypes on eventTypes.eventTypeID = eventifyEvents.eventTypeID
         left join countries on countries.countryID = eventifyEvents.countryID

@@ -38,17 +38,20 @@ export const customButton = (iconBackgroundColour, backgroundColour, iconColour,
             </button>`
 }
 
-export const spinner = (element) => {
+export const renderLocalSpinner = (element) => {
     console.log('adding spinner')
-    const markup = `<div class="spinner">
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
-                        <div class='spinner-section'></div>
+    const markup = `
+                    <div class ="spinner-container custom">
+                        <div class="spinner">
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                                <div class='spinner-section'></div>
+                        </div>
                     </div>`;
     element.innerHTML = '';
     element.insertAdjacentHTML('afterbegin', markup);
@@ -71,6 +74,7 @@ export const timeout = () => {
     });
 };
 
+//TODO:: Replace all instances with makeAxiosRequest
 export const makeAxiosPostRequest = async(url, data) => { // to be phased out and replaced with makeAxiosRequest
     try {
         const response = await Promise.race( //Resolves/rejects to the first promise that finishes
