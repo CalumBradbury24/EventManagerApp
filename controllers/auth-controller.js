@@ -10,15 +10,15 @@ const { signJWT, verifyJWT } = require('../utils.js/jwt-utils');
 //3)User can then access protected routes with valid jwt token in the header or cookies e.g GET /someProtectedRoute
 //4)If jwt in request is valid, server sends back protected data to client
 
-const createAndSendJWT = (user, statusCode, req, res) => {
+const createAndSendJWT = (user, statusCode, res) => {
     const jwt = signJWT(user.userID);
 
     //Can see this in the cookie tab in postman
     const cookieOptions = {
         //set config options for jwt cookie
-        expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-        ), //Convert to milliseconds
+        // expires: new Date(
+        //     Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000)
+        // ), //Convert to milliseconds
         httpOnly: true, //Cookie cannot be accessed or modified in any way by the browser
     };
     if(process.env.NODE_ENV === 'production') cookieOptions.secure = true;  //Send on encrypted connection (using HTTPS), - only want this when in production
@@ -45,7 +45,7 @@ const login = catchAsyncErrors(async (req, res, next) => {
     const user = await loginPromise(email);
 
     //If user logged in successfully, send jwt
-    if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, req, res);
+    if(await bcrypt.compare(password, user.password)) createAndSendJWT(user, 200, res);
     else return next(new AppError('','Incorrect email or password', 401))
 
 }, 'login');

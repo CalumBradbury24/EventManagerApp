@@ -6,7 +6,7 @@ const AppError = require('./app-error');
 exports.signJWT = (userID, options = {}) => { //Create a jwt out of the user id and the secret
     return jwt.sign({id: userID}, process.env.JWT_SECRET, {
         ...(options && options), //Options could be undefined so this ensures its only spread in if it is defined
-        expiresIn: process.env.JWT_EXPIRES_IN
+        expiresIn: process.env.JWT_COOKIE_EXPIRES_IN
     });
 }
 

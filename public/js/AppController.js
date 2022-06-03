@@ -162,7 +162,7 @@ const saveEventToFavourites = async(eventID = 0) => {
 const controlLogin = async (email, password) => {
     LoginView.renderSpinner();
     const response = await userModel.login(email, password);
-    console.log(response)
+
     //If the response status from the http request is a successs
     if(response === 'success'){
         showAlert('success', 'Logged in sucessfully!');
@@ -234,7 +234,7 @@ const init = async () => { //Add required event listeners
         await initHomePage();
         console.log(userModel.userState, eventsModel.eventsState);
     } catch(err){
-        console.error(err); //TOD0:: dont log errors actual errors
+        console.error(err.stack); //TOD0:: dont log errors actual errors
     }
 }
 

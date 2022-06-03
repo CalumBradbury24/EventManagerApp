@@ -55,8 +55,18 @@ const updateFavouriteEvent = (req, res, next) => {
     });
 }
 
+const getUpcomingEvents = (req, res, next) => {
+    connection.query(`select * from eventifyevents
+        inner join favouriteevents on favouriteevents.eventID = eventifyevents.eventID
+        where favouriteevents.userID = ?`, [req.user.userID], (err, rows) => {
+            if(err) return next(new AppError(err, 'Error fetching upcoming events', 400));
+            res.json({success: true, data: rows || []});
+        })
+}
+
 module.exports = {
     getEventTypes,
     getRecommendedEvents,
-    updateFavouriteEvent
+    updateFavouriteEvent,
+    getUpcomingEvents
 }

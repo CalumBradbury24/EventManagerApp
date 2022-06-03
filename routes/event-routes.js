@@ -7,5 +7,6 @@ eventsRouter.use(authController.isLoggedIn);//Apply middleware to all routes bel
 eventsRouter.route('/types').get(eventsController.getEventTypes);
 eventsRouter.route('/recommended').get(eventsController.getRecommendedEvents);
 eventsRouter.route('/favourite').put(eventsController.updateFavouriteEvent);
+eventsRouter.route('/upcoming').get(eventsController.getUpcomingEvents);
 
 module.exports = eventsRouter;

@@ -1,8 +1,19 @@
 import View from './View.js';
 import { renderLocalSpinner } from '../front-end-utilities';
+import { fetchUpcomingEvents } from '../models/events-model';
 
 class UpcomingEventsView extends View {
     _parentElement = document.querySelector('.upcoming-events'); //This div is rendered in the home page view
+    _upcomingEvents = [];
+    constructor(){
+       super(); //must call before using 'this' in derived classed
+        this.fetchEvents();
+    }
+
+    async fetchEvents(){
+        this._upcomingEvents = await fetchUpcomingEvents();
+        console.log('fetched events', this._upcomingEvents);
+    }
 
     initUpcomingEventsSearch(){
         const searchBar = document.querySelector('.event-search-form.upcoming-events-search');
@@ -27,22 +38,25 @@ class UpcomingEventsView extends View {
 
     _generateHTMLMarkup(){
         return `
-        <div class='upcoming-title-container'>
-            <h1 class="upcoming-events-title">Upcoming Events</h1>
-        </div>
-        <div class="event-keyword-search-container">
-            <form class="event-search-form upcoming-events-search" role="search">
-                <input class="event-search-input upcoming-events-search" type="search" placeholder="Search events" autofocus></input>
-                <button class="event-search-button upcoming-events-search" type="submit">
-                    <img class="event-search-icon" src='../assets/search-icon.svg'></img>
-                </button>
-            </form>
-        <div class = "upcoming-events-list">
-
-        </div>
-
-        </div>
+            <div class='upcoming-title-container'>
+                <h1 class="upcoming-events-title">Upcoming Events</h1>
+            </div>
+            <div class="event-keyword-search-container">
+                <form class="event-search-form upcoming-events-search" role="search">
+                    <input class="event-search-input upcoming-events-search" type="search" placeholder="Search events" autofocus></input>
+                    <button class="event-search-button upcoming-events-search" type="submit">
+                        <img class="event-search-icon" src='../assets/search-icon.svg'></img>
+                    </button>
+                </form>
+            <div class="upcoming-events-list">
+                ${this.renderEventsList()}
+            </div>
+            </div>
         `
+    }
+
+    renderEventsList(){
+        console.log(this._data);
     }
 }
 

@@ -1,4 +1,4 @@
-const logger = require('../utils.js/logger');
+//const logger = require('../utils.js/logger');
 const globalErrorHandler = ((error, req, res, next) => {
     let statusCode;
 
