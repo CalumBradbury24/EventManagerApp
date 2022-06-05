@@ -48,7 +48,7 @@ Nice to haves
 - [ ] filter events by distance etc and have google maps of locations
 - [ ] Users can share events to Facebook/Twitter via link etc
 
-//Base is always rendered except for specific seperate pages that dont use the header and footer (faqs etc)
+//Base is always rendered except for specific seperate pages that dont use the header and footer
 //When a user makes a request to a page that requires they be logged in the backend checks their jwt(and gets userID from it),
 //fetches the current user based on that ID and attaches it to the req.user object so that req.user exists on the backend
 

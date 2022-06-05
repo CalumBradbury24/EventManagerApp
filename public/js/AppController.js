@@ -266,9 +266,7 @@ const initHomePage = async() => {
 }
 
 const renderUpcomingEventsView = () => {
-    const upcomingEventsView = new UpcomingEventsView();
-    upcomingEventsView.render();
-    initUpcomingEventsView(upcomingEventsView);
+    new UpcomingEventsView();
 } 
 
 const renderRecommendedEventsView = () => {
@@ -280,10 +278,5 @@ const renderRecommendedEventsView = () => {
 const initRecommendedEventsView = (recommendedEventsView) => {
     recommendedEventsView.initSaveToFavourites(saveEventToFavourites);
 }
-
-const initUpcomingEventsView = (upcomingEventsView) => {
-    upcomingEventsView.initUpcomingEventsSearch();
-}
-
 
 init();

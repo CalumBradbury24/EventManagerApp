@@ -1,27 +1,30 @@
-import View from './View.js';
-import { renderLocalSpinner } from '../front-end-utilities';
+import { renderLocalSpinner, UTCtoLocaleTime, formatMoney } from '../front-end-utilities';
 import { fetchUpcomingEvents } from '../models/events-model';
 
-class UpcomingEventsView extends View {
+class UpcomingEventsView {
     _parentElement = document.querySelector('.upcoming-events'); //This div is rendered in the home page view
     _upcomingEvents = [];
     constructor(){
-       super(); //must call before using 'this' in derived classed
+     //  super(); //must call before using 'this' in derived classed
+        const markup = this._generateHTMLMarkup();
+        this._parentElement.insertAdjacentHTML('afterbegin', markup); 
+        this.initUpcomingEventsSearch();
         this.fetchEvents();
     }
 
     async fetchEvents(){
         this._upcomingEvents = await fetchUpcomingEvents();
-        console.log('fetched events', this._upcomingEvents);
+        this.renderEventsList();
     }
 
     initUpcomingEventsSearch(){
         const searchBar = document.querySelector('.event-search-form.upcoming-events-search');
-        const eventsList = document.querySelector('.upcoming-events-list');
+        this._eventsList = document.querySelector('.upcoming-events-list');
+        renderLocalSpinner(this._eventsList); //Initially append spinner whilst waiting for data to load
 
         searchBar.addEventListener(('submit'), (e) => {
             e.preventDefault(); //Prevent refresh
-            renderLocalSpinner(eventsList);
+            renderLocalSpinner(this._eventsList);
             const search = searchBar.children[0].value; //the input is a child of the event-search-form form element
             this.handleUpComingEventsSearch(search);
         })
@@ -30,10 +33,10 @@ class UpcomingEventsView extends View {
     handleUpComingEventsSearch = async(search) => {
         if(!search || search.length > 250) return //HomePageView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
     
-        FAQsView.renderSpinner('.common-faqs');
-        const searchedFAQs = await FAQsModel.searchFAQs(search);
-        FAQsView.removeSpinner();
-        FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs
+     //   FAQsView.renderSpinner('.common-faqs');
+       // const searchedFAQs = await FAQsModel.searchFAQs(search);
+        // FAQsView.removeSpinner();
+        // FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs
     }
 
     _generateHTMLMarkup(){
@@ -48,15 +51,33 @@ class UpcomingEventsView extends View {
                         <img class="event-search-icon" src='../assets/search-icon.svg'></img>
                     </button>
                 </form>
-            <div class="upcoming-events-list">
-                ${this.renderEventsList()}
             </div>
-            </div>
+            <div class="upcoming-events-list"></div>
         `
     }
 
     renderEventsList(){
-        console.log(this._data);
+        if(this._eventsList) this._eventsList.innerHTML = '';
+        console.log(this._upcomingEvents);
+        const markup = !this._upcomingEvents.length 
+            ? 
+            '<div>No results found.</div>' 
+            :
+            this._upcomingEvents.map(event => {
+                return `
+                    <div class="upcoming-event-container">
+                        <h6 class="event-title">${event.eventName}</h6>
+                        <div class="upcoming-event-details-container">
+                            <span class="upcoming-event-detail"><p>Start date: </p>${(UTCtoLocaleTime(event.startDate) || '')}</span>
+                            <span class="upcoming-event-detail"><p>Location: </p>${event.city}, ${event.countryName}</span>
+                            <span class="upcoming-event-detail"><p>Price: </p>${formatMoney(event.currencySymbol, event.currencyCode, event.cost)}</span>
+                            <span class="upcoming-event-detail"><p>Event owner: </p>${event.eventOwner}</span>
+                        </div>
+                    </div>
+                `
+            }).join('');
+                
+        this._eventsList.insertAdjacentHTML('afterbegin', markup);
     }
 }
 

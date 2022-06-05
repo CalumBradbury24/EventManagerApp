@@ -6,10 +6,6 @@ import 'tippy.js/animations/scale-extreme.css';
 
 class RecommendedEventsView extends View {
     _parentElement = document.querySelector('.recommended-events'); //This div is rendered in the home page view
-   // constructor(){
-        // super(); //must call before using 'this' in derived classed
-        // this.favouritesButtonIsLocked = [];
-   // }
 
     initSaveToFavourites(saveToFavourites){
         const svgNodeList = document.querySelectorAll('.heart-svg'); //Nodelist of all svgs with this class

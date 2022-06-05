@@ -58,19 +58,19 @@ class LoginView extends View {
                         <form class="signUpForm" method="post">
                             <h1>Create Account</h1>
                             <span>Please use your email for registration</span>
-                            <input id="signUpFName" type="First Name" placeholder="First Name" required></input>
-                            <input id="signUpLName" type="Last Name" placeholder="Last Name" required></input>
-                            <input id="signUpEmail" type="email" placeholder="you@example.com" required></input>
-                            <input id="signUpPassword" type="password" placeholder="password" required minlength='8'></input>
-                            <input id="signUpPasswordConfirm" type="password" placeholder="confirm password" required minlength="8"></input>
+                            <input id="signUpFName" autocomplete="given-name" type="First Name" placeholder="First Name" required></input>
+                            <input id="signUpLName" autocomplete="family-name" type="Last Name" placeholder="Last Name" required></input>
+                            <input id="signUpEmail" autocomplete="email" type="email" placeholder="you@example.com" required></input>
+                            <input id="signUpPassword" autocomplete="new-password" type="password" placeholder="password" required minlength='8'></input>
+                            <input id="signUpPasswordConfirm" autocomplete="new-password" type="password" placeholder="confirm password" required minlength="8"></input>
                             <button>Sign Up</button>
                         </form>
                     </div>
                     <div class="form-container sign-in-container">
                         <form class="loginForm"/>
                             <h1>Sign In</h1>
-                            <input id="signInEmail" type="email" name="email" placeholder="you@example.com" required></input>
-                            <input id="signInPassword" type="password" name="password" placeholder="password" required minlength='8'></input>
+                            <input id="signInEmail" autocomplete="email" type="email" name="email" placeholder="you@example.com" required></input>
+                            <input id="signInPassword"  autocomplete="current-password" type="password" name="password" placeholder="password" required minlength='8'></input>
                             <a href="/api/v1/users/resetpassword">Forgot your password?</a>
                             <button>Sign In</button>
                         </form>

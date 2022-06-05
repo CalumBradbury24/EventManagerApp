@@ -40,28 +40,36 @@ const updateFavouriteEvent = (req, res, next) => {
 
     connection.query(`select * from favouriteEvents where eventID = ? and userID = ?`, [eventID, req.user.userID], (err, rows) => {
         if (err) return next(new AppError(err, 'Error updating favourite event', 400));
-        if(rows && rows.length){
+        if(rows && !rows.length){
             connection.query(`insert into favouriteEvents (userID, eventID) values (?, ?)`, [req.user.userID, eventID], (err) => {
                 if(err) return next(new AppError(err, 'Error adding favourite event', 400));
-                res.json({success: true});
+                res.json({success: true, message: 'Event added'});
             });
         }
         else {
             connection.query(`delete from favouriteEvents where userID = ? and eventID = ?`, [req.user.userID, eventID], (err) => {
                 if(err) return next(new AppError(err, 'Error deleting favourite event', 400));
-                res.json({success: true});
+                res.json({success: true, message: 'Event removed'});
             });
         }
     });
 }
 
 const getUpcomingEvents = (req, res, next) => {
-    connection.query(`select * from eventifyevents
+    connection.query(`select eventifyevents.city, eventifyevents.cost, eventifyevents.startDate, eventifyevents.eventName, eventifyevents.eventID, concat(users.firstName, " ", users.lastName) eventOwner, 
+        eventifyevents.publicEvent, countries.countryName, currency.name currencyName, currency.symbol currencySymbol, currency.code currencyCode
+        from eventifyevents
         inner join favouriteevents on favouriteevents.eventID = eventifyevents.eventID
-        where favouriteevents.userID = ?`, [req.user.userID], (err, rows) => {
-            if(err) return next(new AppError(err, 'Error fetching upcoming events', 400));
-            res.json({success: true, data: rows || []});
-        })
+        inner join users on users.userID = eventifyevents.createdBy
+        left join countries on countries.countryID = eventifyEvents.countryID
+        left join states on states.stateID = eventifyEvents.stateID
+        left join currency on currency.currencyID = eventifyEvents.currencyID
+        where favouriteevents.userID = ? and ifnull(eventifyEvents.deleted, 0) = 0 limit 10 offset ?`, [req.user.userID, 0], (err, rows) => {
+        if(err) return next(new AppError(err, 'Error fetching upcoming events', 400));
+        let events = rows || [];
+        events = events.filter(e => !!(+new Date(e.startDate) > +new Date()));
+        res.json({success: true, data: events});
+    });
 }
 
 module.exports = {

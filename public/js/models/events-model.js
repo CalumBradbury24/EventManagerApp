@@ -36,11 +36,11 @@ const updateFavouriteEvent = async(data) => {
 const fetchUpcomingEvents = async() => {
 	try{
 		const response = await makeAxiosRequest('GET', 'events/upcoming');
-		return response;
+		return response.data?.data || [];
 	} catch(err){
 		console.log(err); //TODO: remove log
 		console.error('Failed to fetch upcoming events'); //Message property of response
-		showAlert('error', err.response?.data?.message || 'Unknown Error occurred, please try again.');
+		showAlert('error', err.response?.data?.message || 'Unknown Error occurred when fetching upcoming events.');
 	}
 }
 
