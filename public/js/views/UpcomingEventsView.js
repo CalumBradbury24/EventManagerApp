@@ -13,8 +13,27 @@ class UpcomingEventsView {
     }
 
     async fetchEvents(){
+        if(this._eventsList) this._eventsList.innerHTML = '';
+       // renderLocalSpinner(this._eventsList);
+        this.renderSkeletonLoader();
         this._upcomingEvents = await fetchUpcomingEvents();
         this.renderEventsList();
+    }
+
+    renderSkeletonLoader(){
+        for(let x = 0; x < 7; ++x){
+            const markup =
+            `<div class="upcoming-event-container skeleton-container">
+                <div class="skeleton-title skeleton"></div>
+                <div class="upcoming-event-details-container-skeleton">
+                    <div class="skeleton-text skeleton"></div>
+                    <div class="skeleton-text skeleton"></div>
+                    <div class="skeleton-text skeleton"></div>
+                    <div class="skeleton-text skeleton"></div>
+                <div/>
+            </div>`
+            this._eventsList.insertAdjacentHTML('afterbegin', markup);
+        }
     }
 
     initUpcomingEventsSearch(){
@@ -24,19 +43,14 @@ class UpcomingEventsView {
 
         searchBar.addEventListener(('submit'), (e) => {
             e.preventDefault(); //Prevent refresh
-            renderLocalSpinner(this._eventsList);
             const search = searchBar.children[0].value; //the input is a child of the event-search-form form element
             this.handleUpComingEventsSearch(search);
         })
     }
 
     handleUpComingEventsSearch = async(search) => {
-        if(!search || search.length > 250) return //HomePageView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
-    
-     //   FAQsView.renderSpinner('.common-faqs');
-       // const searchedFAQs = await FAQsModel.searchFAQs(search);
-        // FAQsView.removeSpinner();
-        // FAQsView.renderFAQs(searchedFAQs, true); //Refresh FAQs
+        if(!search || search.length > 250) return; //HomePageView.renderError(!search ? 'Please enter some keywords to search for FAQs.' : 'Please enter fewer search terms.');
+        this.fetchEvents();
     }
 
     _generateHTMLMarkup(){
@@ -53,8 +67,10 @@ class UpcomingEventsView {
                 </form>
             </div>
             <div class="upcoming-events-list"></div>
+            <div>
+            <div>
         `
-    }
+    }// ?
 
     renderEventsList(){
         if(this._eventsList) this._eventsList.innerHTML = '';
@@ -76,7 +92,7 @@ class UpcomingEventsView {
                     </div>
                 `
             }).join('');
-                
+
         this._eventsList.insertAdjacentHTML('afterbegin', markup);
     }
 }

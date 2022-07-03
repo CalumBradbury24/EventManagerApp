@@ -3,7 +3,7 @@ body{/*font-family: 'Montserrat', sans-serif;*/ margin: 0;display: flex;flex-dir
 .home-page{flex:1;overflow: auto;}
 
 /* root styles */
-:root {font-size: 18px;--dark-grey: #2D2B34; --purple-grey: #7C688A; --orange-red: #9F5E45; --brown-orange: #BF9467; --grey-white: #F6F7F6;}
+:root {font-size: 18px;--dark-grey: #2D2B34; --purple-grey: #7C688A; --orange-red: #9F5E45; --brown-orange: #BF9467; --grey-white: #F6F7F6; --loading-grey: #ededed;}
 p{margin:0}
 a{text-decoration: none;}
 a:visited{color:black;}
@@ -121,14 +121,30 @@ svg.heart-svg.on .heart{fill: #a00;}
 .upcoming-events .upcoming-title-container .upcoming-events-title{margin: 0;font-size: 1.3rem;color: white;text-align: center;padding: 10px 0;}
 
 .upcoming-events .upcoming-events-list{width: 85%; margin: 15px auto 15px auto;padding-top: 15px;display: flex;flex-direction: column;gap: 15px;overflow-y: auto;}
-.upcoming-events .upcoming-events-list .upcoming-event-container{border-radius: 10px;border: 1px solid black;}
+.upcoming-events .upcoming-events-list .upcoming-event-container{border-radius: 10px;border: 1px solid black;margin: auto;width: 90%;}
 .upcoming-events .upcoming-events-list .upcoming-event-container .event-title{margin: 0px;background-color: lavender;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 1rem;text-align: center;}
 .upcoming-events .upcoming-events-list .upcoming-event-container .upcoming-event-details-container{font-size: 0.8rem;margin: 5px;display: flex;flex-direction: column;align-items: center;}
 .upcoming-events .upcoming-events-list .upcoming-event-container .upcoming-event-details-container .upcoming-event-detail{display: flex;flex-wrap: wrap;gap: 5px;}
 .upcoming-events .upcoming-events-list .upcoming-event-container .upcoming-event-details-container .upcoming-event-detail p{font-weight: 800;}
 
 @media screen and (max-width: 950px) {
-    .upcoming-events{display: none;}
+  .upcoming-events{display: none;}
+}
+
+.upcoming-event-container.skeleton-container {height: 150px;margin: auto;}
+.skeleton{opacity: 0.7;animation: skeleton-loading 1s linear infinite alternate; /*alternate means the animation moves beg->end->beg->end etc */}
+
+.upcoming-event-details-container-skeleton{margin: 20px 5px;}
+.skeleton-title{width: 75%;height: .75rem;margin: auto;border-radius: .125rem;margin-top: 10px;}
+.skeleton-text{height: .5rem;margin: 7px auto;border-radius: .125rem;width: 70%;}
+
+@keyframes skeleton-loading {
+  0%{
+    background-color:hsl(200, 20%, 70%);
+  }
+  100%{
+    background-color:hsl(200, 20%, 95%);
+  }
 }
 
 /* My account settings page */
