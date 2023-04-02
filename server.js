@@ -20,7 +20,7 @@ connection.connect((error) => {
 
 const port = process.env.port || 5000;
 const server = app.listen(port, () => { //HTTP
-    if(process.env.NODE_ENV === 'production') return logger.info(`Server started running on port ${port}`)
+    if(process.env.NODE_ENV === 'production') return logger.info(`Server started running on port ${port}`);
     logger.info(`Server running on port ${port}`);
 });
 
